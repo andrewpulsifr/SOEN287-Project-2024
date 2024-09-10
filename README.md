@@ -1,3 +1,5 @@
+# SOEN287-Project-2024
+
 # @npmcli/git
 
 A utility for spawning git from npm CLI contexts.
@@ -156,4 +158,4 @@ occurs.
 - Any other options that can be passed to
   [`@npmcli/promise-spawn`](http://npm.im/@npmcli/promise-spawn), or
   `child_process.spawn()`.
-# SOEN287-Project-2024
+

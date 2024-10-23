@@ -66,6 +66,7 @@ button:hover {
 .content {
     width: 80%;
     padding: 20px;
+    flex: 1;
 }
 
 .search-bar {
@@ -104,13 +105,18 @@ button:hover {
 }
 
 .details-button {
+    display: inline-block;
     background-color: #f0f0f0;
     color: black;
-    padding: 10px;
+    padding: 10px, 20px;
     border: 1px solid #ccc;
     cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+
 }
 
 .details-button:hover {
     background-color: #ddd;
 }
+

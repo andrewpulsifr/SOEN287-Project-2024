@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #1d70a2;
+    color:white;
+    font-family: 'Kadwa', serif;
+    font-size: medium;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #173753;
+  font-family: 'Kadwa', serif;
+  font-size: 26px;
+  padding: 10px;
+}
+
+.navdiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.companyname {
+  font-family: 'Kadwa', serif;
+  font-size: 26px;
+  color: white;
+  
+}
+ul {
+    list-style: none; /* Remove bullets from list */
+}
+
+li {
+    display: inline-block;
+    margin-right: 15px; /* Space between list items */
+}
+
+button {
+    background-color: rgba(29, 112, 162, 1); /* Initial background color */
+    border: none; /* Remove the default border */
+    border-radius: 12px; /* Rounded corners */
+    font-size: 22px;
+    font-family: 'Kadwa', serif;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer; /* Pointer on hover */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for scale and opacity */
+}
+
+button:hover {
+    transform: scale(1.04); /* Scale the button slightly */
+    opacity: 0.9; /* Slight opacity change */
+}
+
+button:active {
+    transform: scale(0.95); /* Scale down slightly when clicked */
+    opacity: 0.8; /* Change opacity on click for feedback */
+}

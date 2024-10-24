@@ -1,76 +1,67 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
 body {
-    background-color: #f0f0f0;
-    height: 100vh;
+    font-family: 'Kadwa', serif;
+    background-color: rgba(29, 112, 162, 1);
 }
-
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-}
-
-.product {
-    display: flex;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 100%;
     max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
-
-.image-placeholder {
-    background-color: #e0e0e0;
-    width: 250px; 
-    height: 150px; 
-    border-radius: 10px;
-}
-
-.product-details {
-    margin-left: 20px;
+.card {
     display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    flex: 1; 
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
 }
-
-.product-details h1 {
+.image {
+    flex: 1;
+}
+.image img {
+    width: 100%;
+    border-radius: 8px;
+}
+.details {
+    flex: 2;
+    padding-left: 20px;
+}
+.details h2 {
+    margin: 0;
+}
+.price {
     font-size: 24px;
     color: #333;
+    margin: 10px 0;
 }
-
-.product-details h2 {
-    font-size: 28px;
-    color: #333;
-}
-
-.product-details p {
-    font-size: 16px;
-    color: #666;
-}
-
-.purchase-btn {
-    background-color: #00a651;
-    color: #fff;
-    border: none;
+.purchase-btn, .cancel-btn {
+    background-color: #28a745;
+    color: white;
     padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+    border: none;
     border-radius: 5px;
-    margin-top: 10px;
-    display: inline-block;
-    width: auto;
+    cursor: pointer;
+    font-size: 16px;
 }
-
-.description {
-    margin-top: 15px;
+.purchase-btn[disabled], .cancel-btn[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+.status {
+    margin-top: 10px;
+    font-size: 14px;
+}
+.status.in-progress {
+    color: green;
+}
+.cancel-btn {
+    background-color: #dc3545;
+    margin-top: 10px;
+}
+.toggle-faq {
+    margin-top: 10px;
+    cursor: pointer;
+}
+.faq-content {
+    display: none;
+    margin-top: 5px;
 }

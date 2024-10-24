@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Figma Design to HTML</title>
+    <title>Checkout Page</title>
     <link rel="stylesheet" href="productdetail.css">
-    <link rel="stylesheet" href="home.css">
 </head>
 <body>
     <header>
@@ -20,18 +19,61 @@
     
     </header>
 
-    <div class="container">
-        <div class="product">
-            <div class="image-placeholder"></div>
-            <div class="product-details">
-                <h1>Title</h1>
-                <h2>$price</h2>
-                <div class="description">
-                    <p>Description </p> </div>
-                <button class="purchase-btn">Purchase</button>
+<div class="container">
+    <div class="card">
+        <div class="image">
+            <img src="placeholder.png" alt="Product Image">
+        </div>
+        <div class="details">
+            <h2>Product</h2>
+            <div class="price">$price</div>
+            <p>Description</p>
+
+            <button id="purchaseButton" class="purchase-btn">Purchase</button>
+
+            <div id="serviceStatus" class="status"></div>
+            <button id="cancelButton" class="cancel-btn" style="display: none;">Cancel Service</button>
             </div>
         </div>
     </div>
     <script src="navbar.js"></script>
+</div>
+
+<script>
+    const purchaseButton = document.getElementById('purchaseButton');
+    const cancelButton = document.getElementById('cancelButton');
+    const serviceStatus = document.getElementById('serviceStatus');
+    
+    let purchased = false;
+
+    purchaseButton.addEventListener('click', () => {
+        if (!purchased) {
+            // Simulate purchasing the service
+            purchased = true;
+            purchaseButton.textContent = 'Purchased';
+            purchaseButton.disabled = true;
+
+            // Show the "Cancel Service" button and update the service status
+            cancelButton.style.display = 'inline-block';
+            serviceStatus.textContent = 'Service Status: In Progress';
+            serviceStatus.classList.add('in-progress');
+        }
+    });
+
+    cancelButton.addEventListener('click', () => {
+        if (purchased) {
+            // Simulate canceling the service
+            purchased = false;
+            purchaseButton.textContent = 'Purchase';
+            purchaseButton.disabled = false;
+
+            // Hide the "Cancel Service" button and update the service status
+            cancelButton.style.display = 'none';
+            serviceStatus.textContent = '';
+            serviceStatus.classList.remove('in-progress');
+        }
+    });
+</script>
+
 </body>
 </html>

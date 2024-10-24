@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="login.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Kadwa' rel='stylesheet'>
+
+</head>
+
+<body class="login-frame">
+<!-- Branding Section -->
+<div class= "col-5 branding-container">
+    <img src="Images/Service.png" alt="Logo" id="logo">
+</div>
+    <div class="container">
+        <div class="row">
+            <!-- Login Form -->
+            <div class="col-8 login-form-frame">
+                    <div class="nav-header">
+                        <a href="client-sign-up.html" class="change-portal">Client Portal</a>
+                        <a href="admin-login.html" class="sign-up-button">Sign in</a>
+                    </div>
+                <div class="sign-up-form-container">
+                    <h2>Admin Sign up</h2>
+                    <form action="#" method="POST" class="sign-up-form">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" id="company-name" name="company-name" placeholder="Company Name" required><br>
+                            </div>
+
+                            <div class="input-group">
+                                <input type="text" id="category" name="category" placeholder="Category"  required><br>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="address" id="address" name="address" placeholder="Address" required><br>
+                            </div>
+                            <div class="input-group">
+                                <input type="email" id="email" name="email" placeholder="Email" required><br>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="password" id="password" name="password" placeholder="Password" required><br>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-button sign-up-button">Sign Up</button>
+                    </form>
+                    <p class="signup-text">Don't have an account? <a href="admin-login.html">Sign in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

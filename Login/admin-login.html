@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="login.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Kadwa' rel='stylesheet'>
+
+</head>
+
+<body class="login-frame">
+<!-- Branding Section -->
+<div class= "col-5 branding-container">
+    <img src="Images/Service.png" alt="Logo" id="logo">
+</div>
+    <div class="container">
+        <div class="row">
+            <!-- Login Form -->
+            <div class="col-8 login-form-frame">
+
+                    <div class="nav-header">
+                        <a href="client-login.html" class="change-portal">Client Portal</a>
+                        <a href="admin-sign-up.html" class="sign-up-button">Sign up</a>
+                    </div>
+                    
+                <div class="sign-in-form-container">
+                    <form action="#" method="POST" class="sign-in-form">
+                        <h2>Admin Sign In</h2>
+                        <label for="email">Email:</label><br>
+                        <div class="input-group">
+                            <input type="text" id="email" name="email" required><br>
+                                <span class="icon">
+                                    <img src="Icons/Mail-Icon.svg" alt="Lock Icon" />
+                                </span> <!-- Lock icon for password -->
+
+                        </div>
+
+                        <label for="password">Password:</label><br>
+                        <div class="input-group">
+                            <input type="password" id="password" name="password" required><br>
+                            <span class="icon">
+                                <img src="Icons/lock-Icon.svg" alt="Lock Icon" />
+                            </span> <!-- Lock icon for password -->
+                        </div>
+                        <button type="submit" class="submit-button sign-in-button">Sign In</button>
+                        <p>Don't have an account? <a href="admin-sign-up.html">Sign Up</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

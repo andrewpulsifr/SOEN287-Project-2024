@@ -115,6 +115,17 @@ button:hover {
     transition: background-color 0.3s;
 
 }
+.request-button {
+    display: inline-block;
+    background-color: #15c848;
+    color: rgb(255, 255, 255);
+    padding: 10px, 20px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+
+}
 
 .details-button:hover {
     background-color: #ddd;

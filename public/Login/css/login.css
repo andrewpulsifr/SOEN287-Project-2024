@@ -107,6 +107,7 @@ body, .login-frame{
 
 .sign-in-form-container{
     padding: 20%;
+    padding-top: 15%;
     width:100%;
 }
 
@@ -139,8 +140,9 @@ p{
 }
 
 .sign-in-button{
-    margin-top: 10%;
+    margin-top: 5%;
 }
+
 .sign-up-button{
     margin-top: 5%;
 }
@@ -172,7 +174,7 @@ p{
 
 .input-group {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     border-bottom: solid 2px #173753;
 }
 
@@ -198,6 +200,12 @@ p{
     right: 5%;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.error-message{
+    color: red;
+    margin-top: 5px;
+    font-size: 0.8rem;
 }
 
 /* =================================================================

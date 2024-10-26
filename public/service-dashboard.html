@@ -35,30 +35,6 @@
                     </tr>
                 </thead>
                 <tbody class="request-list">
-                    <tr class="request-item">
-                        <td class="service-title">Service Title 1</td>
-                        <td class="service-price">$50.00</td>
-                        <td>
-                            <div class="progress-bar">
-                                <div class="progress in-progress" style="width: 50%;"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <button class="cancel-button" onclick="cancelRequest(this)">Cancel</button>
-                        </td>
-                    </tr>
-                    <tr class="request-item">
-                        <td class="service-title">Service Title 2</td>
-                        <td class="service-price">$75.00</td>
-                        <td>
-                            <div class="progress-bar">
-                                <div class="progress completed" style="width: 100%;"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <button class="cancel-button disabled" disabled>Cancel</button>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -66,17 +42,8 @@
     
 </div>
 
-    <script>
-        function cancelRequest(button) {
-            const requestItem = button.closest('.request-item');
-            const status = requestItem.querySelector('.progress');
-
-            if (!status.classList.contains('completed')) {
-                requestItem.remove();
-            }
-        }
-    </script>
     <script src="navbar.js"></script>
+    <script src="requests.js"></script>
     <footer>
         <p>&copy; 2024 Your Company Name. All rights reserved.</p>
     </footer>

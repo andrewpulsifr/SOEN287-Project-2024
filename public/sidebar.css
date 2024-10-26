@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+}
+
+.sidebar {
+    width: 20%;
+    padding: 20px;
+    background-color: #173753;
+    color: white;
+    min-height: 100vh;
+}
+
+.sidebar h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar button {
+    background-color: #1d70a2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.sidebar button:hover {
+    background-color: #144b73;
+}
+
+.sidebar .view-purchases {
+    display: block;
+    width: 100%;
+    background-color: #1d70a2;
+    margin: 10px 0;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.sidebar .view-purchases:hover {
+    background-color: #144b73;
+}

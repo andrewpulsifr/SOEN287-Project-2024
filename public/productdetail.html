@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout Page</title>
-    <link rel="stylesheet" href="productdetail.css">
     <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="productdetail.css">
 </head>
 <body>
     <header>
@@ -28,53 +28,14 @@
         <div class="details">
             <h2>Product</h2>
             <div class="price">$price</div>
-            <p>Description</p>
-
-            <button id="purchaseButton" class="purchase-btn">Purchase</button>
-
-            <div id="serviceStatus" class="status"></div>
-            <button id="cancelButton" class="cancel-btn" style="display: none;">Cancel Service</button>
+            <p>lorem ipsum lorem ipusm lorem ipsum lorem ipsum lorem ipusm lorem ipsum
+                lorem ipsum lorem ipusm lorem ipsum lorem ipsum lorem ipusm lorem ipsum.
+            </p>
             </div>
         </div>
     </div>
     <script src="navbar.js"></script>
 </div>
-
-<script>
-    const purchaseButton = document.getElementById('purchaseButton');
-    const cancelButton = document.getElementById('cancelButton');
-    const serviceStatus = document.getElementById('serviceStatus');
-    
-    let purchased = false;
-
-    purchaseButton.addEventListener('click', () => {
-        if (!purchased) {
-            // Simulate purchasing the service
-            purchased = true;
-            purchaseButton.textContent = 'Purchased';
-            purchaseButton.disabled = true;
-
-            // Show the "Cancel Service" button and update the service status
-            cancelButton.style.display = 'inline-block';
-            serviceStatus.textContent = 'Service Status: In Progress';
-            serviceStatus.classList.add('in-progress');
-        }
-    });
-
-    cancelButton.addEventListener('click', () => {
-        if (purchased) {
-            // Simulate canceling the service
-            purchased = false;
-            purchaseButton.textContent = 'Purchase';
-            purchaseButton.disabled = false;
-
-            // Hide the "Cancel Service" button and update the service status
-            cancelButton.style.display = 'none';
-            serviceStatus.textContent = '';
-            serviceStatus.classList.remove('in-progress');
-        }
-    });
-</script>
 
 </body>
 </html>

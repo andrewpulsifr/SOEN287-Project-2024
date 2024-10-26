@@ -1,6 +1,7 @@
 body {
     font-family: 'Kadwa', serif;
     background-color: rgba(29, 112, 162, 1);
+    color : black;
 }
 .container {
     max-width: 800px;

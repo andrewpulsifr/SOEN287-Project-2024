@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Dashboard</title>
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="service-dashboard.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navdiv">
+            <div class="companyname"><a>Company Name</a></div>
+            <div class="navlink" id="navlink">
+            </div>
+        </div>
+    </nav>
+<div class="container">
+    <aside class="sidebar">
+        <h2>Services Menu</h2>
+        <a href="service-dashboard.html"><button class="view-purchases">View Requested Services</button></a>
+    </aside>
+    
+    <main class="content">
+        <div class="dashboard">
+            <h1>Service Requests Dashboard</h1>
+            <table class="request-table">
+                <thead>
+                    <tr>
+                        <th>Service Name</th>
+                        <th>Price</th>
+                        <th>Progress</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="request-list">
+                    <tr class="request-item">
+                        <td class="service-title">Service Title 1</td>
+                        <td class="service-price">$50.00</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress in-progress" style="width: 50%;"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="cancel-button" onclick="cancelRequest(this)">Cancel</button>
+                        </td>
+                    </tr>
+                    <tr class="request-item">
+                        <td class="service-title">Service Title 2</td>
+                        <td class="service-price">$75.00</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress completed" style="width: 100%;"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="cancel-button disabled" disabled>Cancel</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    
+</div>
+
+    <script>
+        function cancelRequest(button) {
+            const requestItem = button.closest('.request-item');
+            const status = requestItem.querySelector('.progress');
+
+            if (!status.classList.contains('completed')) {
+                requestItem.remove();
+            }
+        }
+    </script>
+    <script src="navbar.js"></script>
+    <footer>
+        <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+    </footer>
+</body>
+</html>

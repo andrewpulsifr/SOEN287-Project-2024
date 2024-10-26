@@ -32,6 +32,9 @@ button {
     cursor: pointer;
     border-radius: 5px;
 }
+a {
+    text-decoration: none;
+}
 
 button:hover {
     background-color: #144b73;
@@ -94,7 +97,7 @@ button:hover {
 }
 
 .card {
-    background-color: white;
+    background-color: rgba(251, 254, 249, 1);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -121,13 +124,13 @@ button:hover {
 }
 .request-button {
     display: inline-block;
-    background-color: #15c848;
+    background-color: rgba(67, 151, 117, 1);
     color: rgb(255, 255, 255);
     padding: 10px, 20px;
     border: 1px solid #ccc;
     cursor: pointer;
     text-decoration: none;
-    transition: background-color 0.3s;
+    transition: background-color 0.s;
 
 }
 

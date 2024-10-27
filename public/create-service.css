@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background-color: #ffffff;
+    color: white;
+    font-family: 'Kadwa', serif;
+    font-size: medium;
+    margin: 0; 
+}
+
+.navbar {
+    background-color: #173753;
+    padding: 10px;
+}
+
+.navdiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    width: 100%;
+}
+
+.companyname {
+    font-size: 26px;
+    color: white;
+    justify-self: flex-start; 
+}
+
+.navlink ul {
+    list-style: none;
+    display: flex; 
+    justify-content: flex-end; 
+}
+
+li {
+    margin-left: 15px; }
+
+button {
+    background-color: rgba(29, 112, 162, 1);
+    border: none;
+    border-radius: 12px;
+    font-size: 22px;
+    font-family: 'Kadwa', serif;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.04);
+    opacity: 0.9;
+}
+
+button:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+.formdiv {
+    color: black;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;  
+    width: 100%;
+    max-width: 400px;  
+    padding: 20px;
+}
+
+.form input,
+.form textarea {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+
+
+.form .upload-area {
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.upload-area p {
+    color: #666;
+    margin: 5px 0;
+}
+
+
+
+.form input[type="file"] {
+    display: none;
+}
+button:focus {
+    outline: none; 
+}

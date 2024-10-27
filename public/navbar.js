@@ -3,7 +3,7 @@
 function loggedinAs() {
     let loggedinAs = localStorage.getItem('loggedinAs');
     const navbar = document.getElementById('navlink');
-    loggedinAs = null;
+    loggedinAs = 'business';
 
     
     

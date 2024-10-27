@@ -109,6 +109,35 @@ button:active {
 .form input[type="file"] {
     display: none;
 }
+
+.color-palette {
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: left;
+}
+
+.color-options {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.color-option {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s;
+}
+
+
 button:focus {
     outline: none; 
 }

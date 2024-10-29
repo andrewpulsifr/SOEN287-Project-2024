@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #1d70a2;
+    color: white;
+    font-family: 'Kadwa', serif;
+    font-size: medium;
+    margin: 0; 
+}
+
+.navbar {
+    background-color: #173753;
+    padding: 10px;
+}
+
+.navdiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    width: 100%;
+}
+
+.companyname {
+    font-size: 26px;
+    color: white;
+    justify-self: flex-start; 
+}
+
+.navlink ul {
+    list-style: none;
+    display: flex; 
+    justify-content: flex-end; 
+}
+
+.navlink li {
+    margin-left: 15px; }
+
+.navlink button {
+    background-color: rgba(29, 112, 162, 1);
+    border: none;
+    border-radius: 12px;
+    font-size: 22px;
+    font-family: 'Kadwa', serif;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.navlink button:hover {
+    transform: scale(1.04);
+    opacity: 0.9;
+}
+
+.navlink button:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+.about{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;}
+
+button:focus {
+    outline: none; 
+}

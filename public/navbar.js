@@ -9,7 +9,7 @@ function loggedinAs() {
 
 
 
-    if (authType == 'business') {
+    if (authType == 'admin') {
         navbar.innerHTML += `
          <ul class="nav-list">
          <li><a href="home.html"><button>Home</button><a></li>
@@ -34,7 +34,6 @@ function loggedinAs() {
     }
     if(authType == null)
     {
-        console.log('hello');
         navbar.innerHTML += `<ul>
         <li><a href="home.html"><button>Home</button></a></li>
         <li><a href="about.html"><button>About</button></a></li>
@@ -42,14 +41,8 @@ function loggedinAs() {
         <li><a href="./Login/client-login.html"><button>Login</button></a></li>
         </ul>
         `;
-
-
-
     }
 
 }
-function logout() {
-    loggedinAs = null;
-    window.location.href = 'home.html';
-}
+
 document.addEventListener('DOMContentLoaded', loggedinAs);

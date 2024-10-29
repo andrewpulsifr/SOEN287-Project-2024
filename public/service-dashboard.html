@@ -12,35 +12,59 @@
     <nav class="navbar">
         <div class="navdiv">
             <div class="companyname"><a>Company Name</a></div>
-            <div class="navlink" id="navlink">
-            </div>
+            <div class="navlink" id="navlink"></div>
         </div>
     </nav>
-<div class="container">
-    <aside class="sidebar">
-        <h2>Services Menu</h2>
-        <a href="service-dashboard.html"><button class="view-purchases">View Requested Services</button></a>
-    </aside>
-    
-    <main class="content">
-        <div class="dashboard">
-            <h1>Service Requests Dashboard</h1>
-            <table class="request-table">
-                <thead>
-                    <tr>
-                        <th>Service Name</th>
-                        <th>Price</th>
-                        <th>Progress</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="request-list">
-                </tbody>
-            </table>
-        </div>
-    </main>
-    
-</div>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Services Menu</h2>
+            <a href="service-dashboard.html"><button class="view-purchases">Service Request Dashaboard</button></a>
+        </aside>
+
+        <main class="content">
+            <div class="dashboard">
+
+                <h2>Outstanding Service Requests</h2>
+                <table class="request-table">
+                    <thead>
+                        <tr>
+                            <th>Order Number</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Date of Request</th>
+                            <th>Due Date</th>
+                            <th>Price</th>
+                            <th>Payment Status</th>
+                            <th>Progress</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="outstanding-requests">
+                    </tbody>
+                </table>
+
+                <h2>Service History</h2>
+                <table class="request-table">
+                    <thead>
+                        <tr>
+                            <th>Order Number</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Date of Request</th>
+                            <th>Date Fulfilled</th>
+                            <th>Price</th>
+                            <th>Payment Status</th>
+                            <th>Progress</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="past-requests">
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
 
     <script src="navbar.js"></script>
     <script src="requests.js"></script>

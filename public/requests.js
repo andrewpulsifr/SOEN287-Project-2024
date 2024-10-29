@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
             dueDate: "10/15/2024",
             price: "$100",
             paymentStatus: "unpaid",
-            progress: "In Progress"
+            completed: false
         },
         {
             orderNumber: "SR-20240911-002",
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
             dueDate: "09/20/2024",
             price: "$250",
             paymentStatus: "paid",
-            progress: "In Progress"
+            completed: false
         }
     ];
 
@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
             dateOfRequest: "12/10/2023",
             dateFulfilled: "12/15/2023",
             price: "$150",
-            paymentStatus: "paid",
-            progress: "Completed"
+            paymentStatus: "unpaid",
+            completed: true
         },
         {
             orderNumber: "SH-20231105-002",
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
             dateFulfilled: "11/10/2023",
             price: "$200",
             paymentStatus: "paid",
-            progress: "Completed"
+            completed: true
         }
     ];
 
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <td>${service.dueDate}</td>
             <td>${service.price}</td>
             <td>${service.paymentStatus}</td>
-            <td>${service.progress}</td>
+            <td>${service.completed}</td>
             <td><button class="cancel-btn">Cancel</button></td>
         `;
 
@@ -69,6 +69,13 @@ document.addEventListener("DOMContentLoaded", function() {
     pastServices.forEach(service => {
         const row = document.createElement("tr");
 
+        let actionsHtml;
+        if (service.paymentStatus === "unpaid") {
+            actionsHtml = `<button class="pay-btn">Pay</button>`;
+        } else {
+            actionsHtml = `<button class="view-receipt-btn">View Receipt</button>`;
+        }
+
         row.innerHTML = `
             <td>${service.orderNumber}</td>
             <td>${service.category}</td>
@@ -77,8 +84,8 @@ document.addEventListener("DOMContentLoaded", function() {
             <td>${service.dateFulfilled}</td>
             <td>${service.price}</td>
             <td>${service.paymentStatus}</td>
-            <td>${service.progress}</td>
-             <td><button class="view-receipt-btn">View Receipt</button></td>
+            <td>${service.completed}</td>
+            <td>${actionsHtml}</td>
         `;
 
         pastTable.appendChild(row);
@@ -89,6 +96,21 @@ document.addEventListener("DOMContentLoaded", function() {
             const row = event.target.closest("tr");
             row.remove();
             alert("Service cancelled.");
+        }
+    });
+
+    pastTable.addEventListener("click", function(event) {
+        if (event.target.classList.contains("pay-btn")) {
+            const row = event.target.closest("tr");
+            const service = pastServices.find(s => s.orderNumber === row.cells[0].innerText);
+
+            if (service) {
+                service.paymentStatus = "paid";
+                row.cells[6].innerText = "paid";
+                row.cells[8].innerHTML = `<button class="view-receipt-btn">View Receipt</button>`;
+                
+                alert("Payment processed.");
+            }
         }
     });
 });

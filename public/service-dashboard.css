@@ -51,7 +51,7 @@
     background-color: #c9302c;
 }
 
-.view-receipt-btn {
+.pay-btn, .view-receipt-btn {
     background-color: #4CAF50; /* Green color */
     color: white;
     border: none;
@@ -60,6 +60,6 @@
     cursor: pointer;
 }
 
-.view-receipt-btn:hover {
+.pay-btn, .view-receipt-btn:hover {
     background-color: #45a049;
 }

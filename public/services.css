@@ -134,7 +134,16 @@ button:hover {
     cursor: pointer;
     text-decoration: none;
     transition: background-color 0.s;
-
+}
+.edit-button {
+    display: inline-block;
+    background-color: rgb(26, 57, 157);
+    color: rgb(255, 255, 255);
+    padding: 10px, 20px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.s;
 }
 
 .details-button:hover {

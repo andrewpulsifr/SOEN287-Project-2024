@@ -1,18 +1,15 @@
 
 
 function loggedinAs() {
-    let loggedinAs = localStorage.getItem('loggedinAs');
+    const authType = localStorage.getItem('auth');
     const navbar = document.getElementById('navlink');
-    loggedinAs = 'business';
-
+    navbar.innerHTML = "";
     
-    
-    
-    console.log(loggedinAs);
-    
+    console.log(authType);
 
 
-    if (loggedinAs == 'business') {
+
+    if (authType == 'business') {
         navbar.innerHTML += `
          <ul class="nav-list">
          <li><a href="home.html"><button>Home</button><a></li>
@@ -20,22 +17,22 @@ function loggedinAs() {
          <li><a href="about.html"><button>About</button><a></li>
          <li><a href="services.html"><button>Services</button><a></li>
          <li><a href="business-config.html"><button>Profile</button><a></li>
-         <li><button onclick="logout()">Logout</button></li>
+         <li><button class="logout"">Logout</button></li>
          </ul>
          `;
     }
-    if(loggedinAs == 'client'){
+    if(authType == 'client'){
         navbar.innerHTML += `<ul>
         <li><a href="home.html"><button>Home</button><a></li>
         <li><a href="about.html"><button>About</button><a></li>
         <li><a href="services.html"><button>Services</button><a></li>
         <li><a href="profile.html"><button>Profile</button><a></li>
-        <li><button onclick="logout()">Logout</button></li>
+        <li><button class="logout">Logout</button></li>
         </ul>
         `;
 
     }
-    if(loggedinAs == null)
+    if(authType == null)
     {
         console.log('hello');
         navbar.innerHTML += `<ul>

@@ -6,16 +6,18 @@ class Auth {
     }
 
     validateAuth(auth){
-        if (auth != 1){ 
-            window.location.replace("/"); // change location
-        }
-        else{
-            document.querySelector("body").style.display = "block"; 
+        if (!auth) {  // If no role is set, redirect to homepage
+            window.location.replace("/"); 
+        } else if (auth === 'client' || auth === 'admin') {
+            document.querySelector("body").style.display = "block"; // Show page for valid users
+        } else {
+            // Any other roles or unknown values would redirect to the homepage
+            window.location.replace("/");
         }
     }
 
     logout(){
-        locateStorage.removeItem('auth');
-        window.location.replace("/");
+        localStorage.removeItem('auth');
+        window.location.replace("client-login.html");
     }
 }

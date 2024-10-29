@@ -1,0 +1,133 @@
+
+.analytics-table-container{
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #dee2e6;
+    margin-top: 5%;
+    min-height: 400px; /* Adjust as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+}
+
+.table-title {
+    background-color: #F1F1F1;
+    font-weight: bold;
+    color: #1D70A2;
+    font-size: 1.5em;
+    padding: 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+table { 
+    border-radius: 6px;
+}
+
+.headers th {
+    background-color: #1D70A2 !important;
+    color: #FBFEF9;
+    padding: 15px;
+    font-weight: bold;
+    text-align:center;
+    text-transform: uppercase !important;
+    font-size: 0.8em !important;
+}
+
+.headers {
+    box-shadow: none;
+}
+
+table td {
+    font-size: 0.9em;
+    color: #333; /* Darker text color */
+    text-align: center;
+}
+
+.table {
+    margin-bottom: 0px !important;
+}
+
+
+/* Add hover effect to table rows */
+.table tbody tr:hover {
+    background-color: #e2f8fb !important;
+    cursor: pointer;
+}
+
+#outstanding-column-select,
+#history-column-select{
+    width: 60%;
+}
+#outstanding-search-input,
+#service-history-input{
+    width: 80%;
+}
+
+/* Responsive adjustments */
+@media only screen and (max-width: 768px) {
+    .analytics-table-container {
+        width: 95%;
+    }
+    .table-title {
+        font-size: 1.2em;
+    }
+    .headers th,
+    table td {
+        padding: 10px;
+        font-size: 0.8em;
+    }
+    /* Adjust column widths for a better fit on mobile */
+    th:nth-child(1), td:nth-child(1) { width: 25%; } /* Order Number */
+    th:nth-child(3), td:nth-child(3) { width: 35%; } /* Description */
+    th:nth-child(5), td:nth-child(5) { width: 15%; } /* Due Date */
+}
+
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Specific column widths for both tables */
+.analytics-table-container .table th:nth-child(1),
+.analytics-table-container .table td:nth-child(1) { /* Order Number */
+    width: 22%;
+}
+
+.analytics-table-container .table th:nth-child(2),
+.analytics-table-container .table td:nth-child(2) { /* Category */
+    width: 13%;
+}
+
+.analytics-table-container .table th:nth-child(3),
+.analytics-table-container .table td:nth-child(3) { /* Description */
+    width: 28%;
+}
+
+.analytics-table-container .table th:nth-child(4),
+.analytics-table-container .table td:nth-child(4) { /* Date of Request */
+    width: 12%;
+}
+
+.analytics-table-container .table th:nth-child(5),
+.analytics-table-container .table td:nth-child(5) { /* Due Date or Date Fulfilled */
+    width: 12%;
+}
+
+.analytics-table-container .table th:nth-child(6),
+.analytics-table-container .table td:nth-child(6) { /* Payment Status */
+    width: 13%;
+}

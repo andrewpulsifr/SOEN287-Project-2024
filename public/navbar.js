@@ -14,7 +14,7 @@ function loggedinAs() {
 
     if (loggedinAs == 'business') {
         navbar.innerHTML += `
-         <ul>
+         <ul class="nav-list">
          <li><a href="home.html"><button>Home</button><a></li>
          <li><a href="home.html"><button>Analytics</button><a></li>
          <li><a href="about.html"><button>About</button><a></li>

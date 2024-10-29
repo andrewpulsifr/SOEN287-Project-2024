@@ -1,0 +1,88 @@
+/* =================================================================
+    Responsive breakpoints
+=================================================================*/
+
+/*Mobile first column styling */
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    [class*="col-"] {
+      width: 100%;
+    }
+
+    .branding-container{
+        height: 50vh;
+        border-radius: 0;
+        border-bottom-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+    }
+  }
+
+
+/* For tablets: */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    /* For tablets: */
+    .col-1 { width: 8.33%; }
+    .col-2 { width: 16.66%; }
+    .col-3 { width: 25%; }
+    .col-4 { width: 33.33%; }
+    .col-5 { width: 41.66%; }
+    .col-6 { width: 50%; }
+    .col-7 { width: 58.33%; }
+    .col-8 { width: 66.66%; }
+    .col-9 { width: 75%; }
+    .col-10 { width: 83.33%; }
+    .col-11 { width: 91.66%; }
+    .col-12 { width: 100%; }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .col-5, .col-8 {
+        flex: 1 1 auto;
+    }
+  }
+
+/* Custom column classes based on the provided layout */
+@media only screen and (min-width: 1024px){
+    .col-1  { width: calc(5.9% - 1.4%); }
+    .col-2  { width: calc((5.9% * 2) + 1.4%); }
+    .col-3  { width: calc((5.9% * 3) + 2 * 1.4%); }
+    .col-4  { width: calc((5.9% * 4) + 3 * 1.4%); }
+    .col-5  { width: calc((5.9% * 5) + 4 * 1.4%); }
+    .col-6  { width: calc((5.9% * 6) + 5 * 1.4%); }
+    .col-7  { width: calc((5.9% * 7) + 6 * 1.4%); }
+    .col-8  { width: calc((5.9% * 8) + 7 * 1.4%); }
+    .col-9  { width: calc((5.9% * 9) + 8 * 1.4%); }
+    .col-10 { width: calc((5.9% * 10) + 9 * 1.4%); }
+    .col-11 { width: calc((5.9% * 11) + 10 * 1.4%); }
+    .col-12 { width: 100%; }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .col-5, .col-8 {
+        flex: 1 1 auto;
+    }
+}
+
+/* Basic column styling */
+[class*="col-"] {
+    float: left;
+    padding-left: 15px;
+    margin-right: 1.4%;
+    box-sizing: border-box;
+}
+
+/* Clear floats */
+.row::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Remove margin for the last column in a row */
+[class*="col-"]:last-child {
+    margin-right: 0;
+}

@@ -36,10 +36,10 @@ body {
     justify-content: flex-end; 
 }
 
-li {
+.navlink li {
     margin-left: 15px; }
 
-button {
+.navlink button {
     background-color: rgba(29, 112, 162, 1);
     border: none;
     border-radius: 12px;
@@ -51,12 +51,12 @@ button {
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-button:hover {
+.navlink button:hover {
     transform: scale(1.04);
     opacity: 0.9;
 }
 
-button:active {
+.navlink button:active {
     transform: scale(0.95);
     opacity: 0.8;
 }

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../../reponsive-css.css">
+        <link rel="stylesheet" type="text/css" href="business-analytics.css">
+        <link rel="stylesheet" type="text/css" href="analytics-table.css">
+        <link rel="stylesheet" type="text/css" href="../../nav-bar.css">
+        <link href='https://fonts.googleapis.com/css?family=Kadwa' rel='stylesheet'>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+</html>
+
+<header>
+    <nav class="navbar">
+        <div class="navdiv">
+            <div class="companyname"><a>Company Name</a></div>
+            <div class="navlink" id="navlink">
+            </div>
+        </div>
+    </nav>
+
+</header>
+
+<body>
+    <div class="analytics-container">
+        <div class="analytics-table-container">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                        <th colspan="4" class="table-title" >Outstanding Service Requests</th>
+                        <th colspan="2" class="table-title">
+                            <div class="filter-container">
+                                <select id="outstanding-column-select" class="form-control">
+                                    <option value="category">Category</option>
+                                    <option value="description">Description</option>
+                                    <option value="dateOfRequest">Date of Request</option>
+                                    <option value="dueDate">Due Date</option>
+                                    <option value="paymentStatus">Payment Status</option>
+                                </select>
+                                <input placeholder="Filter" id="outstanding-search-input" class="form-control" type="text">
+                            </div>
+                        </th>
+                        <tr class="headers">
+                            <th>Order Number</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Date of request</th>
+                            <th>Due Date</th>
+                            <th>Payment Status</th>
+                        </tr>
+                            <tbody id="outstanding-services-table">
+
+                            </tbody>
+                </table>
+            </div>
+        </div>
+
+            <div class="analytics-table-container" style="margin-bottom:10%;">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <th colspan="4" class="table-title" >Service History</th>
+                        <th colspan="2" class="table-title">
+                            <div class="filter-container">
+                                <select id="history-column-select" class="form-control">
+                                    <option value="category">Category</option>
+                                    <option value="description">Description</option>
+                                    <option value="dateOfRequest">Date of Request</option>
+                                    <option value="dueDate">Due Date</option>
+                                    <option value="paymentStatus">Payment Status</option>
+                                </select>
+                                <input placeholder="Filter" id="service-history-input" class="form-control" type="text">
+                            </div>
+                        </th>
+                        <tr class="headers">
+                            <th>Order Number</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Date of request</th>
+                            <th>Date Fulfilled</th>
+                            <th>Payment Status</th>
+                        </tr>
+                        <tbody id="service-history-table">
+    
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </div>
+    
+
+</body>
+</html>
+
+<script src="../../navbar.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="analytics-table-builder.js"></script>

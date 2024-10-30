@@ -21,6 +21,30 @@ const outstandingServices = [
     }
 ];
 
+function createModal() {
+    const modal = document.createElement('div');
+    modal.id = 'myModal';
+    modal.classList.add('modal');
+
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Service Details</h2>
+            <p id="modal-description"></p>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // close modal
+    modal.querySelector('.close-button').onclick = () => modal.style.display = 'none';
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+}
+
 function createServiceCards(services, container, isEditPage = false) {
     services.forEach(service => {
         const card = document.createElement('div');
@@ -30,19 +54,24 @@ function createServiceCards(services, container, isEditPage = false) {
             <div class="image-placeholder"></div>
             <h3>${service.category}</h3>
             <p>${service.price}</p>
-            <p>${service.description}</p>
-            <a href="productdetail.html"><button class="details-button">View Details</button></a>
+            <button class="details-button">View Details</button>
             ${isEditPage 
                 ? `<a href="edit-service.html"><button class="edit-button">Edit</button></a>` 
-                : `<a><button class="request-button">Request</button></a>`
-            }
+                : `<a><button class="request-button">Request</button></a>`}
         `;
+
+        card.querySelector('.details-button').onclick = () => {
+            document.getElementById('modal-description').innerText = service.description;
+            document.getElementById('myModal').style.display = 'block'; // disp modal
+        };
 
         container.appendChild(card);
     });
 }
-const cardsGrid = document.querySelector('.cards-grid');
 
-const isEditPage = window.location.pathname.includes('services-business');
-
-createServiceCards(outstandingServices, cardsGrid, isEditPage);
+document.addEventListener("DOMContentLoaded", function() {
+    createModal();
+    const cardsGrid = document.querySelector('.cards-grid');
+    const isEditPage = window.location.pathname.includes('services-business');
+    createServiceCards(outstandingServices, cardsGrid, isEditPage);
+});

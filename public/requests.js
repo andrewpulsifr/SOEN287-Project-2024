@@ -113,4 +113,52 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
     });
+
+// Modal
+const modal = document.createElement("div");
+modal.id = "receipt-modal";
+modal.className = "modal";
+modal.style.display = "none";
+modal.innerHTML = `
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Receipt Details</h2>
+        <p id="receipt-content"></p>
+    </div>
+`;
+document.body.appendChild(modal);
+
+const receiptContent = document.getElementById("receipt-content");
+
+// Open modal
+function openReceiptModal(service) {
+    receiptContent.innerHTML = `
+        <strong>Order Number:</strong> ${service.orderNumber}<br>
+        <strong>Category:</strong> ${service.category}<br>
+        <strong>Description:</strong> ${service.description}<br>
+        <strong>Date of Request:</strong> ${service.dateOfRequest}<br>
+        <strong>Date Fulfilled:</strong> ${service.dateFulfilled || "Pending"}<br>
+        <strong>Price:</strong> ${service.price}<br>
+        <strong>Payment Status:</strong> ${service.paymentStatus}
+    `;
+    modal.style.display = "block";
+}
+
+// Close modal
+modal.querySelector(".close-button").onclick = () => { modal.style.display = "none"; };
+window.onclick = (event) => { if (event.target === modal) { modal.style.display = "none"; } };
+
+// Display modal
+document.getElementById("past-requests").addEventListener("click", function(event) {
+    if (event.target.classList.contains("view-receipt-btn")) {
+        const row = event.target.closest("tr");
+        const orderNumber = row.cells[0].innerText;
+        const service = pastServices.find(s => s.orderNumber === orderNumber);
+
+        if (service) {
+            openReceiptModal(service);
+        }
+    }
+});
+    
 });

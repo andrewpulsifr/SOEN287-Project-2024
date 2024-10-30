@@ -62,6 +62,11 @@ table td {
     width: 80%;
 }
 
+#service-history-range-start, #service-history-range-end,
+#outstanding-date-range-start, #outstanding-date-range-end {
+    width: 40%;
+}
+
 /* Responsive adjustments */
 @media only screen and (max-width: 768px) {
     .analytics-table-container {

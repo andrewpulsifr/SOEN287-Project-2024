@@ -40,6 +40,9 @@
                                     <option value="paymentStatus">Payment Status</option>
                                 </select>
                                 <input placeholder="Filter" id="outstanding-search-input" class="form-control" type="text">
+                                <!-- Additional date input field for date range filtering -->
+                                <input placeholder="Start Date" id="outstanding-date-range-start" class="form-control" type="date" style="display: none;">
+                                <input placeholder="End Date" id="outstanding-date-range-end" class="form-control" type="date" style="display: none;">
                             </div>
                         </th>
                         <tr class="headers">
@@ -67,10 +70,13 @@
                                     <option value="category">Category</option>
                                     <option value="description">Description</option>
                                     <option value="dateOfRequest">Date of Request</option>
-                                    <option value="dueDate">Due Date</option>
+                                    <option value="dateFulfilled">Date Fulfilled</option>
                                     <option value="paymentStatus">Payment Status</option>
                                 </select>
                                 <input placeholder="Filter" id="service-history-input" class="form-control" type="text">
+                                <!-- Additional date input field for date range filtering -->
+                                <input placeholder="Start Date" id="service-history-range-start" class="form-control" type="date" style="display: none;">
+                                <input placeholder="End Date" id="service-history-range-end" class="form-control" type="date" style="display: none;">
                             </div>
                         </th>
                         <tr class="headers">

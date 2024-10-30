@@ -57,6 +57,8 @@ const historyData = [
 const serviceHistoryList = historyData.map(data => 
     new serviceHistory(...data)
 );
+buildOutstandingServicesTable(outstandingServicesList);
+buildServiceHistoryTable(serviceHistoryList);
 
 /****************************************************************
     Event handlers for filtering services
@@ -70,16 +72,68 @@ $('#outstanding-search-input').on('keyup', function(){
 })
 
 $('#service-history-input').on('keyup', function(){
-
     var value = $(this).val();
     var column = $('#history-column-select').val(); // Get selected column
     var data = searchTable(value, serviceHistoryList,column);
     buildServiceHistoryTable(data);
 })
 
-buildOutstandingServicesTable(outstandingServicesList);
-buildServiceHistoryTable(serviceHistoryList);
+/****************************************************************
+   Date filter event handlers
+****************************************************************/
 
+// Update event handlers to show date range inputs when appropriate
+$('#outstanding-column-select').on('change', function(){
+    var selectedColumn = $(this).val();
+    toggleDateInputs(selectedColumn, '#outstanding-search-input', '#outstanding-date-range-start', '#outstanding-date-range-end');
+    buildOutstandingServicesTable(outstandingServicesList);
+});
+
+$('#history-column-select').on('change', function(){
+    var selectedColumn = $(this).val();
+    toggleDateInputs(selectedColumn, '#service-history-input', '#service-history-range-start', '#service-history-range-end');
+    buildServiceHistoryTable(serviceHistoryList);
+});
+
+// Replace non-jQuery event handlers for date range inputs
+$('#outstanding-date-range-start, #outstanding-date-range-end').on('change', function() {
+    const selectedColumn = $('#outstanding-column-select').val();
+    const filteredData = filterByDateRange(outstandingServicesList, selectedColumn, 'outstanding-date-range-start', 'outstanding-date-range-end');
+    buildOutstandingServicesTable(filteredData);
+});
+
+// Event handlers for service history date range using jQuery
+$('#service-history-range-start, #service-history-range-end').on('change', function() {
+    const selectedColumn = $('#history-column-select').val();
+    const filteredData = filterByDateRange(serviceHistoryList, selectedColumn, 'service-history-range-start', 'service-history-range-end');
+    buildServiceHistoryTable(filteredData);
+});
+
+function filterByDateRange(data,selectedColumn,startDateSelector,endDateSelector) {
+    const startDateElem = document.getElementById(startDateSelector);
+    const startDate = startDateElem.value ? new Date(startDateElem.value) : null;
+    const endDateElem = document.getElementById(endDateSelector);
+    const endDate = endDateElem.value ? new Date(endDateElem.value) : null;
+
+    filteredData = data.filter( item => {
+        const date = item[selectedColumn];
+        return (startDate ? date.getTime() >= startDate.getTime() : true) && (endDate ? date.getTime() <= endDate.getTime() : true);
+    });
+    return filteredData;
+}
+
+// Toggle visibility of date inputs based on selected column
+function toggleDateInputs(selectedColumn, textInput, dateStart, dateEnd) {
+    if (selectedColumn === 'dateOfRequest' || selectedColumn === 'dueDate' || selectedColumn === 'dateFulfilled') {
+        $(textInput).hide();
+        $(dateStart).show();
+        $(dateEnd).show();
+    } else {
+        $(dateStart).hide();
+        $(dateEnd).hide();
+        $(textInput).show();
+    }
+}
 
 function searchTable(value, data, column){
     var filteredData = [];
@@ -97,15 +151,6 @@ function searchTable(value, data, column){
                 break;
             case 'description':
                 field = data[i].description.toLowerCase();
-                break;
-            case 'dateOfRequest':
-                field = data[i].dateOfRequest.toISOString().split('T')[0].toLowerCase();
-                break;
-            case 'dueDate':
-                field = data[i].dueDate ? data[i].dueDate.toISOString().split('T')[0].toLowerCase() : '';
-                break;
-            case 'dateFulfilled':
-                field = data[i].dateFulfilled ? data[i].dateFulfilled.toISOString().split('T')[0].toLowerCase() : '';
                 break;
             case 'paymentStatus':
                 field = data[i].paymentStatus.toLowerCase();

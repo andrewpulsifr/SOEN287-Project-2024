@@ -15,6 +15,18 @@
         border-bottom-right-radius: 30px;
         border-bottom-left-radius: 30px;
     }
+    .descTitle h2{
+        font-size: 1.2em;
+    }
+    .descTitle{
+        font-size: 0.8em;
+    }
+    .dropdown-content p{
+        font-size: 0.8em;
+    }
+    .dropdown-content ul{
+        font-size: 0.5em;
+    }
   }
 
 

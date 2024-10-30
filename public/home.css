@@ -1,0 +1,131 @@
+/* Global CSS */
+* {
+    box-sizing: border-box;
+    font-family: 'Kadwa', serif !important; 
+
+}
+
+
+/* Body of HTML file for client main page */
+html, body {
+    height: auto;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(29, 112, 162, 1);
+    z-index: 1;
+}
+
+.descSection {
+    max-height: 70vh; /* or any suitable value */
+}
+
+/* Client page content */
+.ClientContainer {
+    height: 90vh;
+    margin-top: 2.5%;
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Two equal-width columns */
+}
+
+.Column1 {
+    width: 100%;
+}
+
+.WorldLogo {
+    background-image: url("Images/Service.png");
+    background-repeat: repeat-y;
+    height: 100%;
+}
+
+.Column2 {
+    width: 95%;
+    margin-top: 40px;
+    margin-right: 2px;
+    margin-bottom: 30px;
+    background-color: #125b8b;
+    padding: 30px;
+    border-width: 2rem;
+    border-color: #014a7b;
+    box-shadow: 5px 5px 40px 5px;
+    border-style: ridge;
+    color: #25274D;
+    max-height: 75vh;   
+    overflow: visible; /* Prevents expansion beyond bounds */
+}
+
+.descTitle h2 {
+    text-transform: uppercase;
+    color: #FBFEF9;
+    text-decoration: underline;
+}
+
+.descTitle {
+    text-align: center;
+    color: #FBFEF9;
+}
+
+/* Style the button to look like a dropdown trigger */
+.dropbtn {
+    margin-top: 50px;
+    width: 100%;
+    font-weight: bold;
+    font-size: 1em;
+    padding: 10px;
+    background-color: #173753;
+    color: #FBFEF9;
+    border: double 6px #0c0f3c;
+    cursor: pointer;
+}
+
+/* Position the dropdown content, and hide it by default */
+.dropdown {
+    position: relative;
+    display: block;
+}
+
+/* Style the dropdown content (hidden by default) */
+.dropdown-content {
+    text-align: center;
+    color: #FBFEF9;
+    display: none;
+    position: absolute;
+    background-color: #173753;
+    min-width: 100%;
+    box-shadow: 0px 8px 16px 0px #25274D;
+    z-index: 2;
+    border: double 6px #0b0e49;
+}
+
+/* Style the links inside the dropdown */
+.dropdown-content a {
+    text-decoration: none;
+    display: block;
+}
+
+/* Change the link color on hover */
+.dropdown-content a:hover {
+    background-color: #2E9CCA;
+}
+
+/* Show the dropdown content when the button is hovered over */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown .dropdown-content p {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+}
+.dropdown .dropdown-content ul{
+    margin-bottom: 2.5%;
+}
+
+
+.dropdown-content li{
+    list-style: none !important;
+}
+
+

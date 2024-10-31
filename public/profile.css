@@ -90,6 +90,17 @@ button[type="submit"] {
     color: white;
     cursor: pointer;
 }
+.delete-btn {
+    width: 100%;
+    font-size: 18px;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: rgb(186, 9, 0);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+}
 
 button:focus {
     outline: none;

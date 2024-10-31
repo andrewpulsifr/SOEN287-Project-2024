@@ -56,7 +56,7 @@ function createServiceCards(services, container, isEditPage = false) {
             <p>${service.price}</p>
             <button class="details-button">View Details</button>
             ${isEditPage 
-                ? `<a href="edit-service.html"><button class="edit-button">Edit</button></a>` 
+                ? `<a href="create-service.html"><button class="edit-button">Edit</button></a>` 
                 : `<a><button class="request-button">Request</button></a>`}
         `;
 

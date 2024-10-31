@@ -15,7 +15,7 @@ function loggedinAs() {
          <li><a href="home.html"><button>Home</button><a></li>
          <li><a href="business-analytics.html"><button>Analytics</button><a></li>
          <li><a href="about.html"><button>About</button><a></li>
-         <li><a href="services.html"><button>Services</button><a></li>
+         <li><a href="services-business.html"><button>Services</button><a></li>
          <li><a href="business-config.html"><button>Profile</button><a></li>
          <li><button class="logout"">Logout</button></li>
          </ul>

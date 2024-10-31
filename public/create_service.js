@@ -55,7 +55,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 ${isEditPage 
                     ? `<button class="edit-button">Edit</button>
                        <button class="delete-button">Delete</button>` 
-                    : `<button class="request-button">Request</button>`}
+                    : `<button class="request-button">Request</button>`
+                    
+                }
+                <button class="confirm-button">Confirm</button>
             `;
 
             card.querySelector('.details-button').onclick = () => {

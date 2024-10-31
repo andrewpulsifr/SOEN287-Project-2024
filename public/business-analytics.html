@@ -29,7 +29,7 @@
         <div class="analytics-table-container">
             <div class="table-responsive">
                 <table class="table table-striped">
-                        <th colspan="4" class="table-title" >Outstanding Service Requests</th>
+                        <th colspan="5" class="table-title" >Outstanding Service Requests</th>
                         <th colspan="2" class="table-title">
                             <div class="filter-container">
                                 <select id="outstanding-column-select" class="form-control">
@@ -38,6 +38,7 @@
                                     <option value="dateOfRequest">Date of Request</option>
                                     <option value="dueDate">Due Date</option>
                                     <option value="paymentStatus">Payment Status</option>
+                                    <option value="followUp">Follow Up</option>
                                 </select>
                                 <input placeholder="Filter" id="outstanding-search-input" class="form-control" type="text">
                                 <!-- Additional date input field for date range filtering -->
@@ -52,6 +53,7 @@
                             <th>Date of request</th>
                             <th>Due Date</th>
                             <th>Payment Status</th>
+                            <th>Follow Up</th>
                         </tr>
                             <tbody id="outstanding-services-table">
 
@@ -63,7 +65,7 @@
             <div class="analytics-table-container" style="margin-bottom:10%;">
                 <div class="table-responsive">
                     <table class="table table-striped">
-                        <th colspan="4" class="table-title" >Service History</th>
+                        <th colspan="5" class="table-title" >Service History</th>
                         <th colspan="2" class="table-title">
                             <div class="filter-container">
                                 <select id="history-column-select" class="form-control">
@@ -86,6 +88,7 @@
                             <th>Date of request</th>
                             <th>Date Fulfilled</th>
                             <th>Payment Status</th>
+                            <th>Follow Up</th>
                         </tr>
                         <tbody id="service-history-table">
     
@@ -104,3 +107,4 @@
 <script src="navbar.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="analytics-table-builder.js"></script>
+

@@ -174,6 +174,9 @@ function buildOutstandingServicesTable(data){
     table.innerHTML= '';
 
     for (var i = 0; i < data.length; i++){
+        var followUpButton = data[i].paymentStatus === 'unpaid'
+         ? `<button class="btn btn-info follow-up-btn" data-order="${data[i].orderNumber}">Follow Up</button>`
+            : '<span></span>';
         var row = `<tr>
                         <td>${data[i].orderNumber}</td>
                         <td>${data[i].category}</td>
@@ -181,17 +184,31 @@ function buildOutstandingServicesTable(data){
                         <td>${data[i].dateOfRequest ? data[i].dateOfRequest.toISOString().split('T')[0] : ''}</td>
                         <td>${data[i].dueDate ? data[i].dueDate.toISOString().split('T')[0] : ''}</td>
                         <td>${data[i].paymentStatus}</td>
+                        <td>${followUpButton}
                   </tr>`
         table.innerHTML += row
     }
+    document.querySelectorAll('.follow-up-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const orderNumber = this.getAttribute('data-order');
+            handleFollowUp(orderNumber);
+        });
+    });
 }
 
+function handleFollowUp(orderNumber) {
+    alert(`Follow up initiated for order: ${orderNumber}`);
+    
+}
 function buildServiceHistoryTable(data){
     var table = document.getElementById('service-history-table');
 
     table.innerHTML= '';
 
     for (var i = 0; i < data.length; i++){
+        var followUpButton = data[i].paymentStatus === 'unpaid'
+         ? `<button class="btn btn-info follow-up-btn" data-order="${data[i].orderNumber}">Follow Up</button>`
+            : '<span></span>';
         var row = `<tr>
                         <td>${data[i].orderNumber}</td>
                         <td>${data[i].category}</td>
@@ -199,8 +216,15 @@ function buildServiceHistoryTable(data){
                         <td>${data[i].dateOfRequest ? data[i].dateOfRequest.toISOString().split('T')[0] : ''}</td>
                         <td>${data[i].dateFulfilled ? data[i].dateFulfilled.toISOString().split('T')[0] : ''}</td>
                         <td>${data[i].paymentStatus}</td>
+                        <td>${followUpButton}
                   </tr>`
         table.innerHTML += row
     }
+    document.querySelectorAll('.follow-up-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const orderNumber = this.getAttribute('data-order');
+            handleFollowUp(orderNumber);
+        });
+    });
 }
 

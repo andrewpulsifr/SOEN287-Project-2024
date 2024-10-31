@@ -1,6 +1,6 @@
 
 .analytics-table-container{
-    width: 80%;
+    width: 85%;
     margin: 0 auto;
     border: 1px solid #dee2e6;
     margin-top: 5%;
@@ -94,7 +94,7 @@ table td {
 }
 
 table {
-    table-layout: fixed;
+    table-layout: auto;
     width: 100%;
 }
 
@@ -136,3 +136,10 @@ table {
 .analytics-table-container .table td:nth-child(6) { /* Payment Status */
     width: 13%;
 }
+
+.analytics-table-container .table th:nth-child(7),
+.analytics-table-container .table td:nth-child(7) { /* Follow Up */
+    width: 10%;
+    text-align: center;
+}
+

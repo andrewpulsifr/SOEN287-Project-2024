@@ -24,7 +24,12 @@ class Login {
                 //do login api request
                 localStorage.setItem('auth', this.userType);
                 console.log('success');
-                window.location.href = "home.html";
+                if(this.userType == 'client'){
+                    window.location.href = "home.html";
+                }
+                else{
+                    window.location.href = "business-home.html";
+                }
             }
         });
     }

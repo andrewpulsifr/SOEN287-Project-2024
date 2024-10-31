@@ -12,7 +12,7 @@ function loggedinAs() {
     if (authType == 'admin') {
         navbar.innerHTML += `
          <ul class="nav-list">
-         <li><a href="home.html"><button>Home</button><a></li>
+         <li><a href="business-home.html"><button>Home</button><a></li>
          <li><a href="business-analytics.html"><button>Analytics</button><a></li>
          <li><a href="about.html"><button>About</button><a></li>
          <li><a href="services-business.html"><button>Services</button><a></li>

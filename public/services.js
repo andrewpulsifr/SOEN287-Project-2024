@@ -21,6 +21,47 @@ const outstandingServices = [
     }
 ];
 
+/************************************************************************************************
+ * Initialization of page
+ * ************************************************************************************************/
+// Run service page features when both auth and init are complete
+function loadServicePageFeatures() {
+    createModal();
+    const cardsGrid = document.querySelector('.cards-grid');
+    const isBusinessPage = window.location.pathname.includes('services-business');
+    if (isBusinessPage) {
+        createServiceCards(businessServices, cardsGrid, true); // true for edit page (business)
+    } else {
+        createServiceCards(clientServices, cardsGrid, false); // false for client page
+    }
+}
+
+// Wait for both auth and init events
+let authReady = false;
+let initReady = false;
+let loaded = false;
+
+document.addEventListener('authInitialized', () => {
+    authReady = true;
+    if (authReady && initReady && !loaded) {
+        loadServicePageFeatures();
+        loaded = true;
+    }
+});
+
+document.addEventListener('initComplete', () => {
+    initReady = true;
+    if (authReady && initReady  && !loaded) {
+        loadServicePageFeatures();
+        loaded = true;
+    }
+});
+
+
+
+/************************************************************************************************
+ * Modal functionality
+ * ************************************************************************************************/
 function createModal() {
     const modal = document.createElement('div');
     modal.id = 'myModal';
@@ -45,6 +86,9 @@ function createModal() {
     };
 }
 
+/************************************************************************************************
+ * Service management
+ * ************************************************************************************************/
 function createServiceCards(services, container, isEditPage = false) {
     services.forEach(service => {
         const card = document.createElement('div');
@@ -69,9 +113,3 @@ function createServiceCards(services, container, isEditPage = false) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    createModal();
-    const cardsGrid = document.querySelector('.cards-grid');
-    const isEditPage = window.location.pathname.includes('services-business');
-    createServiceCards(outstandingServices, cardsGrid, isEditPage);
-});

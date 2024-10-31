@@ -10,6 +10,7 @@ class Auth {
             window.location.replace("/"); 
         } else if (auth === 'client' || auth === 'admin') {
             document.querySelector("body").style.display = "block"; // Show page for valid users
+            document.dispatchEvent(new Event('authInitialized'));
         } else {
             // Any other roles or unknown values would redirect to the homepage
             window.location.replace("/");
@@ -20,4 +21,5 @@ class Auth {
         localStorage.removeItem('auth');
         window.location.replace("client-login.html");
     }
+
 }

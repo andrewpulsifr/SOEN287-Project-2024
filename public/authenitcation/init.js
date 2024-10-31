@@ -1,7 +1,8 @@
 const auth = new Auth();
 
-// Ensure this is run only when the .logout button is present
-document.addEventListener('DOMContentLoaded', () => {
+function initializePage() {
+    console.log("Page initialization");
+
     const logoutButton = document.querySelector('.logout');
     const deleteButton = document.querySelector('.delete-btn');
     if (logoutButton) {
@@ -14,4 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
             auth.logout();
         });
     }
-});
+    // Dispatch event indicating init is complete
+    document.dispatchEvent(new Event('initComplete'));
+}
+
+document.addEventListener("DOMContentLoaded", initializePage);

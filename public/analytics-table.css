@@ -5,8 +5,9 @@
     border: 1px solid #dee2e6;
     margin-top: 5%;
     min-height: 400px; /* Adjust as needed */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px #00000033;
     border-radius: 6px;
+    
 }
 
 .table-title {
@@ -143,3 +144,6 @@ table {
     text-align: center;
 }
 
+body{
+    background-color: #FBFEF9 !important;
+}

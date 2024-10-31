@@ -15,6 +15,10 @@ body {
     color: black;
 }
 
+.business-content{
+    background-color: #FBFEF9 !important;
+}
+
 .header {
     background-color: #173753;
     padding: 10px;
@@ -99,12 +103,20 @@ button:hover {
 }
 
 .card {
-    background-color: rgba(251, 254, 249, 1);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+}
+
+.client-card {
+    background-color: rgba(251, 254, 249, 1);
     color: black;
+}
+
+.business-card {
+    background: linear-gradient(145deg, #48BF84, #439775);
+    color: #F1F1F1;
+
 }
 
 .image-placeholder {

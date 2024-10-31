@@ -19,7 +19,7 @@ html, body {
 }
 
 .business-body {
-    background-color: #FBFEF9;
+    background-color: #FBFEF9 !important;
 }
 
 .descSection {

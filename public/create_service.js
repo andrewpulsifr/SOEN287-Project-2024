@@ -42,7 +42,14 @@ document.addEventListener("DOMContentLoaded", function() {
         
         services.forEach(service => {
             const card = document.createElement('div');
+            const isBusinessPage = window.location.pathname.includes('services-business')
             card.classList.add('card');
+            if(isBusinessPage){
+                card.classList.add('business-card');
+            }
+            else{
+                card.classList.add('client-card');
+            }
 
             card.innerHTML = `
                 ${service.image ? 

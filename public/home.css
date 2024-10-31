@@ -11,8 +11,15 @@ html, body {
     height: auto;
     margin: 0;
     padding: 0;
-    background-color: rgba(29, 112, 162, 1);
     z-index: 1;
+}
+
+.client-body {
+    background-color: rgba(29, 112, 162, 1);
+}
+
+.business-body {
+    background-color: #FBFEF9;
 }
 
 .descSection {
@@ -29,6 +36,7 @@ html, body {
 
 .Column1 {
     width: 100%;
+    height: 100%;
 }
 
 .WorldLogo {
@@ -39,6 +47,7 @@ html, body {
 
 .Column2 {
     width: 95%;
+    height: 100%;
     margin-top: 40px;
     margin-right: 2px;
     margin-bottom: 30px;
@@ -49,7 +58,6 @@ html, body {
     box-shadow: 5px 5px 40px 5px;
     border-style: ridge;
     color: #25274D;
-    max-height: 75vh;   
     overflow: visible; /* Prevents expansion beyond bounds */
 }
 

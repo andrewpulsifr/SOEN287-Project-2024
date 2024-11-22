@@ -1,4 +1,4 @@
-const db = require("../database/connection");
+const db = require("../config/database");
 
 // Fetch all services
 function getAllServices() {

@@ -40,28 +40,32 @@ const createClientsTable = `
 // Create Services table
 const createServicesTable = `
     CREATE TABLE IF NOT EXISTS Services (
-    ServiceID INT AUTO_INCREMENT PRIMARY KEY,
-    OrderNumber VARCHAR(255) NOT NULL UNIQUE,
-    Category VARCHAR(255),
-    Description TEXT,
-    DateOfRequest DATE,
-    DueDate DATE,
-    DateFulfilled DATE,
-    Price DECIMAL(10, 2),
-    PaymentStatus ENUM('Paid', 'Unpaid'),
-    Completed BOOLEAN
+        ServiceID INT AUTO_INCREMENT PRIMARY KEY,
+        Title VARCHAR(255) NOT NULL,               
+        Category VARCHAR(255) NOT NULL,
+        Description TEXT NOT NULL,
+        Price DECIMAL(10, 2) NOT NULL,             
+        CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 `;
-// create client services table
+// Create ClientServices table (links clients to services)
 const createClientServicesTable = `
     CREATE TABLE IF NOT EXISTS ClientServices (
-    ClientServiceID INT AUTO_INCREMENT PRIMARY KEY,
-    ClientID INT NOT NULL,
-    ServiceID INT NOT NULL,
-    FOREIGN KEY (ClientID) REFERENCES Clients(ClientID) ON DELETE CASCADE,
-    FOREIGN KEY (ServiceID) REFERENCES Services(ServiceID) ON DELETE CASCADE
-);`
-;
+        ClientServiceID INT AUTO_INCREMENT PRIMARY KEY,
+        ClientID INT NOT NULL,                      -- References Clients table
+        ServiceID INT NOT NULL,                     -- References Services table
+        Status ENUM('Pending', 'In Progress', 'Completed') DEFAULT 'Pending',
+        AssignedDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        DueDate DATE DEFAULT NULL,                  -- Due date for the service completion
+        DateFulfilled DATE DEFAULT NULL,            -- Date the service was completed
+        PaymentStatus ENUM('Pending', 'Paid', 'Failed') DEFAULT 'Pending',
+        Completed BOOLEAN DEFAULT FALSE,            -- Service completion flag
+        FOREIGN KEY (ClientID) REFERENCES Clients(ClientID)
+        ON DELETE CASCADE,                         -- Delete client-related service when client is deleted
+        FOREIGN KEY (ServiceID) REFERENCES Services(ServiceID)
+        ON DELETE CASCADE                          -- Delete the service entry when a service is deleted
+    );
+`;
 
 // Create RefreshTokens table
 const createRefreshTokensTable = `

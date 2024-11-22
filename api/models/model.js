@@ -40,21 +40,28 @@ const createClientsTable = `
 // Create Services table
 const createServicesTable = `
     CREATE TABLE IF NOT EXISTS Services (
-        ServiceID INT AUTO_INCREMENT PRIMARY KEY,
-        OrderNumber VARCHAR(255) NOT NULL UNIQUE,
-        ClientID INT NOT NULL,
-        Category VARCHAR(255),
-        Description TEXT,
-        DateOfRequest DATE,
-        DueDate DATE,
-        DateFulfilled DATE,
-        Price DECIMAL(10, 2),
-        PaymentStatus ENUM('Paid', 'Unpaid'),
-        Completed BOOLEAN,
-        FOREIGN KEY (ClientID) REFERENCES Clients(ClientID)
-        ON DELETE CASCADE
+    ServiceID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderNumber VARCHAR(255) NOT NULL UNIQUE,
+    Category VARCHAR(255),
+    Description TEXT,
+    DateOfRequest DATE,
+    DueDate DATE,
+    DateFulfilled DATE,
+    Price DECIMAL(10, 2),
+    PaymentStatus ENUM('Paid', 'Unpaid'),
+    Completed BOOLEAN
     );
 `;
+// create client services table
+const createClientServicesTable = `
+    CREATE TABLE IF NOT EXISTS ClientServices (
+    ClientServiceID INT AUTO_INCREMENT PRIMARY KEY,
+    ClientID INT NOT NULL,
+    ServiceID INT NOT NULL,
+    FOREIGN KEY (ClientID) REFERENCES Clients(ClientID) ON DELETE CASCADE,
+    FOREIGN KEY (ServiceID) REFERENCES Services(ServiceID) ON DELETE CASCADE
+);`
+;
 
 // Create RefreshTokens table
 const createRefreshTokensTable = `
@@ -84,6 +91,13 @@ const createColorPaletteTable = `
 
 // Execute table creation queries
 connection.query(createUsersTable, (err, results) => {
+    if (err) {
+        console.error('Error creating Users table:', err.message);
+    } else {
+        console.log('Users table created or already exists:', results);
+    }
+});
+connection.query(createClientServicesTable, (err, results) => {
     if (err) {
         console.error('Error creating Users table:', err.message);
     } else {

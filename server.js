@@ -2,6 +2,8 @@ const express = require('express');
 const mysql = require("mysql");
 const path = require('path');
 const app = express();
+const routes = require('./routes/routes');
+const bodyParser = require('body-parser');
 
 // Serve static files from the "public" directory
 app.use(express.urlencoded({ extended: false }));
@@ -14,6 +16,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'client-login.html'));
 });
 
+app.use(bodyParser.json());
 
 // Connect to the MySQL database
 const db = mysql.createConnection({
@@ -31,6 +34,8 @@ db.connect((err) => { // Corrected here
         console.log('Connected to the database');
     }
 });
+
+app.use('/api', routes);
 
 
 // Start the server

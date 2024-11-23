@@ -23,11 +23,10 @@
 
                     <div class="nav-header">
                         <a href="client-login.html" class="change-portal">Client Portal</a>
-                        <a href="admin-sign-up.html" class="sign-up-button">Sign up</a>
                     </div>
                     
                 <div class="sign-in-form-container">
-                    <form action="#" method="POST" class="sign-in-form admin-login-form" novalidate>
+                    <form action="http://localhost:4000/auth/login" method="POST" class="sign-in-form admin-login-form" novalidate>
                         <h2>Admin Sign In</h2>
                         <label for="email">Email:</label><br>
                         <div class="input-group">
@@ -47,7 +46,6 @@
                         </div>
                         <span class="error-message"></span><br>
                         <button type="submit" class="submit-button sign-in-button">Sign In</button>
-                        <p>Don't have an account? <a href="admin-sign-up.html">Sign Up</a></p>
                     </form>
                 </div>
             </div>

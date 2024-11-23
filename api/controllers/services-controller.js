@@ -1,5 +1,5 @@
 const serviceModel = require("../models/service-model");
-const clientModel = require("../models/client-model"); // Assuming you have a model for client data
+const clientModel = require("../models/user-model"); // Assuming you have a model for client data
 const jwt = require('jsonwebtoken');
 
 // Get all services

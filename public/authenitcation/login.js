@@ -22,11 +22,11 @@ class Login {
 
             if (error === 0) {
                 try {
-                    const response = await fetch('/api/auth/login', {
+                    const response = await fetch('http://localhost:4000/auth/login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            email: document.querySelector('#email').value,
+                            email: document.querySelector('#username').value,
                             password: document.querySelector('#password').value,
                             userType: this.userType
                         })
@@ -68,16 +68,17 @@ class Login {
                     return true;
                 }
             }
-            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             // Email validation
             if (field.type === "email") {
-                if (!field.value.contains('@')) { // Match with preset email
-                    this.setStatus(field, "Invalid email", "error");
+                if (!emailRegex.test(field.value)) {
+                    this.setStatus(field, "Invalid email address", "error");
                     return false;
-                } else {
-                    this.setStatus(field, null, "success");
-                    return true;
                 }
+
+                this.setStatus(field, null, "success");
+                return true;
+            
             }
         }
     }
@@ -103,10 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const fields = ["username", "password"];
 
     if (clientForm) {
-        new Login(clientForm, fields, 'client');
+        new Login(clientForm, fields, 'Client');
     }
 
     if (adminForm) {
-        new Login(adminForm, fields, 'admin');
+        new Login(adminForm, fields, 'Admin');
     }
 });

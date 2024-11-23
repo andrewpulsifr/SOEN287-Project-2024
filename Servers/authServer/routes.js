@@ -34,7 +34,7 @@ async function deleteRefreshToken(token) {
 // POST /login: Handles user login
 router.post('/login', async (req, res) => {
     const { email, password, userType } = req.body;
-
+    
     if (!email || !password || !userType) {
         return res.status(400).json({ message: 'Missing email, password, or userType.' });
     }
@@ -42,14 +42,13 @@ router.post('/login', async (req, res) => {
     try {
         const [users] = await dbConnection.query('SELECT * FROM Users WHERE Email = ?', [email]);
         const user = users[0];
-
         if (!user || user.Role !== userType) {
-            return res.status(401).json({ message: 'Invalid credentials.' });
+            return res.status(401).json({ message: 'Invalid credentials matching user type.' });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.Password);
         if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Invalid credentials.' });
+            return res.status(401).json({ message: 'Invalid credentials. Incorrect password.' });
         }
 
         // Generate tokens

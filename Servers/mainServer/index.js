@@ -12,7 +12,7 @@ app.use(express.json());
 
 // Serve static HTML for the login page
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'client-login.html'));
+  res.sendFile(path.join(__dirname, '../../public', 'client-login.html'));
 });
 
 app.use('/', routes);
@@ -20,7 +20,7 @@ app.use('/services', routesApi);
 
 // Serve static files from the "public" directory
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../../public')));
 const dbConnection = createConnection(); 
 
 // Set port

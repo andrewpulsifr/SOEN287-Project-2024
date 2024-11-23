@@ -8,7 +8,7 @@ class Auth {
     validateAuth(auth){
         if (!auth) {  // If no role is set, redirect to homepage
             window.location.replace("/"); 
-        } else if (auth === 'client' || auth === 'admin') {
+        } else if (auth === 'Client' || auth === 'Admin') {
             document.querySelector("body").style.display = "block"; // Show page for valid users
             document.dispatchEvent(new Event('authInitialized'));
         } else {

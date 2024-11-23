@@ -30,10 +30,19 @@ function loadServicePageFeatures() {
     const cardsGrid = document.querySelector('.cards-grid');
     const isBusinessPage = window.location.pathname.includes('services-business');
     if (isBusinessPage) {
-        createServiceCards(businessServices, cardsGrid, true); // true for edit page (business)
-    } else {
-        createServiceCards(clientServices, cardsGrid, false); // false for client page
-    }
+        fetchServices('business')
+            .then(services => {
+                createServiceCards(services, cardsGrid, true); // Pass services from backend, true for edit page
+            })
+            .catch(err => console.error("Failed to load services:", err));
+        } else if (window.location.pathname.includes('services-client')) {
+            // Fetch and display services for the client page
+            fetchServices('client')
+                .then(services => {
+                    createServiceCards(services, cardsGrid, false); // Pass services from backend, false for client page
+                })
+                .catch(err => console.error("Failed to load services:", err));
+        }
 }
 
 // Wait for both auth and init events
@@ -87,6 +96,31 @@ function createModal() {
 }
 
 /************************************************************************************************
+ * Fetch Services from Backend
+ ************************************************************************************************/
+async function fetchServices(pageType) {
+    try {
+        const response = await fetch(`/services`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Error fetching services: ${response.statusText}`);
+        }
+
+        const services = await response.json();
+        return services; //  list of services from the backend
+    } catch (error) {
+        console.error('Error:', error);
+        return []; // Return an empty array if the fetch fails
+    }
+}
+
+/************************************************************************************************
  * Service management
  * ************************************************************************************************/
 function createServiceCards(services, container, isEditPage = false) {
@@ -105,7 +139,7 @@ function createServiceCards(services, container, isEditPage = false) {
         `;
 
         card.querySelector('.details-button').onclick = () => {
-            document.getElementById('modal-description').innerText = service.description;
+            document.getElementById('modal-description').innerText = service.Description;
             document.getElementById('myModal').style.display = 'block'; // disp modal
         };
 

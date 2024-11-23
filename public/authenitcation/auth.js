@@ -22,4 +22,24 @@ class Auth {
         window.location.replace("client-login.html");
     }
 
+    async deleteAccount() {
+        const userId = localStorage.getItem('userId'); // Get user ID from localStorage
+        try {
+            const response = await fetch(`/users/${userId}`, { // Call backend delete route
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            if (response.ok) {
+                localStorage.removeItem('auth'); // Clear localStorage
+                localStorage.removeItem('userId');
+                window.location.replace("client-login.html");
+            } else {
+                console.error('Failed to delete account:', await response.text());
+            }
+        } catch (err) {
+            console.error('Error deleting account:', err);
+        }
+    }
+
 }

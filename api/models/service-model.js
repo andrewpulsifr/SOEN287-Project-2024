@@ -1,58 +1,54 @@
-const db = require("../config/database");
+const db = require("../config/database"); 
+const pool = db(); 
 
 // Fetch all services
-function getAllServices() {
-    return new Promise((resolve, reject) => {
-        const sql = "SELECT * FROM Services";
-        db.query(sql, (err, results) => {
-            if (err) return reject(err);
-            resolve(results);
-        });
-    });
+async function getAllServices() {
+    try {
+        const [results] = await pool.query("SELECT * FROM Services");  
+        return results;
+    } catch (err) {
+        throw err;
+    }
 }
 
 // Fetch a single service by ID
-function getServiceById(id) {
-    return new Promise((resolve, reject) => {
-        const sql = "SELECT * FROM Services WHERE id = ?";
-        db.query(sql, [id], (err, result) => {
-            if (err) return reject(err);
-            resolve(result);
-        });
-    });
+async function getServiceById(id) {
+    try {
+        const [result] = await pool.query("SELECT * FROM Services WHERE id = ?", [id]);  
+        return result;
+    } catch (err) {
+        throw err;
+    }
 }
 
 // Create a new service
-function createService(serviceData) {
-    return new Promise((resolve, reject) => {
-        const sql = "INSERT INTO Services SET ?";
-        db.query(sql, serviceData, (err, result) => {
-            if (err) return reject(err);
-            resolve(result);
-        });
-    });
+async function createService(serviceData) {
+    try {
+        const [result] = await pool.query("INSERT INTO Services SET ?", [serviceData]);  
+        return result;
+    } catch (err) {
+        throw err;
+    }
 }
 
 // Update an existing service
-function updateService(id, serviceData) {
-    return new Promise((resolve, reject) => {
-        const sql = "UPDATE Services SET ? WHERE id = ?";
-        db.query(sql, [serviceData, id], (err, result) => {
-            if (err) return reject(err);
-            resolve(result);
-        });
-    });
+async function updateService(id, serviceData) {
+    try {
+        const [result] = await pool.query("UPDATE Services SET ? WHERE id = ?", [serviceData, id]);  
+        return result;
+    } catch (err) {
+        throw err;
+    }
 }
 
 // Delete a service
-function deleteService(id) {
-    return new Promise((resolve, reject) => {
-        const sql = "DELETE FROM Services WHERE id = ?";
-        db.query(sql, [id], (err, result) => {
-            if (err) return reject(err);
-            resolve(result);
-        });
-    });
+async function deleteService(id) {
+    try {
+        const [result] = await pool.query("DELETE FROM Services WHERE id = ?", [id]);  
+        return result;
+    } catch (err) {
+        throw err;
+    }
 }
 
 module.exports = {
@@ -62,5 +58,3 @@ module.exports = {
     updateService,
     deleteService,
 };
-
-

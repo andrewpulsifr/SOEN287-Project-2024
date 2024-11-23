@@ -4,6 +4,7 @@ const routes = require('./routes');
 const path = require('path');
 const createConnection = require('../../api/config/database'); // Adjust the path if necessary
 const createTables = require('../../api/models/model');
+const routesApi = require('../../api/routes/routes'); 
 
 
 const app = express();
@@ -15,6 +16,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/', routes);
+app.use('/services', routesApi);
 
 // Serve static files from the "public" directory
 app.use(express.urlencoded({ extended: false }));

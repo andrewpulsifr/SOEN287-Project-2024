@@ -1,24 +1,24 @@
-const mysql = require('mysql');
+const mysql = require('mysql2/promise');
 
 function createConnection() {
     const dbConfig = {
-        host: "localhost",
-        user: "root",
-        password: "",
-        database: "Soen287_Database"
+        host: process.env.DB_HOST || 'localhost',
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        database: process.env.DB_NAME || "Soen287_Database",
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0
     };
 
-    const connection = mysql.createConnection(dbConfig);
-
-    connection.connect((err) => {
-        if (err) {
-            console.error('Error connecting to the database:', err.stack);
-        } else {
-            console.log('Connected to the database');
-        }
-    });
-
-    return connection; // Return the connection instance
+    try {
+        const connection = mysql.createPool(dbConfig); // Use a connection pool for better performance
+        console.log('Connected to the database pool');
+        return connection; // Return the pool instance
+    } catch (error) {
+        console.error('Error creating the database pool:', error.message);
+        throw error;
+    }
 }
 
 module.exports = createConnection;

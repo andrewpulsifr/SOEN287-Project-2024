@@ -7,7 +7,6 @@ const createUsersTable = `
         Email VARCHAR(255) NOT NULL UNIQUE,
         Password VARCHAR(255) NOT NULL,
         Role ENUM('Client', 'Admin') NOT NULL,
-        Name VARCHAR(255) NOT NULL,
         CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 `;
@@ -31,6 +30,8 @@ const createClientsTable = `
     CREATE TABLE IF NOT EXISTS Clients (
         ClientID INT AUTO_INCREMENT PRIMARY KEY,
         UserID INT NOT NULL,
+        FirstName VARCHAR(255) NOT NULL,
+        LastName VARCHAR(255) NOT NULL,
         Address TEXT,
         FOREIGN KEY (UserID) REFERENCES Users(UserID)
         ON DELETE CASCADE

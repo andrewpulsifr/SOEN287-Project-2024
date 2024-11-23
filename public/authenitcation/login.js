@@ -10,7 +10,7 @@ class Login {
     }
 
     validateOnSubmit() {
-        this.form.addEventListener('submit', (e) => {
+        this.form.addEventListener('submit', async (e) => {
             e.preventDefault(); // prevent default event
             let error = 0;  // Initialize error counter
             this.fields.forEach((field) => {
@@ -20,15 +20,33 @@ class Login {
                 }
             });
 
-            if (error == 0) {
-                //do login api request
-                localStorage.setItem('auth', this.userType);
-                console.log('success');
-                if(this.userType == 'client'){
-                    window.location.href = "home.html";
-                }
-                else{
-                    window.location.href = "business-home.html";
+            if (error === 0) {
+                try {
+                    const response = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: document.querySelector('#email').value,
+                            password: document.querySelector('#password').value,
+                            userType: this.userType
+                        })
+                    });
+    
+                    const result = await response.json();
+                    if (response.ok) {
+                        localStorage.setItem('auth', result.role); // Store user role
+                        if (result.role === 'Client') {
+                            window.location.href = "home.html";
+                        } else if (result.role === 'Admin') {
+                            window.location.href = "business-home.html";
+                        }
+                    } else {
+                        console.error(result.message);
+                        alert(result.message);
+                    }
+                } catch (err) {
+                    console.error('Error:', err);
+                    alert('Something went wrong!');
                 }
             }
         });
@@ -45,9 +63,6 @@ class Login {
                 if (field.value.length < 8) {
                     this.setStatus(field, "Password must be at least 8 characters long", "error");
                     return false;
-                } else if (field.value !== password) { // Match with preset password
-                    this.setStatus(field, "Password does not match", "error");
-                    return false;
                 } else {
                     this.setStatus(field, null, "success");
                     return true;
@@ -56,12 +71,12 @@ class Login {
             
             // Email validation
             if (field.type === "email") {
-                if (field.value === email) { // Match with preset email
-                    this.setStatus(field, null, "success");
-                    return true;
-                } else {
+                if (!field.value.contains('@')) { // Match with preset email
                     this.setStatus(field, "Invalid email", "error");
                     return false;
+                } else {
+                    this.setStatus(field, null, "success");
+                    return true;
                 }
             }
         }

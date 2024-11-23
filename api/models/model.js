@@ -1,5 +1,5 @@
 const connection = require('../config/database');
-
+const pool = connection(); 
 // Create Users table
 const createUsersTable = `
     CREATE TABLE IF NOT EXISTS Users (
@@ -94,62 +94,33 @@ const createColorPaletteTable = `
     );
 `;
 
-function tableCreation(){
-    // Execute table creation queries
-    connection.query(createUsersTable, (err, results) => {
-        if (err) {
-            console.error('Error creating Users table:', err.message);
-        } else {
-            console.log('Users table created or already exists:', results);
-        }
-    });
-    connection.query(createClientServicesTable, (err, results) => {
-        if (err) {
-            console.error('Error creating Users table:', err.message);
-        } else {
-            console.log('Users table created or already exists:', results);
-        }
-    });
+async function tableCreation() {
+    try {
+        // Use 'await' for querying since we're working with promises
+        await pool.query(createUsersTable);
+        console.log('Users table created or already exists.');
 
-    connection.query(createAdminsTable, (err, results) => {
-        if (err) {
-            console.error('Error creating Admins table:', err.message);
-        } else {
-            console.log('Admins table created or already exists:', results);
-        }
-    });
+        await pool.query(createAdminsTable);
+        console.log('Admins table created or already exists.');
 
-    connection.query(createClientsTable, (err, results) => {
-        if (err) {
-            console.error('Error creating Clients table:', err.message);
-        } else {
-            console.log('Clients table created or already exists:', results);
-        }
-    });
+        // Execute other table creation queries
+        await pool.query(createClientsTable);
+        console.log('Clients table created or already exists.');
 
-    connection.query(createServicesTable, (err, results) => {
-        if (err) {
-            console.error('Error creating Services table:', err.message);
-        } else {
-            console.log('Services table created or already exists:', results);
-        }
-    });
+        await pool.query(createServicesTable);
+        console.log('Services table created or already exists.');
 
-    connection.query(createRefreshTokensTable, (err, results) => {
-        if (err) {
-            console.error('Error creating RefreshTokens table:', err.message);
-        } else {
-            console.log('RefreshTokens table created or already exists:', results);
-        }
-    });
+        await pool.query(createClientServicesTable);
+        console.log('ClientServices table created or already exists.');
 
-    connection.query(createColorPaletteTable, (err, results) => {
-        if (err) {
-            console.error('Error creating ColorPalette table:', err.message);
-        } else {
-            console.log('ColorPalette table created or already exists:', results);
-        }
-    });
+        await pool.query(createRefreshTokensTable);
+        console.log('RefreshTokens table created or already exists.');
+
+        await pool.query(createColorPaletteTable);
+        console.log('ColorPalette table created or already exists.');
+    } catch (err) {
+        console.error('Error creating tables:', err.message);
+    }
 }
 
 tableCreation();

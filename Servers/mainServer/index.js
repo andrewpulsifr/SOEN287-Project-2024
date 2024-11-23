@@ -3,6 +3,7 @@ const express = require('express');
 const routes = require('./routes');
 const path = require('path');
 const createConnection = require('../../api/config/database'); // Adjust the path if necessary
+const createTables = require('../../api/models/model');
 
 
 const app = express();

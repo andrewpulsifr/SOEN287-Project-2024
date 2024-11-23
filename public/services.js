@@ -1,25 +1,3 @@
-const outstandingServices = [
-    {
-        orderNumber: "SR-20241010-001",
-        category: "Plumbing",
-        description: "Leaky faucet repair ",
-        dateOfRequest: "10/10/2024",
-        dueDate: "10/15/2024",
-        price: "$100",
-        paymentStatus: "unpaid",
-        completed: false
-    },
-    {
-        orderNumber: "SR-20240911-002",
-        category: "Drywall",
-        description: "Wall crack fix",
-        dateOfRequest: "09/11/2024",
-        dueDate: "09/20/2024",
-        price: "$250",
-        paymentStatus: "paid",
-        completed: false
-    }
-];
 
 /************************************************************************************************
  * Initialization of page
@@ -135,7 +113,7 @@ function createServiceCards(services, container, isEditPage = false) {
             <button class="details-button">View Details</button>
             ${isEditPage 
                 ? `<a href="create-service.html"><button class="edit-button">Edit</button></a>` 
-                : `<a><button class="request-button">Request</button></a>`}
+                : `<a><button class="request-button" data-service-id="${service.ServiceID}">Request</button></a>`}
         `;
 
         card.querySelector('.details-button').onclick = () => {
@@ -143,7 +121,36 @@ function createServiceCards(services, container, isEditPage = false) {
             document.getElementById('myModal').style.display = 'block'; // disp modal
         };
 
+        // event listener for the request
+        const requestButton = card.querySelector('.request-button');
+        if (requestButton) {
+            requestButton.onclick = async () => {
+                const serviceId = requestButton.getAttribute('data-service-id');
+                const token = localStorage.getItem('authToken');  // Get token from local storage
+
+                try {
+                    const response = await fetch('/services/request', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ serviceId })  // Send service ID in the request body
+                    });
+
+                    const result = await response.json();
+                    if (response.ok) {
+                        alert('Service requested successfully!');
+                    } else {
+                        alert('Error requesting service: ' + result.error);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error requesting service');
+                }
+            };
+        }
+
         container.appendChild(card);
     });
 }
-

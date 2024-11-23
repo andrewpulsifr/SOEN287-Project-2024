@@ -51,10 +51,23 @@ async function deleteService(id) {
     }
 }
 
+async function requestService(clientId, serviceId) {
+    const query = `INSERT INTO ClientServices 
+    (ClientID, ServiceID, Status) VALUES (?, ?, 'Pending');`;
+    try {
+        const [result] = await db.execute(query, [clientId, serviceId]);
+        return result;  // Returning the result (insertId) of the insert operation
+    } catch (err) {
+        console.error("Error requesting service:", err);
+        throw err;  // Re-throw the error so the controller can handle it
+    }
+}
+
 module.exports = {
     getAllServices,
     getServiceById,
     createService,
     updateService,
     deleteService,
+    requestService, 
 };

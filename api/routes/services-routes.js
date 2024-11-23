@@ -9,10 +9,6 @@ router.post("/", serviceController.createService);// post new service
 router.put("/:id", serviceController.updateService);// put update service
 router.delete("/:id", serviceController.deleteService);// del service by ID
 
-//User Routes
-router.get("/:id", usersController.getUserById);
-router.get("/email/:email", usersController.getUserByEmail);
-router.put("/:id", usersController.updateUser);
-router.delete("/:id", usersController.deleteUser);
+router.post('/request', serviceController.requestService);// put request service
 
 module.exports = router;

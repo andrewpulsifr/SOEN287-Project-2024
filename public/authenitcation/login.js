@@ -1,5 +1,3 @@
-const password = 'password';
-const email = 'email';
 
 class Login {
     constructor(form, fields, userType) {
@@ -86,14 +84,16 @@ class Login {
 
     setStatus(field, message, status) {
         const errorMessage = field.parentElement.nextElementSibling;
-        if (status == "error") {
+        if (status === "error") {
             errorMessage.innerText = message;
             errorMessage.classList.add("input-error");
-        } else if(status == "success") {
-            if(errorMessage){
-                errorMessage.innerText = ""; // Clear the error message when the field is valid
+            errorMessage.style.display = "block"; // Ensure it's visible
+        } else if (status === "success") {
+            if (errorMessage) {
+                errorMessage.innerText = ""; // Clear the error message
+                errorMessage.classList.remove("input-error");
+                errorMessage.style.display = "none"; // Hide the message
             }
-            errorMessage.classList.remove("input-error");
         }
     }
 }

@@ -1,0 +1,182 @@
+### Login Endpoint Tests ###
+# Test: Valid login with correct credentials
+POST http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "correctPassword123",
+  "userType": "Client"
+}
+# Expected output: 200 OK with a JSON response containing accessToken, refreshToken, and user role.
+
+### Test: Missing fields (email, password, or userType)
+POST http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "correctPassword123"
+}
+# Expected output: 400 Bad Request with a message "Missing email, password, or userType."
+
+### Test: Invalid credentials (incorrect password)
+POST http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "wrongPassword123",
+  "userType": "Client"
+}
+# Expected output: 401 Unauthorized with a message "Invalid credentials. Incorrect password."
+
+---
+
+### Generate Token Endpoint Tests ###
+# Test: Valid refresh token to generate a new access token
+POST http://localhost:4000/auth/token
+Content-Type: application/json
+
+{
+  "token": "validRefreshToken123"
+}
+# Expected output: 200 OK with a new accessToken in the JSON response.
+
+### Test: Missing token (empty string or no token)
+POST http://localhost:4000/auth/token
+Content-Type: application/json
+
+{
+  "token": ""
+}
+# Expected output: 401 Unauthorized indicating a missing or invalid token.
+
+### Test: Invalid or expired refresh token
+POST http://localhost:4000/auth/token
+Content-Type: application/json
+
+{
+  "token": "invalidOrExpiredToken123"
+}
+# Expected output: 403 Forbidden with a message indicating the token is invalid or expired.
+
+---
+
+### Logout Endpoint Tests ###
+# Test: Successful logout with a valid refresh token
+DELETE http://localhost:4000/auth/logout
+Content-Type: application/json
+
+{
+  "token": "validRefreshToken123"
+}
+# Expected output: 204 No Content indicating successful logout with the refresh token removed from the database.
+
+### Test: Missing token (no token provided)
+DELETE http://localhost:4000/auth/logout
+Content-Type: application/json
+
+{
+  "token": ""
+}
+# Expected output: 400 Bad Request with a message "No token provided."
+
+---
+
+### Register Endpoint Tests ###
+# Test: Successful registration with all required fields
+POST http://localhost:4000/auth/register
+Content-Type: application/json
+
+{
+  "email": "newuser@example.com",
+  "password": "newUserPassword123",
+  "address": "123 Main Street",
+  "first-name": "John",
+  "last-name": "Doe"
+}
+# Expected output: 201 Created with a message "User registered successfully."
+
+### Test: Missing required fields (email, password, address, first-name, or last-name)
+POST http://localhost:4000/auth/register
+Content-Type: application/json
+
+{
+  "email": "newuser@example.com",
+  "password": "newUserPassword123"
+}
+# Expected output: 400 Bad Request with a message "Missing required fields."
+
+### Test: Attempt to register with an already registered email
+POST http://localhost:4000/auth/register
+Content-Type: application/json
+
+{
+  "email": "existinguser@example.com",
+  "password": "newUserPassword123",
+  "address": "123 Main Street",
+  "first-name": "Jane",
+  "last-name": "Doe"
+}
+# Expected output: 400 Bad Request with a message "Email is already registered."
+
+---
+
+### Invalid Input Tests ###
+# Test: Invalid email format (for login and registration)
+POST http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+  "email": "invalid-email",
+  "password": "somepassword123",
+  "userType": "Client"
+}
+# Expected output: 400 Bad Request with a message "Invalid email format."
+
+POST http://localhost:4000/auth/register
+Content-Type: application/json
+
+{
+  "email": "invalid-email",
+  "password": "newUserPassword123",
+  "address": "123 Main Street",
+  "first-name": "John",
+  "last-name": "Doe"
+}
+# Expected output: 400 Bad Request with a message "Invalid email format."
+
+### Test: Password does not meet criteria (too short)
+POST http://localhost:4000/auth/register
+Content-Type: application/json
+
+{
+  "email": "newuser@example.com",
+  "password": "short",   # Too short password
+  "address": "123 Main Street",
+  "first-name": "John",
+  "last-name": "Doe"
+}
+# Expected output: 400 Bad Request with a message indicating the password is too short.
+
+### Test: Missing userType in login
+POST http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "correctPassword123"
+}
+# Expected output: 400 Bad Request with a message "Missing email, password, or userType."
+
+### Test: Invalid userType (not matching the role in the system)
+POST http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "correctPassword123",
+  "userType": "Admin"
+}
+# Expected output: 401 Unauthorized with a message "Invalid credentials matching user type."

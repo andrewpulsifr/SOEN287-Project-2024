@@ -74,7 +74,7 @@ const createRefreshTokensTable = `
         TokenID INT AUTO_INCREMENT PRIMARY KEY,
         UserID INT NOT NULL,
         Token VARCHAR(255) NOT NULL,
-        ExpiresAt TIMESTAMP NOT NULL,
+        ExpiresAt DATETIME NOT NULL,
         CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (UserID) REFERENCES Users(UserID)
         ON DELETE CASCADE

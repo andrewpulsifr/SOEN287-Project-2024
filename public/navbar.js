@@ -9,7 +9,7 @@ function loggedinAs() {
 
 
 
-    if (authType == 'admin') {
+    if (authType == 'Admin') {
         navbar.innerHTML += `
          <ul class="nav-list">
          <li><a href="business-home.html"><button>Home</button><a></li>
@@ -21,7 +21,7 @@ function loggedinAs() {
          </ul>
          `;
     }
-    if(authType == 'client'){
+    if(authType == 'Client'){
         navbar.innerHTML += `<ul>
         <li><a href="home.html"><button>Home</button><a></li>
         <li><a href="about.html"><button>About</button><a></li>

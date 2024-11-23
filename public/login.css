@@ -187,9 +187,7 @@ p{
     font-size: 1rem;
 }
 
-.sign-up-form-container .input-group{
-    margin-bottom: 30px;
-}
+
 
 .input-group input:focus {
     outline: none; /* Removes the default blue outline */
@@ -202,8 +200,14 @@ p{
     transform: translateY(-50%);
 }
 
-.error-message{
-    color: red;
-    margin-top: 5px;
-    font-size: 0.8rem;
+.error-message {
+    height: 20px; /* Reserve space for error messages */
+    font-size: 12px; /* Adjust font size if needed */
+    color: red; /* Error message color */
+    margin-top: 4px; /* Space between input and message */
+    visibility: hidden; /* Hide by default */
+}
+
+.error-message.input-error {
+    visibility: visible; /* Show when there's an error */
 }

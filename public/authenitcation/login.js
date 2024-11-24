@@ -1,4 +1,3 @@
-
 class Login {
     constructor(form, fields, userType) {
         this.form = form;
@@ -9,42 +8,59 @@ class Login {
 
     validateOnSubmit() {
         this.form.addEventListener('submit', async (e) => {
-            e.preventDefault(); // prevent default event
-            let error = 0;  // Initialize error counter
+            console.log("Submit")
+            e.preventDefault(); // Prevent default form submission
+            let error = 0; // Initialize error counter
+    
+            // Validate fields
             this.fields.forEach((field) => {
                 const input = document.querySelector(`#${field}`);
-                if (this.validateFields(input) == false) {
+                console.log(input);
+                if (!this.validateFields(input)) {
                     error++;
                 }
             });
-
+    
             if (error === 0) {
+                console.log("0 errors");
                 try {
                     const response = await fetch('http://localhost:4000/auth/login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            email: document.querySelector('#username').value,
+                            email: document.querySelector('#email').value,
                             password: document.querySelector('#password').value,
                             userType: this.userType
                         })
                     });
     
+                    // Extract tokens and user role from the response
                     const result = await response.json();
                     if (response.ok) {
-                        localStorage.setItem('auth', result.role); // Store user role
-                        if (result.role === 'Client') {
+                        const { accessToken, refreshToken, role } = result || {};  // Fallback to an empty object if result is undefined
+                        if (!accessToken || !refreshToken || !role) {
+                            console.error('Missing tokens or role in the response');
+                            alert('Unexpected server response');
+                            return;
+                        }
+                        // Store tokens and role in localStorage
+                        localStorage.setItem('accessToken', accessToken);
+                        localStorage.setItem('refreshToken', refreshToken);
+                        localStorage.setItem('auth', role);
+        
+                        // Redirect based on user role
+                        if (role === 'Client') {
                             window.location.href = "home.html";
-                        } else if (result.role === 'Admin') {
+                        } else if (role === 'Admin') {
                             window.location.href = "business-home.html";
                         }
-                    } else {
+                    }else {
                         console.error(result.message);
                         alert(result.message);
                     }
-                } catch (err) {
-                    console.error('Error:', err);
-                    alert('Something went wrong!');
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Something went wrong. Check error stack.');
                 }
             }
         });
@@ -66,44 +82,43 @@ class Login {
                     return true;
                 }
             }
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             // Email validation
             if (field.type === "email") {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(field.value)) {
                     this.setStatus(field, "Invalid email address", "error");
                     return false;
                 }
-
                 this.setStatus(field, null, "success");
                 return true;
-            
             }
         }
     }
-    
 
     setStatus(field, message, status) {
         const errorMessage = field.parentElement.nextElementSibling;
         if (status === "error") {
             errorMessage.innerText = message;
             errorMessage.classList.add("input-error");
-            errorMessage.style.display = "block"; // Ensure it's visible
+            errorMessage.style.display = "block";
         } else if (status === "success") {
             if (errorMessage) {
-                errorMessage.innerText = ""; // Clear the error message
+                errorMessage.innerText = "";
                 errorMessage.classList.remove("input-error");
-                errorMessage.style.display = "none"; // Hide the message
+                errorMessage.style.display = "none";
             }
         }
     }
 }
 
+// Initialize login forms
 document.addEventListener('DOMContentLoaded', () => {
     const clientForm = document.querySelector(".client-login-form");
     const adminForm = document.querySelector(".admin-login-form");
-    const fields = ["username", "password"];
+    const fields = ["email", "password"];
 
     if (clientForm) {
+        console.log("Client login form loaded")
         new Login(clientForm, fields, 'Client');
     }
 

@@ -9,15 +9,15 @@ Content-Type: application/json
 }
 
 ### Test GET /api/users/:id (Protected Route) - Valid Token
-GET http://localhost:3000/users/123
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjcsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI0MTY2NzUsImV4cCI6MTczMjQxNzU3NX0.dqKJE9STWAOVOEpkZ97M_43hXr0Asw9FpRjPkhQjY5o
+GET http://localhost:4000/users/123
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjcsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI0MTc5NDMsImV4cCI6MTczMjQxODg0M30.4g65xZqzV36zsCtWs_6-fJUXsIqGQv04sztu5O0L_Fc
 
 ### Test GET /api/users/email/:email (Protected Route) - Valid Token
-GET http://localhost:4000/api/users/email/test@example.com
+GET http://localhost:4000/users/email/test@example.com
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjcsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI0MTU2NjcsImV4cCI6MTczMjQxNjU2N30.Wm5COos9ri7Cd_03BpThJ38hXYmpCVABmBibmAk7Ug0
 
 ### Test PUT /api/users/:id (Protected Route) - Valid Token
-PUT http://localhost:4000/api/users/123
+PUT http://localhost:4000/users/123
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjcsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI0MTU2NjcsImV4cCI6MTczMjQxNjU2N30.Wm5COos9ri7Cd_03BpThJ38hXYmpCVABmBibmAk7Ug0
 Content-Type: application/json
 
@@ -26,8 +26,8 @@ Content-Type: application/json
 }
 
 ### Test DELETE /api/users/:id (Protected Route) - Valid Token
-DELETE http://localhost:4000/api/users/123
-Authorization: Bearer {{access_token}}
+DELETE http://localhost:4000/users/123
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjcsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI0MTc5NDMsImV4cCI6MTczMjQxODg0M30.4g65xZqzV36zsCtWs_6-fJUXsIqGQv04sztu5O0L_Fc
 
 ### Login Endpoint Tests ###
 # Test: Valid login with correct credentials

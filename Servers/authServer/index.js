@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const routes = require('./routes');
 const cors = require('cors');
+const servicesApi = require('../../api/routes/services-routes');
+const usersApi = require('../../api/routes/users-routes');  
 const { deleteExpiredTokens } = require('./utils');
 
 const app = express();
@@ -13,6 +15,9 @@ app.use(cors({
     credentials: true
   }));
 app.use('/auth', routes); 
+app.use('/', routes);
+app.use('/services', servicesApi);
+app.use('/users', usersApi);
 
 // Clean up expired refresh tokens every hour
 setInterval(async () => {

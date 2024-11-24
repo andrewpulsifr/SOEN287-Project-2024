@@ -1,9 +1,11 @@
-const serviceModel = require("../models/user-model");
+const userModel = require("../models/user-model");
 
 
 async function getUserById(req, res) {
     try {
-        const user = await userModel.getUserById(req.params.id);
+       // Access the user ID from the decoded token (from req.user)
+       const userId = req.user.UserID;  // The UserID is stored in the decoded token
+       const user = await userModel.getUserById(userId);
         if (!user.length) {
             return res.status(404).json({ message: "User not found" });
         }

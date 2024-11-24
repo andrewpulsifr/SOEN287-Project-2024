@@ -1,3 +1,4 @@
+import apiClient from './../api/apiClient'; // Import the axios client
 
 /************************************************************************************************
  * Initialization of page
@@ -76,25 +77,13 @@ function createModal() {
 /************************************************************************************************
  * Fetch Services from Backend
  ************************************************************************************************/
-async function fetchServices(pageType) {
+async function fetchServices() {
     try {
-        const response = await fetch(`/services`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-            }
-        });
-        
-        if (!response.ok) {
-            throw new Error(`Error fetching services: ${response.statusText}`);
-        }
-
-        const services = await response.json();
-        return services; //  list of services from the backend
+        const response = await apiClient.get('/services'); // Use the apiClient to make the request
+        return response.data;
     } catch (error) {
-        console.error('Error:', error);
-        return []; // Return an empty array if the fetch fails
+        console.error('Error fetching services:', error);
+        return [];
     }
 }
 

@@ -1,4 +1,9 @@
-/* Global CSS */
+:root {
+    --primary-color: #1D70A2;
+    --secondary-color: #173753;
+    --accent-color: #FFFFFF;
+}
+
 * {
     box-sizing: border-box;
     font-family: 'Kadwa', serif !important; 
@@ -15,11 +20,11 @@ html, body {
 }
 
 .client-body {
-    background-color: rgba(29, 112, 162, 1);
+    background-color: var(--primary-color);
 }
 
 .business-body {
-    background-color: #FBFEF9 !important;
+    background-color: var(--accent-color) !important;
 }
 
 .descSection {
@@ -51,10 +56,10 @@ html, body {
     margin-top: 40px;
     margin-right: 2px;
     margin-bottom: 30px;
-    background-color: #125b8b;
+    background-color: var(--primary-color);
     padding: 30px;
     border-width: 2rem;
-    border-color: #014a7b;
+    border-color: var(--primary-color);
     box-shadow: 5px 5px 40px 5px;
     border-style: ridge;
     color: #25274D;

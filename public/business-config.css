@@ -33,7 +33,7 @@ body {
 
 .companyname {
     font-size: 26px;
-    color: white;
+    color: var(--accent-color);
     justify-self: flex-start; 
 }
 
@@ -53,7 +53,7 @@ button {
     font-size: 22px;
     font-family: 'Kadwa', serif;
     padding: 10px 20px;
-    color: white;
+    color: var(--accent-color);
     cursor: pointer;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }

@@ -1,3 +1,8 @@
+:root {
+    --primary-color: #1D70A2;
+    --secondary-color: #173753;
+    --accent-color: #FFFFFF;
+}
 * {
     box-sizing: border-box;
     margin: 0;
@@ -12,7 +17,7 @@ a{
 .sidebar {
     width: 20%;
     padding: 20px;
-    background-color: #173753;
+    background-color: var(--secondary-color);
     color: white;
     min-height: 100vh;
 }
@@ -27,7 +32,7 @@ a{
 }
 
 .sidebar button {
-    background-color: #1d70a2;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -38,18 +43,18 @@ a{
 }
 
 .sidebar button:hover {
-    background-color: #144b73;
+    background-color: var(--secondary-color);
 }
 
 .sidebar .view-purchases {
     display: block;
     width: 100%;
-    background-color: #1d70a2;
+    background-color: var(--primary-color);
     margin: 10px 0;
     text-align: center;
     padding: 10px 0;
 }
 
 .sidebar .view-purchases:hover {
-    background-color: #144b73;
+    background-color: var(--primary-color);
 }

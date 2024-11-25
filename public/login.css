@@ -1,3 +1,9 @@
+:root {
+    --primary-color: #1D70A2;
+    --secondary-color: #173753;
+    --accent-color: #FFFFFF;
+}
+
 * {
     box-sizing: border-box;
     font-family: Kadwa;
@@ -18,7 +24,7 @@ body, .login-frame{
     Left Logo Column styling
 =================================================================*/
 .branding-container {
-    background-color: #48BF84;
+    background-color: var(--primary-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,7 +45,7 @@ body, .login-frame{
 .nav-header .change-portal {
   text-decoration: none;
   position: relative;
-  color: #173753;
+  color: var(--secondary-color);
   right: 10px;
 }
 
@@ -50,7 +56,7 @@ body, .login-frame{
   height: 2px;
   bottom: 0;
   left: 50%;
-  background-color: #173753;
+  background-color: var(--secondary-color);
   transition: width 0.5s ease, left 0.5s ease;
 }
 
@@ -62,16 +68,16 @@ body, .login-frame{
 .nav-header .sign-up-button {
     text-decoration: none;
     padding: 1px 10px;
-    border: 1px solid #173753;
+    border: 1px solid var(--secondary-color);
     border-radius: 5px;
-    color: #173753;
+    color: var(--secondary-color);
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 .nav-header .sign-up-button:hover {
-    background-color: #173753;
-    color: #FFFFFF;
+    background-color: var(--secondary-color);
+    color: var(--accent-color);
 }
 
 /* =================================================================
@@ -80,7 +86,7 @@ body, .login-frame{
 
 .user-form-frame{
     height: 100vh; /* Optional: full viewport height */
-    background-color: #FFFFFF;
+    background-color: var(--accent-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -127,7 +133,7 @@ p{
 /* ========================SIGN IN BUTTON====================================*/
 
 .submit-button {
-    background: linear-gradient(to right, #1c3b5a, #4a77b5); /* Gradient from dark blue to lighter blue */
+    background: linear-gradient(to right, var(--secondary-color), var(--primary-color)); /* Gradient from dark blue to lighter blue */
     color: white; /* Text color */
     padding: 10px 40px; /* Padding for spacing */
     width: 100%;
@@ -175,7 +181,7 @@ p{
 .input-group {
     position: relative;
     margin-bottom: 5px;
-    border-bottom: solid 2px #173753;
+    border-bottom: solid 2px var(--secondary-color);
 }
 
 .input-group input {

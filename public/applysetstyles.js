@@ -13,9 +13,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             // Update about section
-            const aboutSectionElement = document.querySelector('.client-about');
-            if (aboutSectionElement) {
-                aboutSectionElement.innerHTML = `
+            const clientaboutSectionElement = document.querySelector('.client-about');
+            if (clientaboutSectionElement) {
+                clientaboutSectionElement.innerHTML = `
+                    <h2>About Us</h2>
+                    <p>${config.about_section}</p>
+                `;
+            }
+
+            const businessaboutSectionElement = document.querySelector('.business-about');
+            if (businessaboutSectionElement) {
+                businessaboutSectionElement.innerHTML = `
                     <h2>About Us</h2>
                     <p>${config.about_section}</p>
                 `;

@@ -1,6 +1,11 @@
+:root {
+    --primary-color: #1D70A2;
+    --secondary-color: #173753;
+    --accent-color: #FFFFFF;
+}
 body {
     font-family: 'Kadwa', serif;
-    background-color: rgba(29, 112, 162, 1);
+    background-color: var(--primary-color);
     color : black;
 }
 .container {

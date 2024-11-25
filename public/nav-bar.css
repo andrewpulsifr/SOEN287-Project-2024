@@ -1,3 +1,8 @@
+:root {
+    --primary-color: #1D70A2;
+    --secondary-color: #173753;
+    --accent-color: #FFFFFF;
+}
 * {
     margin: 0;
     padding: 0;
@@ -5,15 +10,15 @@
 }
 
 body {
-    background-color: #1d70a2;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--accent-color);
     font-family: 'Kadwa', serif;
     font-size: medium;
     margin: 0; 
 }
 
 .navbar {
-    background-color: #173753;
+    background-color: var(--secondary-color);
     padding: 10px;
 }
 
@@ -26,7 +31,7 @@ body {
 
 .companyname {
     font-size: 26px;
-    color: white;
+    color: var(--accent-color);
     justify-self: flex-start; 
 }
 
@@ -40,13 +45,13 @@ body {
     margin-left: 15px; }
 
 .navlink button {
-    background-color: rgba(29, 112, 162, 1);
+    background-color: var(--primary-color);
     border: none;
     border-radius: 12px;
     font-size: 22px;
     font-family: 'Kadwa', serif;
     padding: 10px 20px;
-    color: white;
+    color: var(--accent-color);
     cursor: pointer;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }

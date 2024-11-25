@@ -1,3 +1,8 @@
+:root {
+    --primary-color: #1D70A2;
+    --secondary-color: #173753;
+    --accent-color: #FFFFFF;
+}
 
 .analytics-table-container{
     width: 85%;
@@ -13,7 +18,7 @@
 .table-title {
     background-color: #F1F1F1;
     font-weight: bold;
-    color: #1D70A2;
+    color: var(--primary-color);
     font-size: 1.5em;
     padding: 15px;
     border-bottom: 1px solid #dee2e6;
@@ -24,7 +29,7 @@ table {
 }
 
 .headers th {
-    background-color: #1D70A2 !important;
+    background-color: var(--primary-color) !important;
     color: #FBFEF9;
     padding: 15px;
     font-weight: bold;
@@ -145,5 +150,5 @@ table {
 }
 
 body{
-    background-color: #FBFEF9 !important;
+    background-color: var(--accent-color) !important;
 }

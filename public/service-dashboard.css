@@ -1,3 +1,8 @@
+:root {
+    --primary-color: #1D70A2;
+    --secondary-color: #173753;
+    --accent-color: #FFFFFF;
+}
 .content {
     flex: 1;
     padding: 20px;
@@ -6,7 +11,7 @@
 }
 
 .dashboard h1, .dashboard h2 {
-    color: #1d70a2;
+    color: var(--primary-color);
     text-decoration: bold;
 }
 
@@ -25,12 +30,12 @@
 }
 
 .request-table th {
-    background-color: #1d70a2;
+    background-color: var(--primary-color);
     color: white;
 }
 
 .request-table tr:nth-child(even) {
-    background-color: #ffffff;
+    background-color: var(--accent-color);
 }
 
 .request-table tr:nth-child(odd) {

@@ -1,3 +1,8 @@
+:root {
+    --primary-color: #1D70A2;
+    --secondary-color: #173753;
+    --accent-color: #FFFFFF;
+}
 * {
     margin: 0;
     padding: 0;
@@ -14,7 +19,7 @@ body {
 
 
 button {
-    background-color: rgba(29, 112, 162, 1);
+    background-color: var(--primary-color);
     border: none;
     border-radius: 12px;
     font-size: 18px;
@@ -84,7 +89,7 @@ button[type="submit"] {
     font-size: 18px;
     padding: 12px;
     margin-top: 10px;
-    background-color: rgba(29, 112, 162, 1);
+    background-color: var(--primary-color);
     border: none;
     border-radius: 8px;
     color: white;

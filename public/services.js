@@ -144,26 +144,44 @@ function createServiceCards(services, container, isEditPage = false) {
 * Request Service
 ************************************************************************************************/
 async function requestService(serviceId) {
-var token = localStorage.getItem("access_token");
-try {
-    const response = await fetch('/services/request', {
-        method: 'POST', // Specify POST method
-        headers: {
-            'Content-Type': 'application/json', // Indicate JSON body
-            'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ serviceId }) // Send serviceId in the request body
-    });
+    const token = localStorage.getItem("accessToken");
 
-if (response.status === 200) {
-    alert('Service requested successfully!');
-} else {
-    alert(`Error requesting service: ${response.data.error}`);
-}
-} catch (error) {
-console.error('Error requesting service:', error);
-alert('An error occurred while requesting the service.');
-}
+    if (!token) {
+        alert('Authentication token is missing.');
+        return;
+    }
+
+    try {
+        const response = await fetch('/services/request', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ serviceId })
+        });
+
+        let responseData = {};  // Default to empty object
+
+        // Try to parse the response as JSON
+        try {
+            responseData = await response.json();
+        } catch (jsonError) {
+            console.error('Error parsing response JSON:', jsonError);
+            responseData = { error: 'Invalid response format from the server' };
+        }
+
+        if (response.ok) {
+            alert('Service requested successfully!');
+        } else {
+            // Check if the error response has an 'error' property
+            const errorMessage = responseData.error || 'Unknown error';
+            alert(`Error requesting service: ${errorMessage}`);
+        }
+    } catch (error) {
+        console.error('Error requesting service:', error);
+        alert('An error occurred while requesting the service.');
+    }
 }
 
 

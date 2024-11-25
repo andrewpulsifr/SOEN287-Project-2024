@@ -1,6 +1,7 @@
 const express = require('express');
 const { generateAccessToken, saveRefreshToken, tokenExists, deleteRefreshToken, comparePassword, hashPassword } = require('./utils');
 const createConnection = require('../../api/config/database');
+const verifyToken = require('../../api/middleware/authMiddleware'); // Import the middleware
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -71,6 +72,16 @@ router.post('/token', async (req, res) => {
         res.status(500).json({ message: 'Internal server error.' });
     }
 });
+
+// POST /validate-token: Validates the provided access token
+router.post('/validate-token',verifyToken, (req, res) => {
+     // The token is already verified, and user info is attached to req.user
+     res.status(200).json({
+        message: 'Token is valid.',
+        user: req.user // Send decoded user info from the token
+    });
+});
+
 
 // DELETE /logout: Remove a refresh token from the database
 router.delete('/logout', async (req, res) => {

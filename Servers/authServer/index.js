@@ -17,7 +17,7 @@ app.use(cors({
 app.use('/auth', routes); 
 app.use('/', routes);
 app.use('/services', servicesApi);
-app.use('/users', usersApi);
+//app.use('/users', usersApi);
 
 
 // Clean up expired refresh tokens every hour

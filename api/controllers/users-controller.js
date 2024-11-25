@@ -80,6 +80,7 @@ async function deleteUser(req, res) {
 
 async function getAllServicesByUserId(req, res) {
     try {
+        const userId = req.user.UserID;
         console.log("Fetching services for UserID:", req.user.UserID);
 
         // Get ClientID using UserID

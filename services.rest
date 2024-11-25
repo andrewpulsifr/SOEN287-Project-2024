@@ -8,6 +8,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjUsInJvb
 }
 
 ### Get all services by user ID
-GET http://127.0.0.1:3000/users/client-requests
+POST http://127.0.0.1:3000/users/client-requests
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjUsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI1MTMyNTMsImV4cCI6MTczMjUxNDE1M30.-LPdoqCArDj_dMr6PkjhyhMzK5Z7UNAMYSiGskEzSBU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjUsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI1MTc3MDIsImV4cCI6MTczMjUxODYwMn0.bkYHaySsUeTZ2wKASLja9BjkTwKsYWA8B_8lIHF1Krs
+
+

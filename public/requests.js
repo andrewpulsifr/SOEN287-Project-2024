@@ -11,16 +11,24 @@ document.addEventListener("DOMContentLoaded", function () {
     async function fetchClientRequests() {
         try {
             const response = await fetch('/users/client-requests', {
-                method: 'GET',
+                method: 'POST',
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             });
-
+    
             if (response.ok) {
                 const data = await response.json();
-                ({ outstandingServices, pastServices } = data);
-                populateTables(outstandingServices, pastServices);
+                
+                // Check if the response contains the expected arrays
+                if (Array.isArray(data.outstandingServices) && Array.isArray(data.pastServices)) {
+                    ({ outstandingServices, pastServices } = data);
+                    populateTables(outstandingServices, pastServices);
+                } else {
+                    console.error("Invalid response data structure:", data);
+                    alert("Error: Unexpected data structure received. Please try again.");
+                }
             } else {
                 console.error("Failed to fetch client requests:", await response.text());
                 alert("Error fetching services. Please try again.");
@@ -32,6 +40,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function populateTables(outstandingServices, pastServices) {
+        // Clear existing rows
+        outstandingTable.innerHTML = '';
+        pastTable.innerHTML = '';
+
         // Populate Outstanding Services Table
         outstandingServices.forEach(service => {
             const row = createServiceRow(service, true);
@@ -47,6 +59,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function createServiceRow(service, isOutstanding) {
         const row = document.createElement("tr");
+
+        // Default values for missing fields
+        const assignedDate = service.AssignedDate ? new Date(service.AssignedDate).toLocaleDateString() : "N/A";
+        const dueDate = service.DueDate ? new Date(service.DueDate).toLocaleDateString() : "N/A";
+        const price = service.Price || "N/A";
+        const paymentStatus = service.PaymentStatus || "N/A";
+        const completed = service.Completed ? "Yes" : "No";
         const actionHtml = isOutstanding
             ? `<button class="cancel-btn">Cancel</button>`
             : service.PaymentStatus === "Pending"
@@ -54,14 +73,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 : `<button class="view-receipt-btn">View Receipt</button>`;
 
         row.innerHTML = `
-            <td>${service.serviceId}</td>
-            <td>${service.category}</td>
-            <td>${service.description}</td>
-            <td>${new Date(service.AssignedDate).toLocaleDateString()}</td>
-            <td>${service.DueDate ? new Date(service.DueDate).toLocaleDateString() : "N/A"}</td>
-            <td>${service.price}</td>
-            <td>${service.PaymentStatus}</td>
-            <td>${service.Completed ? "Yes" : "No"}</td>
+            <td>${service.ServiceID || "N/A"}</td>
+            <td>${service.Category || "N/A"}</td>
+            <td>${service.Description || "N/A"}</td>
+            <td>${assignedDate}</td>
+            <td>${dueDate}</td>
+            <td>${price}</td>
+            <td>${paymentStatus}</td>
+            <td>${completed}</td>
             <td>${actionHtml}</td>
         `;
         return row;
@@ -96,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (event.target.classList.contains("view-receipt-btn")) {
             const row = event.target.closest("tr");
             const serviceId = row.cells[0].innerText;
-            const service = pastServices.find(s => s.serviceId === serviceId);
+            const service = pastServices.find(s => s.ServiceID === serviceId);
 
             if (service) openReceiptModal(service);
         }
@@ -170,12 +189,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function openReceiptModal(service) {
         receiptContent.innerHTML = `
-            <strong>Order Number:</strong> ${service.serviceId}<br>
-            <strong>Category:</strong> ${service.category}<br>
-            <strong>Description:</strong> ${service.description}<br>
+            <strong>Order Number:</strong> ${service.ServiceID}<br>
+            <strong>Category:</strong> ${service.Category}<br>
+            <strong>Description:</strong> ${service.Description}<br>
             <strong>Date of Request:</strong> ${new Date(service.AssignedDate).toLocaleDateString()}<br>
             <strong>Date Fulfilled:</strong> ${service.DateFulfilled ? new Date(service.DateFulfilled).toLocaleDateString() : "N/A"}<br>
-            <strong>Price:</strong> ${service.price}<br>
+            <strong>Price:</strong> ${service.Price}<br>
             <strong>Payment Status:</strong> ${service.PaymentStatus}
         `;
         modal.style.display = "block";

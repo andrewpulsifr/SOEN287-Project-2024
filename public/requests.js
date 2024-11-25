@@ -20,11 +20,11 @@ document.addEventListener("DOMContentLoaded", function () {
     
             if (response.ok) {
                 const data = await response.json();
-                
-                // Check if the response contains the expected arrays
-                if (Array.isArray(data.outstandingServices) && Array.isArray(data.pastServices)) {
-                    ({ outstandingServices, pastServices } = data);
-                    populateTables(outstandingServices, pastServices);
+                console.log('Fetched Data:', data);  // Check the structure of the response
+    
+                // Ensure the response data has the expected structure
+                if (Array.isArray(data)) {
+                    filterAndPopulateTables(data); // Filter data and populate tables
                 } else {
                     console.error("Invalid response data structure:", data);
                     alert("Error: Unexpected data structure received. Please try again.");
@@ -38,21 +38,25 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Failed to load services. Please try again.");
         }
     }
-
-    function populateTables(outstandingServices, pastServices) {
-        // Clear existing rows
+    
+    function filterAndPopulateTables(services) {
+        // Filter the services based on the 'Completed' status
+        const outstandingServices = services.filter(service => !service.Completed);
+        const pastServices = services.filter(service => service.Completed);
+    
+        // Clear existing rows in both tables
         outstandingTable.innerHTML = '';
         pastTable.innerHTML = '';
-
+    
         // Populate Outstanding Services Table
         outstandingServices.forEach(service => {
-            const row = createServiceRow(service, true);
+            const row = createServiceRow(service, true);  // Use `true` for outstanding services
             outstandingTable.appendChild(row);
         });
-
+    
         // Populate Past Services Table
         pastServices.forEach(service => {
-            const row = createServiceRow(service, false);
+            const row = createServiceRow(service, false);  // Use `false` for completed services
             pastTable.appendChild(row);
         });
     }

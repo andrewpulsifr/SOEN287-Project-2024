@@ -4,6 +4,8 @@ const routes = require('./routes');
 const path = require('path');
 const createConnection = require('../../api/config/database'); // Adjust the path if necessary
 const createTables = require('../../api/models/model');
+const servicesApi = require('../../api/routes/services-routes');
+const usersApi = require('../../api/routes/users-routes');  
 
 
 
@@ -20,6 +22,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../../public')));
 const dbConnection = createConnection(); 
 
+app.use('/services', servicesApi);
+app.use('/users', usersApi);
 // Set port
 const port = process.env.PORT || 3000;
 

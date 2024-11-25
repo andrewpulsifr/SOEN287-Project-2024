@@ -65,43 +65,33 @@ async function deleteService(req, res) {
 // request a Service
 async function requestService(req, res) {
     try {
-        const token = req.headers['authorization'].split(' ')[1];  // Extract the token from Authorization header
-        if (!token) {
-            return res.status(401).json({ error: "Authorization token is required" });
+        // Use req.user from the middleware where the token is already decoded
+        const clientId = req.user.userId;  // Get the clientId from the decoded token stored in req.user
+        const serviceId = req.body.serviceId; // Service ID should be passed in the request body
+
+        // Check if the service exists
+        const service = await serviceModel.getServiceById(serviceId);
+        if (!service || service.length === 0) {
+            return res.status(404).json({ error: "Service not found" });
         }
 
-        // Verify the token and get the client ID
-        jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-            if (err) {
-                return res.status(403).json({ error: "Invalid or expired token" });
-            }
+        // Check if the client exists (optional)
+        const client = await clientModel.getClientByUserId(clientId);
+        if (!client || client.length === 0) {
+            return res.status(404).json({ error: "Client not found" });
+        }
 
-            const clientId = decoded.userId;  
-            const serviceId = req.body.serviceId; // Service ID should be passed in the request body
+        // Insert a new record into the ClientServices table
+        const result = await serviceModel.requestService(clientId, serviceId);
 
-            // Check if the service exists
-            const service = await serviceModel.getServiceById(serviceId);
-            if (!service || service.length === 0) {
-                return res.status(404).json({ error: "Service not found" });
-            }
-
-            // Check if the client exists (optional)
-            const client = await clientModel.getClientByUserId(clientId);
-            if (!client || client.length === 0) {
-                return res.status(404).json({ error: "Client not found" });
-            }
-
-            // Insert a new record into the ClientServices table
-            const result = await serviceModel.requestService(clientId, serviceId);
-
-            res.status(201).json({ message: "Service requested successfully", clientServiceId: result.insertId });
-        });
+        res.status(201).json({ message: "Service requested successfully", clientServiceId: result.insertId });
 
     } catch (err) {
         console.error("Error requesting service:", err);
         res.status(500).json({ error: "Error requesting service", details: err });
     }
 }
+
 
 
 module.exports = {

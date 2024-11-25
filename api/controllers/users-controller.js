@@ -1,9 +1,35 @@
-const serviceModel = require("../models/user-model");
+const userModel = require("../models/user-model");
 
+async function getClientById(req, res) {
+    try {
+        const clientId = req.params.id; 
+        const client = await userModel.getClientById(clientId);
+        if (!client.length) {
+            return res.status(404).json({ message: "Client not found" });
+        }
+        res.status(200).json(client[0]);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+async function getClientByUserId(req, res) {
+    try {
+        const userId = req.user.UserID;  
+        const client = await userModel.getClientByUserId(userId);
+        if (!client.length) {
+            return res.status(404).json({ message: "Client not found" });
+        }
+        res.status(200).json(client[0]);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
 
 async function getUserById(req, res) {
     try {
-        const user = await userModel.getUserById(req.params.id);
+        const userId = req.user.UserID; 
+        const user = await userModel.getUserById(userId);
         if (!user.length) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -24,7 +50,6 @@ async function getUserByEmail(req, res) {
         res.status(500).json({ error: err.message });
     }
 }
-
 
 async function updateUser(req, res) {
     try {
@@ -54,7 +79,8 @@ async function deleteUser(req, res) {
 module.exports = {
     getUserById,
     getUserByEmail,
-
     updateUser,
     deleteUser,
+    getClientById,
+    getClientByUserId,
 };

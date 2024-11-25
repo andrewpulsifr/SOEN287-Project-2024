@@ -12,13 +12,10 @@ async function getAllServices() {
 }
 
 // Fetch a single service by ID
-async function getServiceById(id) {
-    try {
-        const [result] = await pool.query("SELECT * FROM Services WHERE id = ?", [id]);  
-        return result;
-    } catch (err) {
-        throw err;
-    }
+async function getServiceById(serviceId) {
+    const query = 'SELECT * FROM Services WHERE ServiceID = ?';
+    const [rows] = await pool.query(query, [serviceId]);
+    return rows;
 }
 
 // Create a new service
@@ -52,14 +49,16 @@ async function deleteService(id) {
 }
 
 async function requestService(clientId, serviceId) {
-    const query = `INSERT INTO ClientServices 
-    (ClientID, ServiceID, Status) VALUES (?, ?, 'Pending');`;
     try {
-        const [result] = await db.execute(query, [clientId, serviceId]);
-        return result;  // Returning the result (insertId) of the insert operation
+        // Example query to insert a new record into ClientServices table
+        const [result] = await pool.query(
+            "INSERT INTO ClientServices (ClientID, ServiceID) VALUES (?, ?)",
+            [clientId, serviceId]
+        );
+        return result;  // Return the result of the insert query
     } catch (err) {
-        console.error("Error requesting service:", err);
-        throw err;  // Re-throw the error so the controller can handle it
+        console.error("Error in requestService:", err);
+        throw err;  // Propagate the error to be handled by the controller
     }
 }
 

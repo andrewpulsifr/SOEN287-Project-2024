@@ -1,6 +1,25 @@
 const connection = require('../config/database');
 const pool = connection(); 
 
+
+async function getClientById(clientId) {
+    try {
+        const [result] = await pool.query("SELECT * FROM Clients WHERE ClientID = ?", [clientId]);
+        return result;
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function getClientByUserId(userId) {
+    try {
+        const [result] = await pool.query("SELECT * FROM Clients WHERE UserID = ?", [userId]);
+        return result;
+    } catch (err) {
+        throw err;
+    }
+}
+
 async function getUserById(userId) {
     try {
         const [result] = await pool.query("SELECT * FROM Users WHERE UserID = ?", [userId]);
@@ -42,4 +61,6 @@ module.exports = {
     getUserByEmail,
     updateUser,
     deleteUser,
+    getClientById,
+    getClientByUserId
 };

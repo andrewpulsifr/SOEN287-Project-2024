@@ -1,8 +1,12 @@
+//import apiClient from './../api/apiClient'; // Import the axios client
 
 /************************************************************************************************
  * Initialization of page
  * ************************************************************************************************/
 // Run service page features when both auth and init are complete
+const token = localStorage.getItem("accessToken");
+    console.log('jwt toke, token:', token);
+
 function loadServicePageFeatures() {
     createModal();
     const cardsGrid = document.querySelector('.cards-grid');
@@ -29,18 +33,20 @@ let initReady = false;
 let loaded = false;
 
 document.addEventListener('authInitialized', () => {
+    console.log('in authInitit Auth Initialized, token:', token);
     authReady = true;
     if (authReady && initReady && !loaded) {
+        console.log('authReady', authReady);
         loadServicePageFeatures();
-        loaded = true;
+        loaded=true;
     }
 });
 
 document.addEventListener('initComplete', () => {
     initReady = true;
     if (authReady && initReady  && !loaded) {
+        console.log('initReady', initReady);
         loadServicePageFeatures();
-        loaded = true;
     }
 });
 
@@ -76,13 +82,14 @@ function createModal() {
 /************************************************************************************************
  * Fetch Services from Backend
  ************************************************************************************************/
-async function fetchServices(pageType) {
+async function fetchServices() {
     try {
+        console.log('Fetching services...');
         const response = await fetch(`/services`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                'Authorization': `Bearer ${localStorage.getItem('auth')}` // Ensure token is being passed
             }
         });
         
@@ -91,25 +98,28 @@ async function fetchServices(pageType) {
         }
 
         const services = await response.json();
-        return services; //  list of services from the backend
+        console.log('Fetched Services:', services); // Check the structure of services
+        return services; // Return services if successful
     } catch (error) {
         console.error('Error:', error);
-        return []; // Return an empty array if the fetch fails
+        return []; // Return an empty array if fetch fails
     }
 }
+
 
 /************************************************************************************************
  * Service management
  * ************************************************************************************************/
 function createServiceCards(services, container, isEditPage = false) {
+    console.log("Creating cards for services:", services); // Log to check service data
     services.forEach(service => {
         const card = document.createElement('div');
         card.classList.add('card');
 
         card.innerHTML = `
             <div class="image-placeholder"></div>
-            <h3>${service.category}</h3>
-            <p>${service.price}</p>
+            <h3>${service.Category}</h3>
+            <p>${service.Price}</p>
             <button class="details-button">View Details</button>
             ${isEditPage 
                 ? `<a href="create-service.html"><button class="edit-button">Edit</button></a>` 
@@ -119,38 +129,52 @@ function createServiceCards(services, container, isEditPage = false) {
         card.querySelector('.details-button').onclick = () => {
             document.getElementById('modal-description').innerText = service.Description;
             document.getElementById('myModal').style.display = 'block'; // disp modal
-        };
-
-        // event listener for the request
+        }; 
+    // Request service functionality
+    if (!isEditPage) {
         const requestButton = card.querySelector('.request-button');
-        if (requestButton) {
-            requestButton.onclick = async () => {
-                const serviceId = requestButton.getAttribute('data-service-id');
-                const token = localStorage.getItem('authToken');  // Get token from local storage
+        requestButton.onclick = () => requestService(service.ServiceID);
+    }
 
-                try {
-                    const response = await fetch('/services/request', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify({ serviceId })  // Send service ID in the request body
-                    });
-
-                    const result = await response.json();
-                    if (response.ok) {
-                        alert('Service requested successfully!');
-                    } else {
-                        alert('Error requesting service: ' + result.error);
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('Error requesting service');
-                }
-            };
-        }
-
-        container.appendChild(card);
+    container.appendChild(card);
     });
+    }
+
+/************************************************************************************************
+* Request Service
+************************************************************************************************/
+async function requestService(serviceId) {
+var token = localStorage.getItem("access_token");
+try {
+    const response = await fetch('/services/request', {
+        method: 'POST', // Specify POST method
+        headers: {
+            'Content-Type': 'application/json', // Indicate JSON body
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ serviceId }) // Send serviceId in the request body
+    });
+
+if (response.status === 200) {
+    alert('Service requested successfully!');
+} else {
+    alert(`Error requesting service: ${response.data.error}`);
 }
+} catch (error) {
+console.error('Error requesting service:', error);
+alert('An error occurred while requesting the service.');
+}
+}
+
+
+
+window.onload = async function() {
+    const services = await fetchServices();
+    
+    if (services.length > 0) {
+        const container = document.querySelector('.cards-grid');
+        createServiceCards(services, container);
+    } else {
+        console.log('No services available or error fetching services');
+    }
+};

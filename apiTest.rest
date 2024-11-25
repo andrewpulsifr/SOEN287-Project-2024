@@ -1,0 +1,12 @@
+Download rest extension on vs code to run this in the apiTest.rest file:
+
+POST http://localhost:4000/auth/register
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "password": "SecurePassword123",
+  "first-name": "John",
+  "last-name": "Doe",
+  "address": "123 Example Street"
+}

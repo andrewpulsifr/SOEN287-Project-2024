@@ -1,3 +1,9 @@
+:root {
+    --primary-color: #1D70A2;
+    --secondary-color: #173753;
+    --accent-color: #FFFFFF;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +12,7 @@
 
 
 body {
-    background-color: #FBFEF9 !important;
+    background-color: var(--accent-color) !important;
     color: white;
     font-family: 'Kadwa', serif;
     font-size: medium;
@@ -14,7 +20,7 @@ body {
 }
 
 .navbar {
-    background-color: #173753;
+    background-color: var(--secondary-color);
     padding: 10px;
 }
 
@@ -41,7 +47,7 @@ li {
     margin-left: 15px; }
 
 button {
-    background-color: rgba(29, 112, 162, 1);
+    background-color: var(--primary-color);
     border: none;
     border-radius: 12px;
     font-size: 22px;

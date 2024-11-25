@@ -13,9 +13,8 @@
 <body>
     <nav class="navbar">
         <div class="navdiv">
-            <div class="companyname"><a>Company Name</a></div>
-            <div class="navlink" id="navlink">
-            </div>
+            <div class="companyname"><a></a></div>
+            <div class="navlink" id="navlink"></div>
         </div>
     </nav>
 
@@ -24,8 +23,10 @@
             <h2>Configure Business</h2>
             <label for="title">Business Name</label>
             <input type="text" id="title" name="title" required>
+            
             <label for="description">About Section</label>
             <textarea id="description" name="description" required></textarea>
+            
             <label for="image">Business Logo</label>
             <div class="upload-area" onclick="document.getElementById('image').click()">
                 <p>Image of Service</p>
@@ -35,21 +36,52 @@
                 <button type="button" class="browse-btn">Browse File</button>
                 <input type="file" id="image" name="image" required>
             </div>
+            
             <div class="color-palette">
-                <p>Choose Color Palette</p>
-                <div class="color-options">
-                    <div class="color-option" style="background-color: #2E8BC0;" data-color="blue"></div>
-                    <div class="color-option" style="background-color: #0B2447;" data-color="navy"></div>
-                    <div class="color-option" style="background-color: #FFFFFF;" data-color="white"></div>
+                <h3>Choose Your Color Theme</h3>
+                
+                <div class="color-section">
+                    <div class="color-label">Primary Color</div>
+                    <div class="color-picker-container">
+                        <input type="color" id="primaryColor" name="primaryColor" value="#2E8BC0">
+                        <div class="color-preview" id="primaryPreview"></div>
+                        <span id="primaryValue">#2E8BC0</span>
+                    </div>
                 </div>
-                <input type="hidden" name="selectedColor" id="selectedColor">
+                
+                <div class="color-section">
+                    <div class="color-label">Secondary Color</div>
+                    <div class="color-picker-container">
+                        <input type="color" id="secondaryColor" name="secondaryColor" value="#0B2447">
+                        <div class="color-preview" id="secondaryPreview"></div>
+                        <span id="secondaryValue">#0B2447</span>
+                    </div>
+                </div>
+                
+                <div class="color-section">
+                    <div class="color-label">Accent Color</div>
+                    <div class="color-picker-container">
+                        <input type="color" id="accentColor" name="accentColor" value="#FFFFFF">
+                        <div class="color-preview" id="accentPreview"></div>
+                        <span id="accentValue">#FFFFFF</span>
+                    </div>
+                </div>
+                
+                <div class="theme-preview">
+                    <h4>Theme Preview</h4>
+                    <div id="themePreview" style="padding: 1rem; border-radius: 4px;">
+                        Sample text with your selected colors
+                    </div>
+                </div>
             </div>
+            
             <button type="submit">Create</button>
         </form>
     </div>
-</body>
 </html>
 
 <script defer src="authenitcation/auth.js"></script>
 <script defer src="authenitcation/init.js"></script>
 <script src="navbar.js"></script>
+<script src="business-config.js"> </script>
+<script src="applysetstyles.js"></script>

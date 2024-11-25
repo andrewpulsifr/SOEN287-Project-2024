@@ -93,6 +93,16 @@ const createColorPaletteTable = `
         ON DELETE CASCADE
     );
 `;
+const createbusiness_config=
+`CREATE TABLE IF NOT EXISTS businessconfig (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    business_name VARCHAR(255) NOT NULL,
+    about_section TEXT NOT NULL,
+    primary_color VARCHAR(7) NOT NULL, -- Hexadecimal color code
+    secondary_color VARCHAR(7) NOT NULL, -- Hexadecimal color code
+    accent_color VARCHAR(7) NOT NULL, -- Hexadecimal color code
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Automatically sets the current timestamp
+);`
 
 async function tableCreation() {
     try {
@@ -102,6 +112,9 @@ async function tableCreation() {
 
         await pool.query(createAdminsTable);
         console.log('Admins table created or already exists.');
+
+        await pool.query(createbusiness_config);
+        console.log("Business Config Table Created or exists.")
 
         // Execute other table creation queries
         await pool.query(createClientsTable);

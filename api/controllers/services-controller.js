@@ -64,9 +64,10 @@ async function deleteService(req, res) {
 
 // request a Service
 async function requestService(req, res) {
+    console.log("Requesting service...");
     try {
         // Use req.user from the middleware where the token is already decoded
-        const clientId = req.user.userId;  // Get the clientId from the decoded token stored in req.user
+        const userId = req.user.UserID;  // Get the userId from the decoded token stored in req.user
         const serviceId = req.body.serviceId; // Service ID should be passed in the request body
 
         // Check if the service exists
@@ -75,14 +76,14 @@ async function requestService(req, res) {
             return res.status(404).json({ error: "Service not found" });
         }
 
-        // Check if the client exists (optional)
-        const client = await clientModel.getClientByUserId(clientId);
+        // Check if the client exists using the userId (from the decoded token)
+        const client = await clientModel.getClientByUserId(userId);
         if (!client || client.length === 0) {
             return res.status(404).json({ error: "Client not found" });
         }
 
         // Insert a new record into the ClientServices table
-        const result = await serviceModel.requestService(clientId, serviceId);
+        const result = await serviceModel.requestService(client[0].ClientID, serviceId);  // Use the ClientID from the client record
 
         res.status(201).json({ message: "Service requested successfully", clientServiceId: result.insertId });
 

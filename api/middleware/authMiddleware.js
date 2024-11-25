@@ -8,7 +8,7 @@ const verifyToken = (req, res, next) => {
     if (!token) {
         return res.status(403).json({ message: 'No token provided.' });
     }
-
+    console.log("in middleware doing verification")
     // Remove 'Bearer ' from the token (if present)
     const bearerToken = token.split(' ')[1];
     if (!bearerToken) {

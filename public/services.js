@@ -4,8 +4,8 @@
  * Initialization of page
  * ************************************************************************************************/
 // Run service page features when both auth and init are complete
-const token = localStorage.getItem('auth');
-    console.log('Auth Initialized, token:', token);
+const token = localStorage.getItem("accessToken");
+    console.log('jwt toke, token:', token);
 
 function loadServicePageFeatures() {
     createModal();
@@ -33,7 +33,6 @@ let initReady = false;
 let loaded = false;
 
 document.addEventListener('authInitialized', () => {
-    const token = localStorage.getItem('auth');
     console.log('in authInitit Auth Initialized, token:', token);
     authReady = true;
     if (authReady && initReady && !loaded) {
@@ -145,12 +144,7 @@ function createServiceCards(services, container, isEditPage = false) {
 * Request Service
 ************************************************************************************************/
 async function requestService(serviceId) {
-const token = localStorage.getItem('auth'); // Retrieve auth token
-if (!token) {
-alert('You need to log in to request a service.');
-return;
-}
-
+var token = localStorage.getItem("access_token");
 try {
     const response = await fetch('/services/request', {
         method: 'POST', // Specify POST method

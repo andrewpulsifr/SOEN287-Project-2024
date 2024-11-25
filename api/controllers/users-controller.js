@@ -1,4 +1,6 @@
 const userModel = require("../models/user-model");
+const serviceModel = require("../models/service-model");
+const jwt = require('jsonwebtoken');
 
 async function getClientById(req, res) {
     try {
@@ -76,6 +78,37 @@ async function deleteUser(req, res) {
     }
 }
 
+async function getAllServicesByUserId(req, res) {
+    try {
+        console.log("Fetching services for UserID:", req.user.UserID);
+
+        // Get ClientID using UserID
+        const client = await userModel.getClientByUserId(req.user.UserID);
+        console.log("Client fetched:", client);
+
+        if (!client || client.length === 0) {
+            return res.status(404).json({ error: "Client not found" });
+        }
+
+        const clientId = client[0].ClientID;
+        console.log("Using ClientID:", clientId);
+
+        // Fetch services using ClientID
+        const services = await userModel.getAllServicesByClientId(clientId);
+        console.log("Services fetched:", services);
+
+        if (!services || services.length === 0) {
+            return res.status(404).json({ error: "No services found for this client" });
+        }
+
+        res.status(200).json(services);
+    } catch (err) {
+        console.error("Error fetching services by User ID:", err);
+        res.status(500).json({ error: "Error fetching services", details: err });
+    }
+}
+
+
 module.exports = {
     getUserById,
     getUserByEmail,
@@ -83,4 +116,5 @@ module.exports = {
     deleteUser,
     getClientById,
     getClientByUserId,
+    getAllServicesByUserId,
 };

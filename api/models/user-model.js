@@ -56,11 +56,29 @@ async function deleteUser(userId) {
     }
 }
 
+async function getAllServicesByClientId(clientId) {
+    try {
+        // Query to get all services that the client has requested (using ClientID)
+        const [services] = await pool.query(
+            `SELECT s.* 
+            FROM Services s
+            JOIN ClientServices cs ON cs.ServiceID = s.ServiceID
+            WHERE cs.ClientID = ?`, 
+            [clientId]
+        );
+        return services;  // Return the full service objects
+    } catch (err) {
+        console.error("Error fetching services by client ID:", err);
+        throw err;  // Propagate the error to be handled by the controller
+    }
+}
+
 module.exports = {
     getUserById,
     getUserByEmail,
     updateUser,
     deleteUser,
     getClientById,
-    getClientByUserId
+    getClientByUserId,
+    getAllServicesByClientId,
 };

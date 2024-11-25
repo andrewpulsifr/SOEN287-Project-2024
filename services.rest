@@ -1,7 +1,13 @@
+### regust service
 POST http://127.0.0.1:3000/services/request
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjMsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI0OTg2OTUsImV4cCI6MTczMjQ5OTU5NX0.Rosa0Yo1nQN1nSQcMoBJepLSSV0Lj9aAmBeWepeTRZ4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjUsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI1MTYwNTYsImV4cCI6MTczMjUxNjk1Nn0.IOrSYIZ_SVgtmMv6N4MY6x1z3bL0X7OJjhgBPyox4y4
 
 {
     "serviceId": 1
 }
+
+### Get all services by user ID
+GET http://127.0.0.1:3000/users/client-requests
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjUsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI1MTMyNTMsImV4cCI6MTczMjUxNDE1M30.-LPdoqCArDj_dMr6PkjhyhMzK5Z7UNAMYSiGskEzSBU

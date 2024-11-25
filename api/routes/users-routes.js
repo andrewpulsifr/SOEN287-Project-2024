@@ -10,4 +10,7 @@ router.get("/email/:email", verifyToken, usersController.getUserByEmail);  // Pr
 router.put("/:id", verifyToken, usersController.updateUser);  // Protect this route with verifyToken
 router.delete("/:id", verifyToken, usersController.deleteUser);  // Protect this route with verifyToken
 
+router.get('/client-requests', verifyToken, usersController.getAllServicesByUserId); 
+//router.post('/client-requests/:serviceId/cancel', verifyToken, usersController.cancelService); // Post cancel service
+
 module.exports = router;

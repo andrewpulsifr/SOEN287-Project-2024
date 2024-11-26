@@ -8,10 +8,6 @@ import servicesApi from '../../api/routes/services-routes.js';
 import usersApi from '../../api/routes/users-routes.js';
 import { deleteExpiredTokens } from './utils.js';
 
-// Access the environment variable
-const secret = process.env.ACCESS_TOKEN_SECRET;
-console.log('Access Token Secret:', secret);
-
 const app = express();
 app.use(express.json());
 

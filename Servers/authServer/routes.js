@@ -36,10 +36,7 @@ router.post('/login', async (req, res) => {
         // Generate tokens
         const accessToken = generateAccessToken({ UserID: user.UserID, role: user.Role });
         const refreshToken = jwt.sign({ UserID: user.UserID, role: user.Role }, process.env.REFRESH_TOKEN_SECRET);
-        jwt.verify(refreshToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-            if (err) console.log(err);
-            else console.log("Access token VALID ON LOGIN");
-        });
+        
         // Save refresh token in database
         await saveRefreshToken(user.UserID, refreshToken);
 

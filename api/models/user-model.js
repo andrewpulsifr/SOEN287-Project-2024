@@ -61,7 +61,7 @@ async function getAllServicesByClientId(clientId) {
         // Query to get all services that the client has requested (using ClientID)
         const [services] = await pool.query(
             `SELECT 
-            s.ServiceID, 
+            cs.ClientServiceID, 
             s.Title, 
             s.Category, 
             s.Description, 

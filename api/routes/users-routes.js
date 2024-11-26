@@ -12,6 +12,5 @@ router.put("/:id", verifyToken, usersController.updateUser);  // Protect this ro
 router.delete("/:id", verifyToken, usersController.deleteUser);  // Protect this route with verifyToken
 
 router.post('/client-requests', verifyToken, usersController.getAllServicesByUserId); 
-//router.post('/client-requests/:serviceId/cancel', verifyToken, usersController.cancelService); // Post cancel service
 
 export default router;

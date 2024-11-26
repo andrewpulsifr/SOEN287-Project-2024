@@ -5,6 +5,7 @@ import express from 'express';
 import routes from './routes.js';
 import cors from 'cors';
 import servicesApi from '../../api/routes/services-routes.js';
+import usersApi from '../../api/routes/users-routes.js';
 import { deleteExpiredTokens } from './utils.js';
 
 // Access the environment variable
@@ -22,7 +23,7 @@ app.use(cors({
 app.use('/auth', routes); 
 app.use('/', routes);
 app.use('/services', servicesApi);
-//app.use('/users', usersApi);
+app.use('/users', usersApi);
 
 
 // Clean up expired refresh tokens every hour

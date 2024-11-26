@@ -148,29 +148,30 @@ async function requestService(serviceId) {
     }
 
     try {
-        const response = await fetch('/services/request', {
-            method: 'POST',
+        const url = '/services/request';  // The endpoint for the request
+        const options = {
+            method: 'POST', // HTTP method for the request
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ serviceId })
-        });
+            body: JSON.stringify({ serviceId }) // Body with serviceId
+        };
 
-        let responseData = {};  // Default to empty object
-
-        // Try to parse the response as JSON
-        try {
-            responseData = await response.json();
-        } catch (jsonError) {
-            console.error('Error parsing response JSON:', jsonError);
-            responseData = { error: 'Invalid response format from the server' };
-        }
+        const response = await fetchWrapper(url, options, token);  // Using fetchWrapper
 
         if (response.ok) {
             alert('Service requested successfully!');
         } else {
-            // Check if the error response has an 'error' property
+            // Try to parse the response to check for any error messages
+            let responseData = {};
+            try {
+                responseData = await response.json();
+            } catch (jsonError) {
+                console.error('Error parsing response JSON:', jsonError);
+                responseData = { error: 'Invalid response format from the server' };
+            }
+
             const errorMessage = responseData.error || 'Unknown error';
             alert(`Error requesting service: ${errorMessage}`);
         }
@@ -179,6 +180,7 @@ async function requestService(serviceId) {
         alert('An error occurred while requesting the service.');
     }
 }
+
 
 
 

@@ -1,3 +1,5 @@
+import { fetchWrapper } from './fetchHandler/fetchWrapper.js';
+
 document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem("accessToken");
     console.log('JWT token:', token);
@@ -77,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 : `<button class="view-receipt-btn">View Receipt</button>`;
 
         row.innerHTML = `
-            <td>${service.ServiceID || "N/A"}</td>
+            <td>${service.ClientServiceID || "N/A"}</td>
             <td>${service.Category || "N/A"}</td>
             <td>${service.Description || "N/A"}</td>
             <td>${assignedDate}</td>
@@ -93,9 +95,9 @@ document.addEventListener("DOMContentLoaded", function () {
     outstandingTable.addEventListener("click", function (event) {
         if (event.target.classList.contains("cancel-btn")) {
             const row = event.target.closest("tr");
-            const serviceId = row.cells[0].innerText;
+            const clientServiceId = row.cells[0].innerText;
 
-            cancelService(serviceId).then(success => {
+            cancelService(clientServiceId).then(success => {
                 if (success) {
                     row.remove();
                     alert("Service cancelled successfully.");
@@ -107,9 +109,9 @@ document.addEventListener("DOMContentLoaded", function () {
     pastTable.addEventListener("click", function (event) {
         if (event.target.classList.contains("pay-btn")) {
             const row = event.target.closest("tr");
-            const serviceId = row.cells[0].innerText;
+            const clientServiceId = row.cells[0].innerText;
 
-            payForService(serviceId).then(success => {
+            payForService(clientServiceId).then(success => {
                 if (success) {
                     row.cells[6].innerText = "Paid";
                     row.cells[8].innerHTML = `<button class="view-receipt-btn">View Receipt</button>`;
@@ -118,25 +120,32 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         } else if (event.target.classList.contains("view-receipt-btn")) {
             const row = event.target.closest("tr");
-            const serviceId = row.cells[0].innerText;
-            const service = pastServices.find(s => s.ServiceID === serviceId);
+            const clientServiceId = row.cells[0].innerText;
+            const service = pastServices.find(s => s.ClientServiceID === clientServiceId);
 
             if (service) openReceiptModal(service);
         }
     });
 
-    async function cancelService(serviceId) {
+    async function cancelService(clientServiceId) {
         try {
-            const response = await fetch(`/services/request/${serviceId}/cancel`, {
+            // Prepare the request options
+            const options = {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json', // Include content type
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}` // Pass JWT token
                 },
-                body: JSON.stringify({ clientServiceId: serviceId }) // Pass the ClientServiceID in the body
-            });
+                body: JSON.stringify({ clientServiceId: clientServiceId }) // Pass the ClientServiceID in the body
+            };
+    
+            // Use the fetchWrapper to handle the request
+            const response = await fetchWrapper(`/services/request/${clientServiceId}/cancel`, options, token);
     
             if (response.ok) {
+                alert("Service cancelled successfully.");
+                // After cancellation, re-fetch and update the tables
+                //fetchClientRequests();
                 return true; // Successfully canceled the service
             } else {
                 console.error("Error cancelling service:", await response.text());
@@ -149,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
     }
+    
     
 
 
@@ -174,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function openReceiptModal(service) {
         receiptContent.innerHTML = `
-            <strong>Order Number:</strong> ${service.ServiceID}<br>
+            <strong>Order Number:</strong> ${service.ClientServiceID}<br>
             <strong>Category:</strong> ${service.Category}<br>
             <strong>Description:</strong> ${service.Description}<br>
             <strong>Date of Request:</strong> ${new Date(service.AssignedDate).toLocaleDateString()}<br>

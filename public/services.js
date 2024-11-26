@@ -1,4 +1,4 @@
-//import apiClient from './../api/apiClient'; // Import the axios client
+import { fetchWrapper } from './fetchHandler/fetchWrapper.js';
 
 /************************************************************************************************
  * Initialization of page
@@ -84,28 +84,24 @@ function createModal() {
  ************************************************************************************************/
 async function fetchServices() {
     try {
-        console.log('Fetching services...');
-        const response = await fetch(`/services`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('auth')}` // Ensure token is being passed
-            }
-        });
-        
-        if (!response.ok) {
-            throw new Error(`Error fetching services: ${response.statusText}`);
-        }
+        // Validate access token with a protected API route
+        const url = '/services'; // The endpoint you want to call
+        const options = {
+            method: 'GET', // HTTP method for the request
+        };
+    
+        const response = await fetchWrapper(url,options, token);
 
-        const services = await response.json();
-        console.log('Fetched Services:', services); // Check the structure of services
-        return services; // Return services if successful
+        if (response.ok) {  // Check if the response was successful
+            return await response.json();  // Convert response to JSON
+        } else {
+            throw new Error('Failed to fetch services',+ response.message);
+        }
     } catch (error) {
-        console.error('Error:', error);
-        return []; // Return an empty array if fetch fails
+        console.error('Error fetching services:', error);
+        return [];
     }
 }
-
 
 /************************************************************************************************
  * Service management
@@ -188,6 +184,7 @@ async function requestService(serviceId) {
 
 window.onload = async function() {
     const services = await fetchServices();
+    console.log("Services: " + services)
     
     if (services.length > 0) {
         const container = document.querySelector('.cards-grid');

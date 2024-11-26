@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const response = await fetch('/get-config');
+        const response = await fetch('/config/get-config');
+        if(!response.ok){
+            console.error("Error fetching configuration:", await response.text());
+            return; // Return early if there's an error fetching the configuration. Otherwise, continue with the rest of the script.
+        }
         const config = await response.json();
 
         if (config) {

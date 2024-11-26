@@ -1,6 +1,5 @@
-const userModel = require("../models/user-model");
-const serviceModel = require("../models/service-model");
-const jwt = require('jsonwebtoken');
+import userModel from '../models/user-model.js';
+import serviceModel from '../models/service-model.js';
 
 async function getClientById(req, res) {
     try {
@@ -110,7 +109,7 @@ async function getAllServicesByUserId(req, res) {
 }
 
 
-module.exports = {
+export {
     getUserById,
     getUserByEmail,
     updateUser,

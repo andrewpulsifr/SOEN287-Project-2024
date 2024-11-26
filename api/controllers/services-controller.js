@@ -1,6 +1,5 @@
-const serviceModel = require("../models/service-model");
-const clientModel = require("../models/user-model"); // Assuming you have a model for client data
-const jwt = require('jsonwebtoken');
+import serviceModel from "../models/service-model.js";
+import clientModel from "../models/user-model.js"; // Assuming you have a model for client data
 
 // Get all services
 async function fetchAllServices(req, res) {
@@ -93,13 +92,12 @@ async function requestService(req, res) {
     }
 }
 
-
-
-module.exports = {
-    fetchAllServices,
-    fetchServiceById,
-    createService,
-    updateService,
-    deleteService,
-    requestService,
+export { 
+    fetchAllServices, 
+    fetchServiceById, 
+    createService, 
+    updateService, 
+    deleteService, 
+    requestService 
 };
+

@@ -1,10 +1,15 @@
-require('dotenv').config();
-const express = require('express');
-const routes = require('./routes');
-const cors = require('cors');
-const servicesApi = require('../../api/routes/services-routes');
-const usersApi = require('../../api/routes/users-routes');  
-const { deleteExpiredTokens } = require('./utils');
+import dotenv from 'dotenv';
+dotenv.config(); // This is for loading environment variables
+import { fileURLToPath } from 'url'; // Import fileURLToPath
+import express from 'express';
+import routes from './routes.js';
+import cors from 'cors';
+import servicesApi from '../../api/routes/services-routes.js';
+import { deleteExpiredTokens } from './utils.js';
+
+// Access the environment variable
+const secret = process.env.ACCESS_TOKEN_SECRET;
+console.log('Access Token Secret:', secret);
 
 const app = express();
 app.use(express.json());

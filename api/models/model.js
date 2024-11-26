@@ -1,5 +1,5 @@
-const connection = require('../config/database');
-const pool = connection(); 
+import createConnection from '../config/database.js';
+const pool = createConnection(); 
 // Create Users table
 const createUsersTable = `
     CREATE TABLE IF NOT EXISTS Users (
@@ -136,4 +136,4 @@ async function tableCreation() {
     }
 }
 
-tableCreation();
+export default tableCreation();

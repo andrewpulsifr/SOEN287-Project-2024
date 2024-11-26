@@ -1,5 +1,5 @@
-const connection = require('../config/database');
-const pool = connection(); 
+import createConnection from '../config/database.js';
+const pool = createConnection(); 
 
 
 async function getClientById(clientId) {
@@ -85,7 +85,7 @@ async function getAllServicesByClientId(clientId) {
     }
 }
 
-module.exports = {
+export default {
     getUserById,
     getUserByEmail,
     updateUser,

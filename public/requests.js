@@ -127,15 +127,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function cancelService(serviceId) {
         try {
-            const response = await fetch(`/client-requests/${serviceId}/cancel`, {
-                method: 'POST',
+            const response = await fetch(`/services/request/${serviceId}/cancel`, {
+                method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${token}`
-                }
+                    'Content-Type': 'application/json', // Include content type
+                    'Authorization': `Bearer ${token}` // Pass JWT token
+                },
+                body: JSON.stringify({ clientServiceId: serviceId }) // Pass the ClientServiceID in the body
             });
-
+    
             if (response.ok) {
-                return true;
+                return true; // Successfully canceled the service
             } else {
                 console.error("Error cancelling service:", await response.text());
                 alert("Failed to cancel service.");
@@ -147,29 +149,8 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
     }
+    
 
-    async function payForService(serviceId) {
-        try {
-            const response = await fetch(`/client-requests/${serviceId}/pay`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                return true;
-            } else {
-                console.error("Error processing payment:", await response.text());
-                alert("Failed to process payment.");
-                return false;
-            }
-        } catch (error) {
-            console.error("Error processing payment:", error);
-            alert("An error occurred while processing payment.");
-            return false;
-        }
-    }
 
     // Modal Functionality
     const modal = document.createElement("div");

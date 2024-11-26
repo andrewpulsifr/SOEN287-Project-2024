@@ -62,6 +62,27 @@ async function requestService(clientId, serviceId) {
     }
 }
 
+async function getClientServiceById(clientServiceId) {
+    try {
+        const query = 'SELECT * FROM ClientServices WHERE ClientServiceID = ?';
+        const [rows] = await pool.query(query, [clientServiceId]);
+        return rows;
+    } catch (err) {
+        throw err;
+    }
+}
+
+// Delete a requested service by ClientServiceID
+async function cancelServiceRequest(clientServiceId) {
+    try {
+        const query = 'DELETE FROM ClientServices WHERE ClientServiceID = ?';
+        const [result] = await pool.query(query, [clientServiceId]);
+        return result;
+    } catch (err) {
+        throw err;
+    }
+}
+
 export default {
     getAllServices,
     getServiceById,
@@ -69,4 +90,6 @@ export default {
     updateService,
     deleteService,
     requestService, 
+    getClientServiceById,
+    cancelServiceRequest,
 };

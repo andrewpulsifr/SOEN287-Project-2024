@@ -12,5 +12,6 @@ router.put("/:id", verifyToken, serviceController.updateService); // Put update 
 router.delete("/:id", verifyToken, serviceController.deleteService); // Delete service by ID
 
 router.post('/request', verifyToken, serviceController.requestService); // Post request service
+router.delete('/request/:serviceId/cancel', verifyToken, serviceController.cancelService); // Accepts ServiceID
 
 export default router;

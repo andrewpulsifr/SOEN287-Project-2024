@@ -1,5 +1,5 @@
 import serviceModel from "../models/service-model.js";
-import clientModel from "../models/user-model.js"; // Assuming you have a model for client data
+import clientModel from "../models/user-model.js"; 
 
 // Get all services
 async function fetchAllServices(req, res) {
@@ -92,12 +92,40 @@ async function requestService(req, res) {
     }
 }
 
-export { 
-    fetchAllServices, 
-    fetchServiceById, 
-    createService, 
-    updateService, 
-    deleteService, 
-    requestService 
-};
+// Cancel a requested service
+async function cancelService(req, res) {
+    console.log("Cancelling requested service...");
+    try {
+        // Extract the `ClientServiceID` from the request parameters
+        const clientServiceId = req.params.clientServiceId || req.params.serviceId;
+        if (!clientServiceId) {
+            return res.status(400).json({ error: "ClientServiceID is required" });
+        }
+        // Check if the requested service exists in `ClientServices`
+        /*const clientService = await serviceModel.getClientServiceById(clientServiceId);
+        if (!clientService || clientService.length === 0) {
+            return res.status(404).json({ error: "Requested service not found" });
+        }*/
 
+        // Delete the record from `ClientServices`
+        await serviceModel.cancelServiceRequest(clientServiceId);
+
+        res.json({ message: "Requested service cancelled successfully" });
+    } catch (err) {
+        console.error("Error cancelling requested service:", err);
+        res.status(500).json({ error: "Error cancelling requested service", details: err });
+    }
+}
+
+
+
+
+export {
+    fetchAllServices,
+    fetchServiceById,
+    createService,
+    updateService,
+    deleteService,
+    requestService,
+    cancelService,
+};

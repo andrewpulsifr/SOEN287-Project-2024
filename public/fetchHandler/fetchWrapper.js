@@ -8,7 +8,7 @@ export async function fetchWrapper(url, options = {}, accessToken) {
         'Authorization': `Bearer ${accessToken}`, // Attach token automatically
         ...options.headers
     };
-    let response = await fetch(`${baseUrl}${url}`, {headers, ...options });
+    let response = await fetch(`${baseUrl}${url}`, { ...options, headers });
 
     // If the response indicates an unauthorized error (401), attempt to refresh the token
     if (response.status === 401) {

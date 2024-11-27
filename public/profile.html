@@ -5,31 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
     <link rel="stylesheet" href="profile.css">
-    <link rel = "stylesheet" href="nav-bar.css">
+    <link rel="stylesheet" href="nav-bar.css">
 </head>
 <body>
     <nav class="navbar">
         <div class="navdiv">
             <div class="companyname"><a>Company Name</a></div>
-            <div class="navlink" id="navlink">
-            </div>
+            <div class="navlink" id="navlink"></div>
         </div>
     </nav>
     <div class="formdiv">
         <h2>Edit Profile</h2>
         <form id="editProfileForm" class="form">
+            <!-- Email from Users table -->
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" value="client@email.com" required>
 
+            <!-- Password from Users table -->
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required value="password">
+            <input type="password" id="password" name="password">
 
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required value="John Johnson">
+            <!-- First Name from Clients table -->
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required value="John">
 
+            <!-- Last Name from Clients table -->
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required value="Johnson">
+
+            <!-- Address from Clients table -->
             <label for="address">Address:</label>
-            <input id="address" name="address" value ="8735 Oxford Saint Avenue" rows="3" required></input>
- 
+            <textarea id="address" name="address" rows="3" required>8735 Oxford Street Avenue</textarea>
+
             <button type="submit">Save Changes</button>
         </form>
         <button class="delete-btn">Delete Account</button>
@@ -37,6 +44,7 @@
 </body>
 </html>
 
-<script defer type="module" src="/authenitcation/init.js"></script>
+<!--<script defer type="module" src="/authentication/init.js"></script>!-->
+<script type="module" src="clientprofile.js"></script>
 <script src="navbar.js"></script>
 <script src="applysetstyles.js"></script>

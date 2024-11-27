@@ -117,6 +117,48 @@ async function cancelService(req, res) {
     }
 }
 
+async function getClientProfile(req, res) {
+    try {
+        const userId = req.userId; // Extracted from token middleware
+        const client = await userModel.getClientByUserId(userId);
+        const user = await userModel.getUserById(userId);
+
+        if (!client.length || !user.length) {
+            return res.status(404).json({ message: 'User or Client not found' });
+        }
+
+        res.status(200).json({
+            user: user[0],
+            client: client[0],
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+async function updateClientProfile(req, res) {
+    try {
+        const userId = req.userId; // Extracted from token middleware
+        const { user, client } = req.body;
+
+        // Update user details
+        const userUpdateResult = await userModel.updateUser(userId, user);
+        if (userUpdateResult.affectedRows === 0) {
+            return res.status(404).json({ message: 'User not found or no changes made' });
+        }
+
+        // Update client details
+        const clientUpdateResult = await userModel.updateClient(userId, client);
+        if (clientUpdateResult.affectedRows === 0) {
+            return res.status(404).json({ message: 'Client not found or no changes made' });
+        }
+
+        res.status(200).json({ message: 'Profile updated successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 
 
 
@@ -128,4 +170,6 @@ export {
     deleteService,
     requestService,
     cancelService,
+    getClientProfile,
+    updateClientProfile,
 };

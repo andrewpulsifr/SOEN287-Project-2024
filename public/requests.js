@@ -111,25 +111,25 @@ document.addEventListener("DOMContentLoaded", function () {
             const row = event.target.closest("tr");
             const clientServiceId = row.cells[0].innerText;
 
-            payForService(clientServiceId).then(success => {
-                if (success) {
-                    row.cells[6].innerText = "Paid";
-                    row.cells[8].innerHTML = `<button class="view-receipt-btn">View Receipt</button>`;
-                    alert("Payment processed successfully.");
-                }
-            });
+            alert("Payment processed successfully.");
+
+            row.cells[6].innerText = "Paid"; // Update payment status column
+            row.cells[8].innerHTML = `<button class="view-receipt-btn">View Receipt</button>`; // Replace pay with receipt button
         } else if (event.target.classList.contains("view-receipt-btn")) {
             const row = event.target.closest("tr");
             const clientServiceId = row.cells[0].innerText;
             const service = pastServices.find(s => s.ClientServiceID === clientServiceId);
-
-            if (service) openReceiptModal(service);
+    
+            if (service) {
+                openReceiptModal(service);} // Opens the receipt modal
         }
     });
+    
+    
 
     async function cancelService(clientServiceId) {
         try {
-            // Prepare the request options
+
             const options = {
                 method: 'DELETE',
                 headers: {
@@ -162,27 +162,47 @@ document.addEventListener("DOMContentLoaded", function () {
     
 
 
-    // Modal Functionality
-    const modal = document.createElement("div");
-    modal.id = "receipt-modal";
-    modal.className = "modal";
-    modal.style.display = "none";
-    modal.innerHTML = `
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Receipt Details</h2>
-            <p id="receipt-content"></p>
-        </div>
-    `;
-    document.body.appendChild(modal);
+    function createModal() {
+        const modal = document.createElement("div");
+        modal.id = "receipt-modal";
+        modal.className = "modal";
+        modal.style.display = "none";
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Receipt Details</h2>
+                <p id="receipt-content"></p>
+            </div>
+        `;
+        
+        // Append the modal to the body
+        document.body.appendChild(modal);
+    
+        // Get the receipt content and close button elements
+        const receiptContent = document.getElementById("receipt-content");
+        const closeButton = modal.querySelector(".close-button");
+    
+        // Close button functionality
+        closeButton.onclick = () => {
+            modal.style.display = "none";
+        };
+    
+        // Close the modal if the user clicks outside of it
+        window.onclick = event => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+        
+        return modal;
+    }
+    
 
-    const receiptContent = document.getElementById("receipt-content");
-    modal.querySelector(".close-button").onclick = () => (modal.style.display = "none");
-    window.onclick = event => {
-        if (event.target === modal) modal.style.display = "none";
-    };
-
+    const modal = createModal();
+    
+    // Function to open the receipt modal with details
     function openReceiptModal(service) {
+        const receiptContent = document.getElementById("receipt-content");
         receiptContent.innerHTML = `
             <strong>Order Number:</strong> ${service.ClientServiceID}<br>
             <strong>Category:</strong> ${service.Category}<br>
@@ -192,8 +212,10 @@ document.addEventListener("DOMContentLoaded", function () {
             <strong>Price:</strong> ${service.Price}<br>
             <strong>Payment Status:</strong> ${service.PaymentStatus}
         `;
-        modal.style.display = "block";
+        modal.style.display = "block"; // Show the modal
     }
+    
+
 
     // Initialize Client Requests
     fetchClientRequests();

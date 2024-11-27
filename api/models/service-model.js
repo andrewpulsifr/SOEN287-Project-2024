@@ -83,6 +83,15 @@ async function cancelServiceRequest(clientServiceId) {
     }
 }
 
+async function updateClient(userId, clientData) {
+    try {
+        const [result] = await pool.query('UPDATE Clients SET ? WHERE UserID = ?', [clientData, userId]);
+        return result;
+    } catch (err) {
+        throw err;
+    }
+}
+
 export default {
     getAllServices,
     getServiceById,
@@ -92,4 +101,5 @@ export default {
     requestService, 
     getClientServiceById,
     cancelServiceRequest,
+    updateClient,
 };

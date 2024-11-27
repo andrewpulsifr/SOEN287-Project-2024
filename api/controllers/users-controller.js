@@ -108,6 +108,82 @@ async function getAllServicesByUserId(req, res) {
     }
 }
 
+async function getClientProfile(req, res) {
+    try {
+        const userId = req.userId; // Extracted from token middleware
+        const client = await serviceModel.getClientByUserId(userId);
+        const user = await serviceModel.getUserById(userId);
+
+        if (!client.length || !user.length) {
+            return res.status(404).json({ message: 'User or Client not found' });
+        }
+
+        res.status(200).json({
+            user: user[0],
+            client: client[0],
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+async function updateProfile(req, res) {
+    try {
+        const userId = req.user.UserID;
+        const { client } = req.body;
+        console.log('Request Body:', req.body);
+
+        // Ensure client data exists in the request
+        if (!client) {
+            return res.status(400).json({ message: 'Client data is required' });
+        }
+
+        // Ensure that password and email are not being modified
+        if (client.Password || client.Email) {
+            return res.status(400).json({ message: 'Password and email are not updatable' });
+        }
+
+        // Update client details
+        const clientUpdateResult = await userModel.updateClient(userId, client);
+        if (clientUpdateResult.affectedRows === 0) {
+            return res.status(404).json({ message: 'Client not found or no changes made' });
+        }
+
+        res.status(200).json({ message: 'Profile updated successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+
+
+async function getProfile(req, res) {
+    try {
+        const userId = req.user.UserID; 
+        console.log('Fetching profile for user ID:', userId);
+        // Fetch user data using getUserById
+        const user = await getUserById(userId);
+        if (!user || user.length === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Fetch client data using getClientByUserId
+        const client = await getClientByUserId(userId);
+        if (!client || client.length === 0) {
+            return res.status(404).json({ error: 'Client not found' });
+        }
+
+        // Return both user and client data
+        res.status(200).json({
+            user: user[0],  // Assuming user is returned as an array and you need the first element
+            client: client[0]  // Assuming client is returned as an array and you need the first element
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+
 
 export {
     getUserById,
@@ -117,4 +193,7 @@ export {
     getClientById,
     getClientByUserId,
     getAllServicesByUserId,
+    getClientProfile,
+    updateProfile,
+    getProfile,
 };

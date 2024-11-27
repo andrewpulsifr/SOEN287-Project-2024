@@ -21,7 +21,7 @@ router.post('/login', async (req, res) => {
         const [users] = await dbConnection.query('SELECT * FROM Users WHERE Email = ?', [email]);
         const user = users[0];
         if (!user){
-          return res.status(401).json({ message: 'Invalid credentials. No user exists.' });
+          return res.status(401).json({ message: 'Invalid credentials. No user exists with with email input.' });
         }
 
         if (user.Role !== userType) {

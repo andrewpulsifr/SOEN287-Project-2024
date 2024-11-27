@@ -55,11 +55,13 @@ class Login {
                             window.location.href = "business-home.html";
                         }
                     }else {
-                        console.error(result.message);
-                        alert(result.message);
+                        const emailField = document.querySelector(`#${this.fields[0]}`);
+                        const passwordField = document.querySelector(`#${this.fields[1]}`);
+                        this.setStatus(emailField, "Invalid email or password.", "error");
+                        this.setStatus(passwordField, "Invalid email or password.", "error");
                     }
                 } catch (error) {
-                    console.error('Error:', error);
+                    console.error('Error:', error.message);
                     alert('Something went wrong. Check error stack.');
                 }
             }

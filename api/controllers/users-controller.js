@@ -183,6 +183,23 @@ async function getProfile(req, res) {
     }
 }
 
+async function deleteAccount(req, res) {
+    try {
+        const userId = req.user.UserID;
+
+        const deleteResult = await userModel.deleteClientAndUser(userId);
+
+        if (!deleteResult) {
+            return res.status(404).json({ message: 'User not found or already deleted' });
+        }
+
+        res.status(200).json({ message: 'Account deleted successfully' });
+    } catch (err) {
+        console.error('Error deleting account:', err);
+        res.status(500).json({ error: 'An error occurred while deleting the account.' });
+    }
+}
+
 
 
 export {
@@ -196,4 +213,5 @@ export {
     getClientProfile,
     updateProfile,
     getProfile,
+    deleteAccount,
 };

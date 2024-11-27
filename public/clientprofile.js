@@ -108,10 +108,40 @@ async function saveProfile(event) {
         document.getElementById('firstName').value = updatedClientData.client?.FirstName || '';
         document.getElementById('lastName').value = updatedClientData.client?.LastName || '';
         document.getElementById('address').value = updatedClientData.client?.Address || '';
-
+        window.location.reload();
     } catch (error) {
         console.error('Error updating profile:', error);
         alert('An error occurred while updating your profile.');
+    }
+}
+
+async function deleteAccount() {
+    if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+        try {
+            const response = await fetch('/users/profile/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete account.');
+            }
+
+            alert('Account deleted successfully.');
+
+            // Clear any stored tokens or user data
+            localStorage.removeItem('accessToken');
+            sessionStorage.clear();
+            
+            // Redirect the user to the login page
+            window.location.href = '/client-login';
+        } catch (error) {
+            console.error('Error deleting account:', error);
+            alert('An error occurred while deleting your account. Please try again later.');
+        }
     }
 }
 
@@ -122,4 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const editProfileForm = document.getElementById('editProfileForm');
     editProfileForm.addEventListener('submit', saveProfile);
+
+    
+    const deleteAccountButton = document.getElementsByClassName('delete-btn')[0];
+    deleteAccountButton.addEventListener('click', deleteAccount);
 });

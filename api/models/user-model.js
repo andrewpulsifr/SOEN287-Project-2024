@@ -58,7 +58,6 @@ async function updateClient(userId, client) {
 }
 
 
-
 async function deleteUser(userId) {
     try {
         const [result] = await pool.query("DELETE FROM Users WHERE UserID = ?", [userId]);
@@ -139,6 +138,36 @@ async function getProfileByUserId(userId) {
 }
 
 
+async function deleteClientAndUser(userId) {
+    try {
+        // Transaction to ensure atomicity
+        await pool.query('START TRANSACTION');
+
+        // Delete the client record associated with the user
+        const clientDeleteResult = await pool.query(
+            'DELETE FROM Clients WHERE UserID = ?',
+            [userId]
+        );
+
+        // Delete the user record
+        const userDeleteResult = await pool.query(
+            'DELETE FROM Users WHERE UserID = ?',
+            [userId]
+        );
+
+        await pool.query('COMMIT');
+
+        // Return true if at least one row was deleted for the user
+        return userDeleteResult[0].affectedRows > 0;
+    } catch (err) {
+        await pool.query('ROLLBACK');
+        throw err;
+    }
+}
+
+
+
+
 
 
 
@@ -152,4 +181,5 @@ export default {
     getAllServicesByClientId,
     updateClient,
     getProfileByUserId,
+    deleteClientAndUser,
 };

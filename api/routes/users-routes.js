@@ -15,6 +15,7 @@ router.get('/get-profile', verifyToken, usersController.getUserById);
 router.post('/get-client', verifyToken, usersController.getClientByUserId);
 router.get('/get-user', verifyToken, usersController.getProfile);
 router.put('/profile/update', verifyToken, usersController.updateProfile);
-router.post('/client-requests', verifyToken, usersController.getAllServicesByUserId); 
+router.post('/client-requests', verifyToken, usersController.getAllServicesByUserId);
+router.delete('profile/delete', verifyToken, usersController.deleteAccount); 
 
 export default router;

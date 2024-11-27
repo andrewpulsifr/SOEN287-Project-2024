@@ -12,4 +12,8 @@ router.delete("/:id", verifyToken, serviceController.deleteService); // Delete s
 
 router.post('/request', verifyToken, serviceController.requestService); // Post request service
 
+router.post('/create', verifyToken, serviceController.createService);
+
+
+
 module.exports = router;

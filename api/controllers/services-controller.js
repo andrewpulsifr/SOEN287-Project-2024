@@ -14,6 +14,40 @@ async function fetchAllServices(req, res) {
         res.status(500).json({ error: "Error fetching services", details: err });
     }
 }
+async function createService(req, res) {
+    const { category, description, price, image } = req.body;
+
+    const db = createConnection();
+    const query = `
+        INSERT INTO Services (Title, Category, Description, Price, Image) 
+        VALUES (?, ?, ?, ?, ?)
+    `;
+
+    try {
+        console.log('Received data:', { category, description, price, image });
+
+        const [result] = await db.execute(query, [
+            category, 
+            category, 
+            description, 
+            parseFloat(price), 
+            image || null
+        ]);
+
+        res.status(201).json({ 
+            message: 'Service created successfully', 
+            serviceId: result.insertId 
+        });
+    } catch (error) {
+        console.error('Detailed Database error:', error.sqlMessage || error);
+        res.status(500).json({ 
+            error: 'Failed to create service', 
+            details: error.sqlMessage || error.toString() 
+        });
+    } finally {
+        db.end();
+    }
+}
 
 // Get a specific service
 async function fetchServiceById(req, res) {
@@ -27,17 +61,7 @@ async function fetchServiceById(req, res) {
     }
 }
 
-// Create a new service
-async function createService(req, res) {
-    try {
-        const newService = req.body;
-        const result = await serviceModel.createService(newService);
-        res.status(201).json({ message: "Service created", serviceId: result.insertId });
-    } catch (err) {
-        console.error("Error creating service:", err);
-        res.status(500).json({ error: "Error creating service", details: err });
-    }
-}
+
 
 // Update an existing service
 async function updateService(req, res) {

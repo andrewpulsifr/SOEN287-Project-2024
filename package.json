@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "# @npmcli/git",
   "main": "Servers/mainServer/index.js",
+  "type": "module", 
   "scripts": {
-    "devStart": "nodemon -- Servers/mainServer/index.js",
-    "devStartAuth": "nodemon -- Servers/authServer/index.js",
+    "devStart": "nodemon Servers/mainServer/index.js",
+    "devStartAuth": "nodemon Servers/authServer/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node Servers/mainServer/index.js"
   },

@@ -1,5 +1,5 @@
-const db = require("../config/database"); 
-const pool = db(); 
+import createConnection from '../config/database.js';
+const pool = createConnection(); 
 
 // Fetch all services
 async function getAllServices() {
@@ -62,11 +62,44 @@ async function requestService(clientId, serviceId) {
     }
 }
 
-module.exports = {
+async function getClientServiceById(clientServiceId) {
+    try {
+        const query = 'SELECT * FROM ClientServices WHERE ClientServiceID = ?';
+        const [rows] = await pool.query(query, [clientServiceId]);
+        return rows;
+    } catch (err) {
+        throw err;
+    }
+}
+
+// Delete a requested service by ClientServiceID
+async function cancelServiceRequest(clientServiceId) {
+    try {
+        const query = 'DELETE FROM ClientServices WHERE ClientServiceID = ?';
+        const [result] = await pool.query(query, [clientServiceId]);
+        return result;
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function updateClient(userId, clientData) {
+    try {
+        const [result] = await pool.query('UPDATE Clients SET ? WHERE UserID = ?', [clientData, userId]);
+        return result;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export default {
     getAllServices,
     getServiceById,
     createService,
     updateService,
     deleteService,
     requestService, 
+    getClientServiceById,
+    cancelServiceRequest,
+    updateClient,
 };

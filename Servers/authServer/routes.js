@@ -1,9 +1,10 @@
-const express = require('express');
-const { generateAccessToken, saveRefreshToken, tokenExists, deleteRefreshToken, comparePassword, hashPassword } = require('./utils');
-const createConnection = require('../../api/config/database');
-const verifyToken = require('../../api/middleware/authMiddleware'); // Import the middleware
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+// Importing required modules in ES Module syntax
+import express from 'express';
+import { generateAccessToken, saveRefreshToken, tokenExists, deleteRefreshToken, comparePassword, hashPassword } from './utils.js';
+import createConnection from '../../api/config/database.js'; // Adjust the path if needed
+import verifyToken from '../../api/middleware/authMiddleware.js'; // Import the middleware
+import jwt from 'jsonwebtoken';
+import authenticateToken from '../mainServer/middleware.js';
 
 const dbConnection = createConnection();
 const router = express.Router();
@@ -35,7 +36,7 @@ router.post('/login', async (req, res) => {
         // Generate tokens
         const accessToken = generateAccessToken({ UserID: user.UserID, role: user.Role });
         const refreshToken = jwt.sign({ UserID: user.UserID, role: user.Role }, process.env.REFRESH_TOKEN_SECRET);
-
+        
         // Save refresh token in database
         await saveRefreshToken(user.UserID, refreshToken);
 
@@ -74,11 +75,30 @@ router.post('/token', async (req, res) => {
 });
 
 // POST /validate-token: Validates the provided access token
-router.post('/validate-token',verifyToken, (req, res) => {
-     // The token is already verified, and user info is attached to req.user
-     res.status(200).json({
-        message: 'Token is valid.',
-        user: req.user // Send decoded user info from the token
+router.post('/validate-token', (req, res) => {
+    const token = req.headers['authorization']; // Get the token from headers
+    
+    // Check if token is provided
+    if (!token) {
+        return res.status(403).json({ message: 'No token provided.' });
+    }
+    
+    // Remove 'Bearer ' from the token (if present)
+    const bearerToken = token.split(' ')[1];
+    if (!bearerToken) {
+        return res.status(403).json({ message: 'Invalid token format. "Bearer <token>" is expected.' });
+    }
+    // Verify token
+    jwt.verify(bearerToken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        if (err) {
+            console.log(err);
+            return res.status(401).json({ message: 'Unauthorized. Invalid or expired token.' + err });
+        }
+
+        // Store the decoded token data (e.g., user info) in the request object
+
+        // Now, proceed with the response for this endpoint
+        res.status(200).json({ message: 'Token is valid!'});
     });
 });
 
@@ -136,4 +156,4 @@ router.post('/register', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

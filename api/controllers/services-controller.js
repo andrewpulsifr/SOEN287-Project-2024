@@ -1,6 +1,5 @@
-const serviceModel = require("../models/service-model");
-const clientModel = require("../models/user-model"); // Assuming you have a model for client data
-const jwt = require('jsonwebtoken');
+import serviceModel from "../models/service-model.js";
+import clientModel from "../models/user-model.js"; 
 
 // Get all services
 async function fetchAllServices(req, res) {
@@ -117,13 +116,84 @@ async function requestService(req, res) {
     }
 }
 
+// Cancel a requested service
+async function cancelService(req, res) {
+    console.log("Cancelling requested service...");
+    try {
+        // Extract the `ClientServiceID` from the request parameters
+        const clientServiceId = req.params.clientServiceId || req.params.serviceId;
+        if (!clientServiceId) {
+            return res.status(400).json({ error: "ClientServiceID is required" });
+        }
+        // Check if the requested service exists in `ClientServices`
+        /*const clientService = await serviceModel.getClientServiceById(clientServiceId);
+        if (!clientService || clientService.length === 0) {
+            return res.status(404).json({ error: "Requested service not found" });
+        }*/
+
+        // Delete the record from `ClientServices`
+        await serviceModel.cancelServiceRequest(clientServiceId);
+
+        res.json({ message: "Requested service cancelled successfully" });
+    } catch (err) {
+        console.error("Error cancelling requested service:", err);
+        res.status(500).json({ error: "Error cancelling requested service", details: err });
+    }
+}
+
+async function getClientProfile(req, res) {
+    try {
+        const userId = req.userId; // Extracted from token middleware
+        const client = await userModel.getClientByUserId(userId);
+        const user = await userModel.getUserById(userId);
+
+        if (!client.length || !user.length) {
+            return res.status(404).json({ message: 'User or Client not found' });
+        }
+
+        res.status(200).json({
+            user: user[0],
+            client: client[0],
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+async function updateClientProfile(req, res) {
+    try {
+        const userId = req.userId; // Extracted from token middleware
+        const { user, client } = req.body;
+
+        // Update user details
+        const userUpdateResult = await userModel.updateUser(userId, user);
+        if (userUpdateResult.affectedRows === 0) {
+            return res.status(404).json({ message: 'User not found or no changes made' });
+        }
+
+        // Update client details
+        const clientUpdateResult = await userModel.updateClient(userId, client);
+        if (clientUpdateResult.affectedRows === 0) {
+            return res.status(404).json({ message: 'Client not found or no changes made' });
+        }
+
+        res.status(200).json({ message: 'Profile updated successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
 
 
-module.exports = {
+
+
+export {
     fetchAllServices,
     fetchServiceById,
     createService,
     updateService,
     deleteService,
     requestService,
+    cancelService,
+    getClientProfile,
+    updateClientProfile,
 };

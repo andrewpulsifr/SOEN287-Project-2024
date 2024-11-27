@@ -10,6 +10,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjUsInJvb
 ### Get all services by user ID
 POST http://127.0.0.1:3000/users/client-requests
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjUsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI1MTc3MDIsImV4cCI6MTczMjUxODYwMn0.bkYHaySsUeTZ2wKASLja9BjkTwKsYWA8B_8lIHF1Krs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjUsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI1MTg2NTUsImV4cCI6MTczMjUxOTU1NX0.vJ56AOgucKptVLvvrVw-bb_armDsmhRE0hgrx_RrT40
+
+### getProfile ###
+
+POST http://127.0.0.1:4000/users/get-profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjYsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI2NzE5NzAsImV4cCI6MTczMjY3Mjg3MH0.8RJJg_iywkrSJbogW97trfgGXVbStPOWoZWV8p1SmzU
+
 
 

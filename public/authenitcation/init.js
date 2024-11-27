@@ -1,3 +1,5 @@
+import Auth from "./auth.js"
+
 const auth = new Auth();
 
 function initializePage() {

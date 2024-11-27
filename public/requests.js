@@ -1,3 +1,5 @@
+import { fetchWrapper } from './fetchHandler/fetchWrapper.js';
+
 document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem("accessToken");
     console.log('JWT token:', token);
@@ -77,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 : `<button class="view-receipt-btn">View Receipt</button>`;
 
         row.innerHTML = `
-            <td>${service.ServiceID || "N/A"}</td>
+            <td>${service.ClientServiceID || "N/A"}</td>
             <td>${service.Category || "N/A"}</td>
             <td>${service.Description || "N/A"}</td>
             <td>${assignedDate}</td>
@@ -93,9 +95,9 @@ document.addEventListener("DOMContentLoaded", function () {
     outstandingTable.addEventListener("click", function (event) {
         if (event.target.classList.contains("cancel-btn")) {
             const row = event.target.closest("tr");
-            const serviceId = row.cells[0].innerText;
+            const clientServiceId = row.cells[0].innerText;
 
-            cancelService(serviceId).then(success => {
+            cancelService(clientServiceId).then(success => {
                 if (success) {
                     row.remove();
                     alert("Service cancelled successfully.");
@@ -107,35 +109,44 @@ document.addEventListener("DOMContentLoaded", function () {
     pastTable.addEventListener("click", function (event) {
         if (event.target.classList.contains("pay-btn")) {
             const row = event.target.closest("tr");
-            const serviceId = row.cells[0].innerText;
+            const clientServiceId = row.cells[0].innerText;
 
-            payForService(serviceId).then(success => {
-                if (success) {
-                    row.cells[6].innerText = "Paid";
-                    row.cells[8].innerHTML = `<button class="view-receipt-btn">View Receipt</button>`;
-                    alert("Payment processed successfully.");
-                }
-            });
+            alert("Payment processed successfully.");
+
+            row.cells[6].innerText = "Paid"; // Update payment status column
+            row.cells[8].innerHTML = `<button class="view-receipt-btn">View Receipt</button>`; // Replace pay with receipt button
         } else if (event.target.classList.contains("view-receipt-btn")) {
             const row = event.target.closest("tr");
-            const serviceId = row.cells[0].innerText;
-            const service = pastServices.find(s => s.ServiceID === serviceId);
-
-            if (service) openReceiptModal(service);
+            const clientServiceId = row.cells[0].innerText;
+            const service = pastServices.find(s => s.ClientServiceID === clientServiceId);
+    
+            if (service) {
+                openReceiptModal(service);} // Opens the receipt modal
         }
     });
+    
+    
 
-    async function cancelService(serviceId) {
+    async function cancelService(clientServiceId) {
         try {
-            const response = await fetch(`/client-requests/${serviceId}/cancel`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
 
+            const options = {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // Pass JWT token
+                },
+                body: JSON.stringify({ clientServiceId: clientServiceId }) // Pass the ClientServiceID in the body
+            };
+    
+            // Use the fetchWrapper to handle the request
+            const response = await fetchWrapper(`/services/request/${clientServiceId}/cancel`, options, token);
+    
             if (response.ok) {
-                return true;
+                alert("Service cancelled successfully.");
+                // After cancellation, re-fetch and update the tables
+                //fetchClientRequests();
+                return true; // Successfully canceled the service
             } else {
                 console.error("Error cancelling service:", await response.text());
                 alert("Failed to cancel service.");
@@ -147,53 +158,53 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
     }
+    
+    
 
-    async function payForService(serviceId) {
-        try {
-            const response = await fetch(`/client-requests/${serviceId}/pay`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
 
-            if (response.ok) {
-                return true;
-            } else {
-                console.error("Error processing payment:", await response.text());
-                alert("Failed to process payment.");
-                return false;
+    function createModal() {
+        const modal = document.createElement("div");
+        modal.id = "receipt-modal";
+        modal.className = "modal";
+        modal.style.display = "none";
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Receipt Details</h2>
+                <p id="receipt-content"></p>
+            </div>
+        `;
+        
+        // Append the modal to the body
+        document.body.appendChild(modal);
+    
+        // Get the receipt content and close button elements
+        const receiptContent = document.getElementById("receipt-content");
+        const closeButton = modal.querySelector(".close-button");
+    
+        // Close button functionality
+        closeButton.onclick = () => {
+            modal.style.display = "none";
+        };
+    
+        // Close the modal if the user clicks outside of it
+        window.onclick = event => {
+            if (event.target === modal) {
+                modal.style.display = "none";
             }
-        } catch (error) {
-            console.error("Error processing payment:", error);
-            alert("An error occurred while processing payment.");
-            return false;
-        }
+        };
+        
+        return modal;
     }
+    
 
-    // Modal Functionality
-    const modal = document.createElement("div");
-    modal.id = "receipt-modal";
-    modal.className = "modal";
-    modal.style.display = "none";
-    modal.innerHTML = `
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Receipt Details</h2>
-            <p id="receipt-content"></p>
-        </div>
-    `;
-    document.body.appendChild(modal);
-
-    const receiptContent = document.getElementById("receipt-content");
-    modal.querySelector(".close-button").onclick = () => (modal.style.display = "none");
-    window.onclick = event => {
-        if (event.target === modal) modal.style.display = "none";
-    };
-
+    const modal = createModal();
+    
+    // Function to open the receipt modal with details
     function openReceiptModal(service) {
+        const receiptContent = document.getElementById("receipt-content");
         receiptContent.innerHTML = `
-            <strong>Order Number:</strong> ${service.ServiceID}<br>
+            <strong>Order Number:</strong> ${service.ClientServiceID}<br>
             <strong>Category:</strong> ${service.Category}<br>
             <strong>Description:</strong> ${service.Description}<br>
             <strong>Date of Request:</strong> ${new Date(service.AssignedDate).toLocaleDateString()}<br>
@@ -201,8 +212,10 @@ document.addEventListener("DOMContentLoaded", function () {
             <strong>Price:</strong> ${service.Price}<br>
             <strong>Payment Status:</strong> ${service.PaymentStatus}
         `;
-        modal.style.display = "block";
+        modal.style.display = "block"; // Show the modal
     }
+    
+
 
     // Initialize Client Requests
     fetchClientRequests();

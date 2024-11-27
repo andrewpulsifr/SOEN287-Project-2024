@@ -1,4 +1,5 @@
 import business_model from "../models/business-model.js"
+import serviceModel from "../models/service-model.js";
 export const submitBusinessConfig = async (req, res) => {
     try {
         const { business_name, about_section, primary_color, secondary_color, accent_color } = req.body;
@@ -15,3 +16,12 @@ export const submitBusinessConfig = async (req, res) => {
         res.status(500).json({ error: 'Failed to save configuration' });
     }
 };
+export const fetchAllClientServices =  async (req, res) => {
+    try{
+        const services = await serviceModel.getAllClientServices();
+        res.json(services);
+    }catch(err){
+        console.error("Error fetching client services", err);
+        res.status(500).json({error: 'Error fetching client services'});
+    }
+}

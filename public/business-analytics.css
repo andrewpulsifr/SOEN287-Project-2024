@@ -1,0 +1,43 @@
+:root {
+    --primary-color: #1D70A2;
+    --secondary-color: #173753;
+    --accent-color: #FFFFFF;
+}
+body,html{
+    font-family: 'Kadwa', serif !important; 
+    background-color: var(--accent-color);
+
+}
+
+/* General button styling */
+.follow-up-btn {
+    background-color: #2E8BC0; /* Light blue color */
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.follow-up-btn:hover {
+    background-color: #0B2447; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge button */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+/* Disabled state */
+.follow-up-btn:disabled {
+    background-color: #cccccc; /* Gray color for disabled state */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Button alignment */
+td .follow-up-btn {
+    display: inline-block;
+    text-align: center;
+}

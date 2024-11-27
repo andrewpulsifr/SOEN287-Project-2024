@@ -97,10 +97,23 @@ async function updateClient(userId, clientData) {
         throw err;
     }
 }
+async function getAllClientServices() {
+    const query = `
+        SELECT cs.ClientServiceID, cs.Status, cs.AssignedDate, cs.DueDate, cs.PaymentStatus, 
+               c.FirstName, c.LastName, s.Category, s.Description, s.Price
+        FROM ClientServices cs
+        INNER JOIN Clients c ON cs.ClientID = c.ClientID
+        INNER JOIN Services s ON cs.ServiceID = s.ServiceID
+        ORDER BY cs.AssignedDate DESC;
+    `;
+    const [results] = await pool.query(query);
+    return results;
+}
 
 export default {
     getAllServices,
     getServiceById,
+    getAllClientServices,
     createService,
     updateService,
     deleteService,

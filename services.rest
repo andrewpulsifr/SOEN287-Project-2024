@@ -18,5 +18,8 @@ POST http://127.0.0.1:4000/users/get-profile
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjYsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI2NzE5NzAsImV4cCI6MTczMjY3Mjg3MH0.8RJJg_iywkrSJbogW97trfgGXVbStPOWoZWV8p1SmzU
 
-
+###delete###
+POST http://127.0.0.1:3000/users/profile/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjcsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE3MzI3Mzc1MjksImV4cCI6MTczMjczODQyOX0.jAGN9l7ZZlSMDzeQBAu1MHY2RlkiW2GNIlmsawQFXk8
 

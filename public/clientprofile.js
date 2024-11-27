@@ -118,7 +118,7 @@ async function saveProfile(event) {
 async function deleteAccount() {
     if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
         try {
-            const response = await fetch('/users/profile/delete', {
+            const response = await fetchWrapper('/users/profile/delete', {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -133,11 +133,9 @@ async function deleteAccount() {
             alert('Account deleted successfully.');
 
             // Clear any stored tokens or user data
-            localStorage.removeItem('accessToken');
-            sessionStorage.clear();
             
             // Redirect the user to the login page
-            window.location.href = '/client-login';
+            window.location.href = '/client-login.html';
         } catch (error) {
             console.error('Error deleting account:', error);
             alert('An error occurred while deleting your account. Please try again later.');

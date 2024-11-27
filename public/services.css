@@ -117,6 +117,7 @@ button:hover {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
+    color: black;
 }
 
 .client-card {

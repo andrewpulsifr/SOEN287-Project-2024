@@ -14,41 +14,44 @@ async function fetchAllServices(req, res) {
     }
 }
 async function createService(req, res) {
-    const { category, description, price, image } = req.body;
+    
+    const { title, description, category, price, image } = req.body;
+    console.log(req.body)
 
-    const db = createConnection();
-    const query = `
-        INSERT INTO Services (Title, Category, Description, Price, Image) 
-        VALUES (?, ?, ?, ?, ?)
-    `;
+
+    
+    if (!title || !description ||!category || !price) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const serviceData = {
+        Title: title,
+        Description: description,
+        Category: category,
+        Price: parseFloat(price),
+        Image: image || null,
+    };
 
     try {
-        console.log('Received data:', { category, description, price, image });
+        console.log('Received data for new service:', serviceData);
 
-        const [result] = await db.execute(query, [
-            category, 
-            category, 
-            description, 
-            parseFloat(price), 
-            image || null
-        ]);
+        
+        const result = await serviceModel.createService(serviceData);
 
-        res.status(201).json({ 
-            message: 'Service created successfully', 
-            serviceId: result.insertId 
+        res.status(201).json({
+            message: 'Service created successfully',
+            serviceId: result.insertId,
         });
     } catch (error) {
-        console.error('Detailed Database error:', error.sqlMessage || error);
-        res.status(500).json({ 
-            error: 'Failed to create service', 
-            details: error.sqlMessage || error.toString() 
+        console.error('Error creating service:', error.message || error);
+        res.status(500).json({
+            error: 'Failed to create service',
+            details: error.message || error.toString(),
         });
-    } finally {
-        db.end();
     }
 }
 
-// Get a specific service
+
 async function fetchServiceById(req, res) {
     try {
         const service = await serviceModel.getServiceById(req.params.id);

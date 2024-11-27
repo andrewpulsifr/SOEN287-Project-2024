@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS Services (
     Category VARCHAR(255) NOT NULL,
     Description TEXT NOT NULL,
     Price DECIMAL(10, 2) NOT NULL,
-    Image TEXT,
+    Image LONGTEXT,
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 `;
@@ -137,4 +137,4 @@ async function tableCreation() {
     }
 }
 
-export default tableCreation();
+export default tableCreation;

@@ -1,4 +1,5 @@
 import createConnection from '../config/database.js';
+
 const pool = createConnection(); 
 
 // Fetch all services
@@ -20,11 +21,16 @@ async function getServiceById(serviceId) {
 
 // Create a new service
 async function createService(serviceData) {
+    const db = createConnection();
     try {
-        const [result] = await pool.query("INSERT INTO Services SET ?", [serviceData]);  
+        const query = "INSERT INTO Services SET ?";
+        const [result] = await db.query(query, serviceData);
         return result;
     } catch (err) {
+        console.error('Database error in createService:', err);
         throw err;
+    } finally {
+        db.end();
     }
 }
 

@@ -1,28 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
     const service_form = document.querySelector('.form');
     const image = document.getElementById('image');
-    const token = localStorage.getItem('token');
+    const accessToken = localStorage.getItem('accessToken');
     
     service_form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        const imageFile = image.files[0];
+        if (!imageFile) {
+            alert('Please upload an image');
+            return;
+        }
+
         const formData = {
-            category: document.getElementById('title').value,
+            title: document.getElementById('title').value,
             description: document.getElementById('description').value,
+            category: "category",
             price: document.getElementById('price').value,
-            image: await getBase64(image.files[0])
+            image: await getBase64(imageFile),
         };
-        
+
+        console.log('Form Data:', formData);
+
         try {
             const response = await fetch('/services/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${accessToken}`
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(formData),
             });
-
+            
             if (response.ok) {
                 window.location.href = './services-business.html';
             } else {
@@ -37,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Existing getBase64 function (make sure this is defined)
 async function getBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();

@@ -4,16 +4,18 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import database from '../../api/models/model.js'
 import servicesApi from '../../api/routes/services-routes.js';
 import usersApi from '../../api/routes/users-routes.js';
 import configRoutes from './config-routes.js';
 import businessRoutes from '../../api/routes/business-routes.js';
+import tableCreation from '../../api/models/model.js';
 
 dotenv.config();
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
+tableCreation();
 // Middleware
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));

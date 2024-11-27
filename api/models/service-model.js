@@ -37,7 +37,7 @@ async function createService(serviceData) {
 // Update an existing service
 async function updateService(id, serviceData) {
     try {
-        const [result] = await pool.query("UPDATE Services SET ? WHERE id = ?", [serviceData, id]);  
+        const [result] = await pool.query("UPDATE Services SET ? WHERE ServiceID = ?", [serviceData, id]);  
         return result;
     } catch (err) {
         throw err;
@@ -47,7 +47,7 @@ async function updateService(id, serviceData) {
 // Delete a service
 async function deleteService(id) {
     try {
-        const [result] = await pool.query("DELETE FROM Services WHERE id = ?", [id]);  
+        const [result] = await pool.query("DELETE FROM Services WHERE ServiceID = ?", [id]);  
         return result;
     } catch (err) {
         throw err;

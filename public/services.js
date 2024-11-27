@@ -123,7 +123,7 @@ function createServiceCards(services, container, isEditPage = false) {
             <p>${service.Price}</p>
             <button class="details-button">View Details</button>
             ${isEditPage 
-                ? `<a href="create-service.html"><button class="edit-button">Edit</button></a>` 
+                ? `<a href="edit-service.html?id=${service.ServiceID}""><button class="edit-button">Edit</button></a>` 
                 : `<a><button class="request-button" data-service-id="${service.ServiceID}">Request</button></a>`}
         `;
 

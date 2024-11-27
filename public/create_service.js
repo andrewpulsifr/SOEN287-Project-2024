@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const service_form = document.querySelector('.form');
     const image = document.getElementById('image');
     const accessToken = localStorage.getItem('accessToken');
+
+    
     
     service_form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -15,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = {
             title: document.getElementById('title').value,
             description: document.getElementById('description').value,
-            category: "category",
+            category: document.getElementById('title').value,
             price: document.getElementById('price').value,
             image: await getBase64(imageFile),
         };

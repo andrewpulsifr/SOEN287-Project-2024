@@ -17,9 +17,6 @@ router.delete('/request/:clientServiceId/cancel', verifyToken, serviceController
 
 router.post('/create', verifyToken, serviceController.createService);
 
-router.post('/create', verifyToken, serviceController.createService);
-
-
 router.post('/client-requests', verifyToken, usersController.getAllServicesByUserId); 
 router.get('/profile', verifyToken, usersController.getClientProfile);
 

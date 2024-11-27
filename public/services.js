@@ -123,14 +123,36 @@ function createServiceCards(services, container, isEditPage = false) {
             <p>${service.Price}</p>
             <button class="details-button">View Details</button>
             ${isEditPage 
-                ? `<a href="edit-service.html?id=${service.ServiceID}""><button class="edit-button">Edit</button></a>` 
-                : `<a><button class="request-button" data-service-id="${service.ServiceID}">Request</button></a>`}
-        `;
+                ? `
+        <a href="edit-service.html?id=${service.ServiceID}"><button class="edit-button">Edit</button></a>
+        <button class="remove-button" data-service-id="${service.ServiceID}">Remove</button>
+        `
+        : `<a><button class="request-button" data-service-id="${service.ServiceID}">Request</button></a>`}
+`;
 
         card.querySelector('.details-button').onclick = () => {
             document.getElementById('modal-description').innerText = service.Description;
             document.getElementById('myModal').style.display = 'block'; // disp modal
         }; 
+
+        const removeButton = card.querySelector('.remove-button');
+        if (removeButton) {
+            removeButton.addEventListener('click', async () => {
+                const serviceId = removeButton.getAttribute('data-service-id');
+                const confirmation = confirm('Are you sure you want to remove this service?');
+
+                if (confirmation) {
+                    try {
+                        await removeService(serviceId); // Call the removeService function
+                        card.remove(); // Remove the card from the DOM
+                        alert('Service removed successfully!');
+                    } catch (err) {
+                        console.error('Error removing service:', err);
+                        alert('Failed to remove service. Please try again.');
+                    }
+                }
+            });
+        }
     // Request service functionality
     if (!isEditPage) {
         const requestButton = card.querySelector('.request-button');
@@ -139,7 +161,34 @@ function createServiceCards(services, container, isEditPage = false) {
 
     container.appendChild(card);
     });
+
+
     }
+
+    async function removeService(serviceId) {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            throw new Error('Authentication token is missing.');
+        }
+    
+        const url = `/services/${serviceId}`; // Adjust the endpoint as needed
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+    
+        const response = await fetch(url, options);
+    
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to remove service');
+        }
+    
+        return response.json(); // Optionally return response data if needed
+    }
+    
 
 /************************************************************************************************
 * Request Service

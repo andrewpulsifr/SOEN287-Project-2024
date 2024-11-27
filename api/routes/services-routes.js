@@ -3,6 +3,7 @@ import * as serviceController from '../controllers/services-controller.js';
 import verifyToken from '../middleware/authMiddleware.js'; // Import verifyToken middleware
 import * as usersController from '../controllers/users-controller.js';
 
+
 const router = express.Router();
 
 // Apply authMiddleware to all routes to protect them
@@ -20,5 +21,8 @@ router.post('/create', verifyToken, serviceController.createService);
 router.post('/client-requests', verifyToken, usersController.getAllServicesByUserId); 
 router.get('/profile', verifyToken, usersController.getClientProfile);
 
-module.exports = router;
+
+
+
+
 export default router;

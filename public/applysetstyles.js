@@ -8,9 +8,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const config = await response.json();
 
         if (config) {
-            document.documentElement.style.setProperty('--primary-color', `${config.primary_color} !important`);
-            document.documentElement.style.setProperty('--secondary-color', `${config.secondary_color} !important`);
-            document.documentElement.style.setProperty('--accent-color', `${config.accent_color} !important`);
+            document.documentElement.style.setProperty('--primary-color', `${config.primary_color}`);
+            document.documentElement.style.setProperty('--secondary-color', `${config.secondary_color}`);
+            document.documentElement.style.setProperty('--accent-color', `${config.accent_color}`);
             
             const companyNameElement = document.querySelector('.companyname a');
             if (companyNameElement) {

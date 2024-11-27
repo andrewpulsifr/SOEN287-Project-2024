@@ -7,6 +7,7 @@ import { dirname } from 'path';
 import servicesApi from '../../api/routes/services-routes.js';
 import usersApi from '../../api/routes/users-routes.js';
 import configRoutes from './config-routes.js';
+import businessRoutes from '../../api/routes/business-routes.js';
 
 dotenv.config();
 const app = express();
@@ -24,7 +25,8 @@ app.use(express.static(path.join(__dirname, '../../public')));
 // Routes
 app.use('/services', servicesApi);
 app.use('/users', usersApi);
-app.use('/config', configRoutes); // Routes will be under "/config"
+app.use('/config', configRoutes); 
+app.use('/business', businessRoutes);
 
 // Home route
 app.get('/', (req, res) => {

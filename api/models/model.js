@@ -1,5 +1,10 @@
 import createConnection from '../config/database.js';
 const pool = createConnection(); 
+import bcrypt from 'bcrypt';
+
+// Pre-hash admin password
+const adminPassword = bcrypt.hashSync('adminPassword', 10); // Replace with dynamic hashing if needed
+
 // Create Users table
 const createUsersTable = `
     CREATE TABLE IF NOT EXISTS Users (
@@ -15,7 +20,7 @@ const createUsersTable = `
 const createAdminsTable = `
     CREATE TABLE IF NOT EXISTS Admins (
         AdminID INT AUTO_INCREMENT PRIMARY KEY,
-        UserID INT NOT NULL,
+        UserID INT NOT NULL UNIQUE,
         BusinessName VARCHAR(255) NOT NULL,
         About TEXT,
         BusinessLogo VARCHAR(255),
@@ -105,6 +110,27 @@ const createbusiness_config=
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Automatically sets the current timestamp
 );`
 
+const createAdminUser = `
+    INSERT INTO Users (Email, Password, Role)
+    SELECT ?, ?, 'Admin'
+    WHERE NOT EXISTS (
+        SELECT 1 FROM Users WHERE Email = ?
+    );
+`;
+
+const createAdminEntry = `
+    INSERT INTO Admins (UserID, BusinessName, About, BusinessLogo, Category)
+    SELECT UserID, 'Cool Business Name', 'Default About', 'http://localhost:3000/Images/default.png', 'Cool Category'
+    FROM Users
+    WHERE Email = ?
+        AND NOT EXISTS (
+            SELECT 1 FROM Admins WHERE UserID = (
+                SELECT UserID FROM Users WHERE Email = ?
+            )
+        );
+`;
+
+
 async function tableCreation() {
     try {
         // Use 'await' for querying since we're working with promises
@@ -132,6 +158,15 @@ async function tableCreation() {
 
         await pool.query(createColorPaletteTable);
         console.log('ColorPalette table created or already exists.');
+
+        const email = 'admin@example.com';
+        const hashedPassword = bcrypt.hashSync('adminPassword', 10);
+
+        await pool.query(createAdminUser, [email, hashedPassword, email]);
+        console.log('Admin user created or already exists.');
+
+        await pool.query(createAdminEntry, [email, email]);
+        console.log('Admin account created or already exists.');
     } catch (err) {
         console.error('Error creating tables:', err.message);
     }

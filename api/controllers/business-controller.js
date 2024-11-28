@@ -25,3 +25,24 @@ export const fetchAllClientServices =  async (req, res) => {
         res.status(500).json({error: 'Error fetching client services'});
     }
 }
+
+export const markServiceAsComplete=  async (req, res) => {
+    const { clientServiceId } = req.body;
+
+    if (!clientServiceId) {
+        return res.status(400).json({ error: 'ClientServiceID is required' });
+    }
+
+    try {
+        const result = await serviceModel.updateServiceStatusToComplete(clientServiceId);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Service not found or already completed' });
+        }
+
+        res.status(200).json({ message: 'Service marked as complete' });
+    } catch (error) {
+        console.error('Error marking service as complete:', error);
+        res.status(500).json({ error: 'Failed to mark service as complete' });
+    }
+}

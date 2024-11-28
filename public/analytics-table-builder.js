@@ -43,6 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         Follow Up
                     </button>
                 </td>
+                <td>
+                ${service.Status !== 'Completed' ? `
+                <button class="complete-btn" data-client-service-id="${service.ClientServiceID}">
+                    Complete
+                </button>` : ''}
+            </td
             `;
 
             
@@ -54,6 +60,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         attachFollowUpListeners();
+        attachCompleteListeners();
+    }
+
+    function attachCompleteListeners() {
+        document.querySelectorAll('.complete-btn').forEach(button => {
+            button.addEventListener('click', async () => {
+                const clientServiceId = button.getAttribute('data-client-service-id');
+    
+                const confirmation = confirm('Are you sure you want to mark this service as complete?');
+                if (confirmation) {
+                    try {
+                        await markServiceAsComplete(clientServiceId);
+                        alert('Service marked as complete!');
+                        fetchClientServices(); 
+                    } catch (error) {
+                        console.error('Error marking service as complete:', error);
+                        alert('Failed to mark service as complete.');
+                    }
+                }
+            });
+        });
+    }
+    
+    async function markServiceAsComplete(clientServiceId) {
+        const response = await fetch('/business/complete', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ clientServiceId })
+        });
+    
+        if (!response.ok) {
+            throw new Error('Failed to mark service as complete');
+        }
+    
+        return response.json();
     }
 
     function attachFollowUpListeners() {

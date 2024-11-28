@@ -13,8 +13,45 @@ async function fetchAllServices(req, res) {
         res.status(500).json({ error: "Error fetching services", details: err });
     }
 }
+async function createService(req, res) {
+    
+    const { title, description, category, price, image } = req.body;
+    console.log(req.body)
 
-// Get a specific service
+
+    
+    if (!title || !description ||!category || !price) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const serviceData = {
+        Title: title,
+        Description: description,
+        Category: category,
+        Price: parseFloat(price),
+        Image: image || null,
+    };
+
+    try {
+        console.log('Received data for new service:', serviceData);
+
+        
+        const result = await serviceModel.createService(serviceData);
+
+        res.status(201).json({
+            message: 'Service created successfully',
+            serviceId: result.insertId,
+        });
+    } catch (error) {
+        console.error('Error creating service:', error.message || error);
+        res.status(500).json({
+            error: 'Failed to create service',
+            details: error.message || error.toString(),
+        });
+    }
+}
+
+
 async function fetchServiceById(req, res) {
     try {
         const service = await serviceModel.getServiceById(req.params.id);
@@ -26,17 +63,7 @@ async function fetchServiceById(req, res) {
     }
 }
 
-// Create a new service
-async function createService(req, res) {
-    try {
-        const newService = req.body;
-        const result = await serviceModel.createService(newService);
-        res.status(201).json({ message: "Service created", serviceId: result.insertId });
-    } catch (err) {
-        console.error("Error creating service:", err);
-        res.status(500).json({ error: "Error creating service", details: err });
-    }
-}
+
 
 // Update an existing service
 async function updateService(req, res) {

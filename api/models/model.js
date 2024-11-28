@@ -40,14 +40,15 @@ const createClientsTable = `
 
 // Create Services table
 const createServicesTable = `
-    CREATE TABLE IF NOT EXISTS Services (
-        ServiceID INT AUTO_INCREMENT PRIMARY KEY,
-        Title VARCHAR(255) NOT NULL,               
-        Category VARCHAR(255) NOT NULL,
-        Description TEXT NOT NULL,
-        Price DECIMAL(10, 2) NOT NULL,             
-        CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
+CREATE TABLE IF NOT EXISTS Services (
+    ServiceID INT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,               
+    Category VARCHAR(255) NOT NULL,
+    Description TEXT NOT NULL,
+    Price DECIMAL(10, 2) NOT NULL,
+    Image LONGTEXT,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 `;
 // Create ClientServices table (links clients to services)
 const createClientServicesTable = `
@@ -136,4 +137,4 @@ async function tableCreation() {
     }
 }
 
-export default tableCreation();
+export default tableCreation;

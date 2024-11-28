@@ -2,17 +2,21 @@ document.querySelector(".form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const formData = {
-        title: document.getElementById("title").value,
-        description: document.getElementById("description").value,
-        primaryColor: document.getElementById("primaryColor").value,
-        secondaryColor: document.getElementById("secondaryColor").value,
-        accentColor: document.getElementById("accentColor").value,
+        business_name: document.getElementById("title").value,
+        about_section: document.getElementById("description").value,
+        primary_color: document.getElementById("primaryColor").value,
+        secondary_color: document.getElementById("secondaryColor").value,
+        accent_color: document.getElementById("accentColor").value,
     };
 
     try {
-        const response = await fetch('/submit-config', {
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await fetch('/business/submit-config', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+             },
+            
             body: JSON.stringify(formData),
         });
 

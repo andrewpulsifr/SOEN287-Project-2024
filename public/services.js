@@ -8,10 +8,13 @@ const token = localStorage.getItem("accessToken");
     console.log('jwt toke, token:', token);
 
 function loadServicePageFeatures() {
+    console.log("loadservicepage")
     createModal();
     const cardsGrid = document.querySelector('.cards-grid');
     const isBusinessPage = window.location.pathname.includes('services-business');
+    console.log('Is this the business page?', isBusinessPage);
     if (isBusinessPage) {
+        console.log("fetching service busines")
         fetchServices('business')
             .then(services => {
                 createServiceCards(services, cardsGrid, true); // Pass services from backend, true for edit page
@@ -19,6 +22,7 @@ function loadServicePageFeatures() {
             .catch(err => console.error("Failed to load services:", err));
         } else if (window.location.pathname.includes('services-client')) {
             // Fetch and display services for the client page
+            console.log("fetching service client ")
             fetchServices('client')
                 .then(services => {
                     createServiceCards(services, cardsGrid, false); // Pass services from backend, false for client page
@@ -83,6 +87,7 @@ function createModal() {
  * Fetch Services from Backend
  ************************************************************************************************/
 async function fetchServices() {
+    console.log("fetching service")
     try {
         // Validate access token with a protected API route
         const url = '/services'; // The endpoint you want to call
@@ -118,14 +123,36 @@ function createServiceCards(services, container, isEditPage = false) {
             <p>${service.Price}</p>
             <button class="details-button">View Details</button>
             ${isEditPage 
-                ? `<a href="create-service.html"><button class="edit-button">Edit</button></a>` 
-                : `<a><button class="request-button" data-service-id="${service.ServiceID}">Request</button></a>`}
-        `;
+                ? `
+        <a href="edit-service.html?id=${service.ServiceID}"><button class="edit-button">Edit</button></a>
+        <button class="remove-button" data-service-id="${service.ServiceID}">Remove</button>
+        `
+        : `<a><button class="request-button" data-service-id="${service.ServiceID}">Request</button></a>`}
+`;
 
         card.querySelector('.details-button').onclick = () => {
             document.getElementById('modal-description').innerText = service.Description;
             document.getElementById('myModal').style.display = 'block'; // disp modal
         }; 
+
+        const removeButton = card.querySelector('.remove-button');
+        if (removeButton) {
+            removeButton.addEventListener('click', async () => {
+                const serviceId = removeButton.getAttribute('data-service-id');
+                const confirmation = confirm('Are you sure you want to remove this service?');
+
+                if (confirmation) {
+                    try {
+                        await removeService(serviceId); // Call the removeService function
+                        card.remove(); // Remove the card from the DOM
+                        alert('Service removed successfully!');
+                    } catch (err) {
+                        console.error('Error removing service:', err);
+                        alert('Failed to remove service. Please try again.');
+                    }
+                }
+            });
+        }
     // Request service functionality
     if (!isEditPage) {
         const requestButton = card.querySelector('.request-button');
@@ -134,7 +161,34 @@ function createServiceCards(services, container, isEditPage = false) {
 
     container.appendChild(card);
     });
+
+
     }
+
+    async function removeService(serviceId) {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            throw new Error('Authentication token is missing.');
+        }
+    
+        const url = `/services/${serviceId}`; // Adjust the endpoint as needed
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+    
+        const response = await fetch(url, options);
+    
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to remove service');
+        }
+    
+        return response.json(); // Optionally return response data if needed
+    }
+    
 
 /************************************************************************************************
 * Request Service
@@ -184,14 +238,3 @@ async function requestService(serviceId) {
 
 
 
-window.onload = async function() {
-    const services = await fetchServices();
-    console.log("Services: " + services)
-    
-    if (services.length > 0) {
-        const container = document.querySelector('.cards-grid');
-        createServiceCards(services, container);
-    } else {
-        console.log('No services available or error fetching services');
-    }
-};

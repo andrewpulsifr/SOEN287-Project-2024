@@ -1,4 +1,5 @@
 import createConnection from '../config/database.js';
+
 const pool = createConnection(); 
 
 // Fetch all services
@@ -20,18 +21,23 @@ async function getServiceById(serviceId) {
 
 // Create a new service
 async function createService(serviceData) {
+    const db = createConnection();
     try {
-        const [result] = await pool.query("INSERT INTO Services SET ?", [serviceData]);  
+        const query = "INSERT INTO Services SET ?";
+        const [result] = await db.query(query, serviceData);
         return result;
     } catch (err) {
+        console.error('Database error in createService:', err);
         throw err;
+    } finally {
+        db.end();
     }
 }
 
 // Update an existing service
 async function updateService(id, serviceData) {
     try {
-        const [result] = await pool.query("UPDATE Services SET ? WHERE id = ?", [serviceData, id]);  
+        const [result] = await pool.query("UPDATE Services SET ? WHERE ServiceID = ?", [serviceData, id]);  
         return result;
     } catch (err) {
         throw err;
@@ -41,7 +47,7 @@ async function updateService(id, serviceData) {
 // Delete a service
 async function deleteService(id) {
     try {
-        const [result] = await pool.query("DELETE FROM Services WHERE id = ?", [id]);  
+        const [result] = await pool.query("DELETE FROM Services WHERE ServiceID = ?", [id]);  
         return result;
     } catch (err) {
         throw err;
@@ -91,10 +97,23 @@ async function updateClient(userId, clientData) {
         throw err;
     }
 }
+async function getAllClientServices() {
+    const query = `
+        SELECT cs.ClientServiceID, cs.Status, cs.AssignedDate, cs.DueDate, cs.PaymentStatus, 
+               c.FirstName, c.LastName, s.Category, s.Description, s.Price
+        FROM ClientServices cs
+        INNER JOIN Clients c ON cs.ClientID = c.ClientID
+        INNER JOIN Services s ON cs.ServiceID = s.ServiceID
+        ORDER BY cs.AssignedDate DESC;
+    `;
+    const [results] = await pool.query(query);
+    return results;
+}
 
 export default {
     getAllServices,
     getServiceById,
+    getAllClientServices,
     createService,
     updateService,
     deleteService,

@@ -30,7 +30,7 @@
             <div class="table-responsive">
                 <table class="table table-striped">
                         <th colspan="5" class="table-title" >Outstanding Service Requests</th>
-                        <th colspan="2" class="table-title">
+                        <th colspan="3" class="table-title">
                             <div class="filter-container">
                                 <select id="outstanding-column-select" class="form-control">
                                     <option value="category">Category</option>
@@ -39,6 +39,7 @@
                                     <option value="dueDate">Due Date</option>
                                     <option value="paymentStatus">Payment Status</option>
                                     <option value="followUp">Follow Up</option>
+                                    <option value="complete">Complete</option>
                                 </select>
                                 <input placeholder="Filter" id="outstanding-search-input" class="form-control" type="text">
                                 <!-- Additional date input field for date range filtering -->
@@ -54,6 +55,7 @@
                             <th>Due Date</th>
                             <th>Payment Status</th>
                             <th>Follow Up</th>
+                            <th>Complete</th>
                         </tr>
                             <tbody id="outstanding-services-table">
 
@@ -66,7 +68,7 @@
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <th colspan="5" class="table-title" >Service History</th>
-                        <th colspan="2" class="table-title">
+                        <th colspan="3" class="table-title">
                             <div class="filter-container">
                                 <select id="history-column-select" class="form-control">
                                     <option value="category">Category</option>

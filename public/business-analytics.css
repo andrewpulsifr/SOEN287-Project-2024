@@ -41,3 +41,36 @@ td .follow-up-btn {
     display: inline-block;
     text-align: center;
 }
+
+
+.complete-btn {
+    background-color: #2E8BC0; 
+    color: #ffffff; 
+    border: none;
+    border-radius: 5px; 
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+.complete-btn:hover {
+    background-color: #0B2447; 
+    transform: scale(1.05); 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+
+.complete-btn:disabled {
+    background-color: #cccccc; 
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+
+td .complete-btn {
+    display: inline-block;
+    text-align: center;
+}

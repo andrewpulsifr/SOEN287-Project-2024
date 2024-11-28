@@ -110,6 +110,18 @@ async function getAllClientServices() {
     return results;
 }
 
+async function updateServiceStatusToComplete(clientServiceId) {
+    const query = `
+        UPDATE ClientServices
+        SET Status = 'Completed',
+            DateFulfilled = NOW(),
+            Completed = true
+        WHERE ClientServiceID = ?
+    `;
+    const [result] = await pool.query(query, [clientServiceId]);
+    return result;
+}
+
 export default {
     getAllServices,
     getServiceById,
@@ -121,4 +133,5 @@ export default {
     getClientServiceById,
     cancelServiceRequest,
     updateClient,
+    updateServiceStatusToComplete,
 };

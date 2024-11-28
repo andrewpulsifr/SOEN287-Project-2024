@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "# @npmcli/git",
   "main": "Servers/mainServer/index.js",
-  "type": "module", 
+  "type": "module",
   "scripts": {
     "devStart": "nodemon Servers/mainServer/index.js",
     "devStartAuth": "nodemon Servers/authServer/index.js",

@@ -114,8 +114,9 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Payment processed successfully.");
 
             row.cells[6].innerText = "Paid"; // Update payment status column
-            row.cells[8].innerHTML = `<button class="view-receipt-btn">View Receipt</button>`; // Replace pay with receipt button
-        } else if (event.target.classList.contains("view-receipt-btn")) {
+            row.cells[8].innerHTML = `<button class="view-receipt-btn">Paid</button>`; // Replace pay with receipt button
+        } 
+        if (event.target.classList.contains("view-receipt-btn")) {
             const row = event.target.closest("tr");
             const clientServiceId = row.cells[0].innerText;
             const service = pastServices.find(s => s.ClientServiceID === clientServiceId);
